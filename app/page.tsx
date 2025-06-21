@@ -1,103 +1,109 @@
+// app/page.tsx
+
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 py-12">
+      {/* Hero Section */}
+      <section className="text-center max-w-4xl">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-purple-500 mb-6">
+          Welcome to <span className="text-white">Gamez24</span>
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300 mb-10">
+          Your ultimate destination to grab{" "}
+          <span className="text-purple-400 font-semibold">free</span> games from
+          top platforms like <span className="text-white">Steam</span>,{" "}
+          <span className="text-white">Epic Games</span>, and{" "}
+          <span className="text-white">Prime Gaming</span>. We track deals so
+          you never miss a freebie.
+        </p>
+        <Link href="/deals" className="bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold px-6 py-3 rounded-2xl transition shadow-lg shadow-purple-900">
+          Explore Free Deals
+        </Link>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+      {/* Platforms Showcase */}
+      <section className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-12 items-center text-center">
+        <div className="flex flex-col items-center transition-transform duration-300 hover:scale-105 group">
+          <div className="p-5 rounded-full bg-black group-hover:shadow-[0_0_25px_5px_rgba(168,85,247,0.7)] transition-shadow duration-500">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              src="/steam_logo.png"
+              alt="Steam"
+              width={100}
+              height={100}
+              className="mb-4"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+          <p className="text-gray-400 mt-2">Free Games on Steam</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+ <div className="flex flex-col items-center transition-transform duration-300 hover:scale-105 group">
+          <div className="p-5 rounded-full bg-black group-hover:shadow-[0_0_25px_5px_rgba(168,85,247,0.7)] transition-shadow duration-500">
+            <Image
+              src="/epic_games.png"
+              alt="Epic Games"
+              width={100}
+              height={100}
+              className="mb-4"
+            />
+          </div>
+          <p className="text-gray-400 mt-2">Weekly Free Epic Games</p>
+        </div>
+
+         <div className="flex flex-col items-center transition-transform duration-300 hover:scale-105 group">
+          <div className="p-5 rounded-full bg-black group-hover:shadow-[0_0_25px_5px_rgba(168,85,247,0.7)] transition-shadow duration-500">
+            <Image
+              src="/prime_gaming_i.png"
+              alt="Prime Gaming"
+              width={100}
+              height={100}
+              className="mb-4"
+            />
+          </div>
+          <p className="text-gray-400 mt-2">Prime Gaming Freebies</p>
+        </div>
+        
+
+        {/* <div className="flex flex-col items-center">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src="/steam_logo.png"
+            alt="Steam"
+            width={100}
+            height={100}
+            className="mb-4"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <p className="text-gray-400">Free Games on Steam</p>
+        </div>
+
+        <div className="flex flex-col items-center">
           <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+            src="/epic_games.png"
+            alt="Epic Games"
+            width={100}
+            height={100}
+            className="mb-4"
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          <p className="text-gray-400">Weekly Free Epic Games</p>
+        </div>
+
+        <div className="flex flex-col items-center">
           <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+            src="/prime_gaming.jpg"
+            alt="Prime Gaming"
+            width={100}
+            height={100}
+            className="mb-4"
           />
-          Go to nextjs.org →
-        </a>
+          <p className="text-gray-400">Prime Gaming Freebies</p>
+        </div> */}
+      </section>
+
+      {/* Footer */}
+      <footer className="mt-24 text-sm text-gray-500 text-center">
+        &copy; {new Date().getFullYear()} Gamez24. All rights reserved.
       </footer>
-    </div>
+    </main>
   );
 }
