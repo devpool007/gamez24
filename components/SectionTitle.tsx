@@ -2,8 +2,8 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+// import { Link } from 'react-router-dom';
+// import { ArrowRight } from 'lucide-react';
 
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -19,10 +19,10 @@ export const SectionTitle = ({ children, className, viewAllLink }: SectionTitleP
       </h2>
       {viewAllLink && (
         <Button asChild variant="link" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-          <Link to={viewAllLink}>
+          {/* <Link to={viewAllLink}>
             View All
             <ArrowRight className="w-4 h-4 ml-1" />
-          </Link>
+          </Link> */}
         </Button>
       )}
     </div>

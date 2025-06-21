@@ -14,7 +14,7 @@ export default function DealsPage() {
         </h1>
       </header>
 
-      <main className="h-auto bg-zinc-900 px-6 py-12 flex flex-col items-center text-white">
+      <main className=" relative h-auto px-18 py-12   text-white">
         {/* Placeholder for dynamic list */}
         {/* Replace this with <Suspense> or your DealsList component later */}
         {/* <p className="text-purple-400 animate-pulse text-xl mt-10">

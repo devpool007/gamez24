@@ -23,7 +23,7 @@ interface DealsSectionProps {
 
 export const DealsSection = ({ title, games, colorConfig, viewAllLink }: DealsSectionProps) => {
   return (
-    <section className="mb-12">
+    <section className="mb-12 w-auto">
       <SectionTitle className={colorConfig.sectionTitle} viewAllLink={viewAllLink}>
         {title}
       </SectionTitle>

@@ -1,9 +1,10 @@
-import { Game } from '@/data/mock-games';
-import { Calendar, Tag } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { useClaimStore } from '@/store/useClaimStore';
-import Image from 'next/image';
+"use client";
+import { Game } from "@/data/mock-games";
+import { Calendar, Tag } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useClaimStore } from "@/store/useClaimStore";
+import Image from "next/image";
 
 interface GameCardProps {
   game: Game;
@@ -15,11 +16,10 @@ interface GameCardProps {
 export const GameCard = ({
   game,
   animationDelay,
-  iconColorClass = 'text-primary',
-  shadowColorClass = 'hover:shadow-primary/50',
+  iconColorClass = "text-primary",
+  shadowColorClass = "hover:shadow-primary/50",
 }: GameCardProps) => {
-
-  const claimGame  = useClaimStore((state) => state.claimGame);
+  const claimGame = useClaimStore((state) => state.claimGame);
 
   const handleClaim = () => {
     claimGame(game.platform, game.title);
@@ -28,31 +28,33 @@ export const GameCard = ({
   return (
     <div
       className={cn(
-        'bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform hover:-translate-y-1 group animate-fade-in-up flex flex-col',
+        "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform hover:-translate-y-1 group animate-fade-in-up flex flex-col h-9/10",
         shadowColorClass
       )}
-      style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
+      style={{ animationDelay: `${animationDelay}ms`}}
     >
-      <div className="aspect-[3/4] overflow-hidden">
-        <Image
-          src={game.imageUrl}
-          alt={game.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+      <div className="relative aspect-[3/4] overflow-hidden w-full h-full  group-hover:scale-105 transition-transform duration-300">
+        <Image src={game.imageUrl} alt={game.title} fill className="object-cover" />
       </div>
       <div className="p-4 flex flex-col flex-grow">
-        <h3 className="font-bold text-lg truncate text-foreground">{game.title}</h3>
+        <h3 className="font-bold text-lg truncate text-foreground">
+          {game.title}
+        </h3>
         <div className="mt-2 space-y-2 text-sm text-muted-foreground flex-grow">
           <div className="flex items-center">
-            <Tag className={cn('w-4 h-4 mr-2', iconColorClass)} />
+            <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
             <span>{game.platform}</span>
           </div>
           <div className="flex items-center">
-            <Calendar className={cn('w-4 h-4 mr-2', iconColorClass)} />
+            <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
             <span>{game.freeUntil}</span>
           </div>
         </div>
-        <Button variant="secondary" className="w-full mt-4" onClick={handleClaim}>
+        <Button
+          variant="secondary"
+          className="w-full mt-4"
+          onClick={handleClaim}
+        >
           Claim Now
         </Button>
       </div>
