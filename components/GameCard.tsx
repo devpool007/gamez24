@@ -28,14 +28,21 @@ export const GameCard = ({
   return (
     <div
       className={cn(
-        "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform hover:-translate-y-1 group animate-fade-in-up flex flex-col h-9/10",
+        "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col h-110",
         shadowColorClass
       )}
-      style={{ animationDelay: `${animationDelay}ms`}}
+      style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
     >
-      <div className="relative aspect-[3/4] overflow-hidden w-full h-full  group-hover:scale-105 transition-transform duration-300">
-        <Image src={game.imageUrl} alt={game.title} fill className="object-cover" />
+      <div className="relative aspect-[3/4] overflow-hidden group-hover:scale-105 transition-transform duration-300">
+        <Image
+          src={game.imageUrl}
+          alt={game.title}
+          fill
+          className="object-cover" //what the hell this does figure out later
+          sizes="(max-width: 768px) 100vw, 200px"
+        />
       </div>
+
       <div className="p-4 flex flex-col flex-grow">
         <h3 className="font-bold text-lg truncate text-foreground">
           {game.title}

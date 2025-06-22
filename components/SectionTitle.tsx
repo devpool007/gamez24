@@ -14,9 +14,9 @@ interface SectionTitleProps {
 export const SectionTitle = ({ children, className, viewAllLink }: SectionTitleProps) => {
   return (
     <div className="flex justify-between items-center mb-6">
-      <h2 className={cn("text-3xl font-bold border-l-4 pl-4", className)}>
+      <h1 className={cn("text-4xl font-bold border-l-4 pl-4", className)}>
         {children}
-      </h2>
+      </h1>
       {viewAllLink && (
         <Button asChild variant="link" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
           {/* <Link to={viewAllLink}>

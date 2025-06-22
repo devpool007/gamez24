@@ -1,14 +1,17 @@
-
-import { Game } from '@/data/mock-games';
-import { SectionTitle } from '@/components/SectionTitle';
-import { GameCard } from '@/components/GameCard';
+import { Game } from "@/data/mock-games";
+import { SectionTitle } from "@/components/SectionTitle";
+import { GameCard } from "@/components/GameCard";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
+} from "@/components/ui/carousel";
+
+
+
+
 
 interface DealsSectionProps {
   title: string;
@@ -21,18 +24,28 @@ interface DealsSectionProps {
   viewAllLink?: string;
 }
 
-export const DealsSection = ({ title, games, colorConfig, viewAllLink }: DealsSectionProps) => {
+export const DealsSection = ({
+  title,
+  games,
+  colorConfig,
+  viewAllLink,
+}: DealsSectionProps) => {
   return (
-    <section className="mb-12 w-auto">
-      <SectionTitle className={colorConfig.sectionTitle} viewAllLink={viewAllLink}>
+    <section className="mb-12">
+      <SectionTitle
+        className={colorConfig.sectionTitle}
+        viewAllLink={viewAllLink}
+      >
         {title}
       </SectionTitle>
-      <Carousel opts={{ align: 'start' }} className="w-full">
+      <Carousel opts={{ align: "start" }} className="w-full p-4">
+        <CarouselPrevious className="hidden sm:flex -top-16 right-16 left-auto translate-y-0" />
+        <CarouselNext className="hidden sm:flex -top-16 right-4 translate-y-0" />
         <CarouselContent className="-ml-4">
           {games.map((game, index) => (
             <CarouselItem
               key={game.id}
-              className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+              className="p-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
             >
               <GameCard
                 game={game}
@@ -43,8 +56,6 @@ export const DealsSection = ({ title, games, colorConfig, viewAllLink }: DealsSe
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
       </Carousel>
     </section>
   );
