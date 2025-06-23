@@ -9,7 +9,7 @@ type ClaimStats = Record<DealCategory, number>;
 interface ClaimStore {
   stats: ClaimStats;
   claimGame: (platform: string, gameTitle: string) => void;
-  totalClaims: number;
+  totalClaims: () => number;
 }
 
 const platformToCategoryMap: { [key: string]: DealCategory } = {
@@ -53,7 +53,7 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     }
   },
 
-  get totalClaims() {
+    totalClaims: () => {
     const stats = get().stats;
     return Object.values(stats).reduce((sum, count) => sum + count, 0);
   },

@@ -1,12 +1,14 @@
 
-import { useClaim } from '@/contexts/ClaimContext';
+"use client";
+import { useClaimStore } from '@/store/useClaimStore';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { Trophy } from 'lucide-react';
 import { dealsConfig } from '@/config/dealsConfig';
 
 export const ClaimStats = () => {
-  const { stats, totalClaims } = useClaim();
+  const stats = useClaimStore((state) => state.stats);
+  const totalClaims = useClaimStore((state) => state.totalClaims());
 
   const getDisplayName = (categoryKey: string) => {
     const category = dealsConfig[categoryKey as keyof typeof dealsConfig];

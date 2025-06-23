@@ -39,13 +39,13 @@ export const DealsSection = ({
         {title}
       </SectionTitle>
       <Carousel opts={{ align: "start" }} className="w-full p-4">
-        <CarouselPrevious className="hidden sm:flex -top-16 right-16 left-auto translate-y-0" />
-        <CarouselNext className="hidden sm:flex -top-16 right-4 translate-y-0" />
-        <CarouselContent className="-ml-4">
+        <CarouselPrevious className="flex -top-16 right-16 left-auto translate-y-0" />
+        <CarouselNext className="flex -top-16 right-4 translate-y-0" />
+        <CarouselContent className="content-center gap-4">
           {games.map((game, index) => (
             <CarouselItem
               key={game.id}
-              className="p-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+              className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
             >
               <GameCard
                 game={game}

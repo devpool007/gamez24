@@ -22,13 +22,16 @@ export const GameCard = ({
   const claimGame = useClaimStore((state) => state.claimGame);
 
   const handleClaim = () => {
+    setTimeout(() => {
+      window.open('https://store.epicgames.com/en-US/p/the-operator-b835e9', '_blank');
+    }, 800);
     claimGame(game.platform, game.title);
   };
 
   return (
     <div
       className={cn(
-        "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col h-110",
+        "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-50",
         shadowColorClass
       )}
       style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
@@ -39,7 +42,7 @@ export const GameCard = ({
           alt={game.title}
           fill
           className="object-cover" //what the hell this does figure out later
-          sizes="(max-width: 768px) 100vw, 200px"
+          // sizes="(max-width: 768px) 100vw, 200px"
         />
       </div>
 

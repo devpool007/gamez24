@@ -13,8 +13,8 @@ interface SectionTitleProps {
 
 export const SectionTitle = ({ children, className, viewAllLink }: SectionTitleProps) => {
   return (
-    <div className="flex justify-between items-center mb-6">
-      <h1 className={cn("text-4xl font-bold border-l-4 pl-4", className)}>
+    <div className="flex justify-between items-center mb-2">
+      <h1 className={cn("text-2xl font-bold border-l-4 pl-4", className)}>
         {children}
       </h1>
       {viewAllLink && (
