@@ -1,29 +1,30 @@
 // stores/useClaimStore.ts
 
-import { create } from 'zustand';
-import { toast } from 'sonner';
-import { DealCategory } from '@/config/dealsConfig';
+import { create } from "zustand";
+import { toast } from "sonner";
+import { DealCategory } from "@/config/dealsConfig";
 
 type ClaimStats = Record<DealCategory, number>;
 
 interface ClaimStore {
   stats: ClaimStats;
+  moneySaved: number;
   claimGame: (platform: string, gameTitle: string) => void;
   totalClaims: () => number;
 }
 
 const platformToCategoryMap: { [key: string]: DealCategory } = {
-  'Prime gaming': 'prime',
-  'Steam': 'steam',
-  'Epic Games': 'epic',
-  'GOG': 'gog',
+  "Prime gaming": "prime",
+  Steam: "steam",
+  "Epic Games": "epic",
+  GOG: "gog",
 };
 
 const categoryToDisplayNameMap: { [key in DealCategory]: string } = {
-  prime: 'Prime Gaming',
-  steam: 'Steam',
-  epic: 'Epic Games',
-  gog: 'GOG',
+  prime: "Prime Gaming",
+  steam: "Steam",
+  epic: "Epic Games",
+  gog: "GOG",
 };
 
 export const useClaimStore = create<ClaimStore>((set, get) => ({
@@ -33,6 +34,8 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     epic: 0,
     gog: 0,
   },
+
+  moneySaved: 0,
 
   claimGame: (platform: string, gameTitle: string) => {
     const category = platformToCategoryMap[platform];
@@ -53,7 +56,7 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     }
   },
 
-    totalClaims: () => {
+  totalClaims: () => {
     const stats = get().stats;
     return Object.values(stats).reduce((sum, count) => sum + count, 0);
   },

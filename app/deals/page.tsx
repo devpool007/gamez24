@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
-  locale: "de",
+  locale: "en-US",
   includeAll: true,
 });
 
@@ -21,7 +21,9 @@ function formatDateLong(dateString: string): string {
 
 async function EpicGames() {
   const data = await epicFreeGames.getGames();
-  console.log(data.nextGames[0]['urlSlug']);
+  console.log(
+    data.currentGames[0]["price"]["totalPrice"]["fmtPrice"]["originalPrice"]
+  );
 
   const currentDeals: Game[] = data.currentGames.map(
     (game: OfferGame, idx: number) => {
@@ -32,6 +34,7 @@ async function EpicGames() {
         id: game.id,
         imageUrl: game.keyImages[2]?.url,
         title: game.title,
+        price: game.price.totalPrice.fmtPrice.originalPrice,
         platform: "Epic Games",
         freeUntil: endDate ? (
           <>
@@ -57,10 +60,11 @@ async function EpicGames() {
         id: game.id,
         imageUrl: game.keyImages[2]?.url,
         title: game.title,
+        price: game.price.totalPrice.fmtPrice.originalPrice,
         platform: "Epic Games",
         freeUntil: endDate ? (
           <>
-            <b>Sale</b> starts{" "}
+            <b>Free</b> from{" "}
             <span className={dealsConfig.epic.colorConfig.sectionTitle}>
               {formatDateLong(endDate)}
             </span>

@@ -36,6 +36,9 @@ export const GameCard = ({
     }, 800);
     setModalOpen(false);
     claimGame(game.platform, game.title);
+    //addToMoneySaved(game.price)
+    // logic in zustand store -> const priceStr = "€13.49";
+// const priceNum = parseFloat(priceStr.replace(/[^0-9.]/g, ''));
   }
 
   function handleOpenClient() {
@@ -45,6 +48,7 @@ export const GameCard = ({
     );
     setModalOpen(false);
     claimGame(game.platform, game.title);
+    //addToMoneySaved(game.price)
   }
 
   function GameModal(){
@@ -105,7 +109,7 @@ export const GameCard = ({
         <div className="mt-2 space-y-2 text-sm text-muted-foreground flex-grow">
           <div className="flex items-center">
             <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
-            <span>{game.platform}</span>
+            <span className="line-through">{game.price}</span>
           </div>
           <div className="flex items-center">
             <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />

@@ -9,12 +9,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-
-
-
-
 interface DealsSectionProps {
-  title: string;
+  title?: string;
   games: Game[];
   colorConfig: {
     sectionTitle: string;
@@ -25,19 +21,12 @@ interface DealsSectionProps {
 }
 
 export const DealsSection = ({
-  title,
   games,
   colorConfig,
-  viewAllLink,
 }: DealsSectionProps) => {
   return (
     <section className="mb-12">
-      <SectionTitle
-        className={colorConfig.sectionTitle}
-        viewAllLink={viewAllLink}
-      >
-        {title}
-      </SectionTitle>
+      <SectionTitle/>
       <Carousel opts={{ align: "start" }} className="w-full p-4">
         <CarouselPrevious className="flex -top-12 right-16 left-auto translate-y-0" />
         <CarouselNext className="flex -top-12 right-4 translate-y-0" />

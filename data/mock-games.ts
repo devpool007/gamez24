@@ -8,6 +8,7 @@ export interface Game {
   id: string;
   title: string;
   platform: string;
+  price?: string;
   imageUrl: string;
   freeUntil: string | JSX.Element;
   urlSlug: string;
