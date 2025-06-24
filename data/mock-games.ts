@@ -1,10 +1,16 @@
+import { JSX } from "react/jsx-dev-runtime";
+
+function randomSlug() {
+  return Math.random().toString(36).substring(2, 10);
+}
 
 export interface Game {
   id: string;
   title: string;
   platform: string;
   imageUrl: string;
-  freeUntil: string;
+  freeUntil: string | JSX.Element;
+  urlSlug: string;
 }
 
 export const primeGames: Game[] = [
@@ -14,13 +20,15 @@ export const primeGames: Game[] = [
     platform: 'PC',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1x8f.jpg',
     freeUntil: 'July 15, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '2',
-    title: 'Baldur\'s Gate II: Enhanced Edition',
+    title: "Baldur's Gate II: Enhanced Edition",
     platform: 'PC',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vcv.jpg',
     freeUntil: 'August 5, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '3',
@@ -28,6 +36,7 @@ export const primeGames: Game[] = [
     platform: 'PC',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1w1z.jpg',
     freeUntil: 'August 12, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '12',
@@ -35,6 +44,7 @@ export const primeGames: Game[] = [
     platform: 'PC',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vxt.jpg',
     freeUntil: 'August 19, 2025',
+    urlSlug: randomSlug(),
   },
 ];
 
@@ -45,13 +55,15 @@ export const steamDeals: Game[] = [
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1r7f.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
   {
     id: '6',
-    title: 'Sid Meier\'s Civilization VI',
+    title: "Sid Meier's Civilization VI",
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vce.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
    {
     id: '7',
@@ -59,6 +71,7 @@ export const steamDeals: Game[] = [
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co263g.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
   {
     id: '8',
@@ -66,6 +79,7 @@ export const steamDeals: Game[] = [
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vcf.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
   {
     id: '13',
@@ -73,6 +87,7 @@ export const steamDeals: Game[] = [
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vct.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
   {
     id: '14',
@@ -80,6 +95,7 @@ export const steamDeals: Game[] = [
     platform: 'Steam',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1vcr.jpg',
     freeUntil: 'Weekend Deal',
+    urlSlug: randomSlug(),
   },
 ];
 
@@ -90,6 +106,7 @@ export const epicGamesDeals: Game[] = [
     platform: 'Epic Games',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2961.jpg',
     freeUntil: 'July 29, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '2',
@@ -97,6 +114,7 @@ export const epicGamesDeals: Game[] = [
     platform: 'Epic Games',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co78fp.jpg',
     freeUntil: 'Permanent',
+    urlSlug: randomSlug(),
   },
   {
     id: '3',
@@ -104,6 +122,7 @@ export const epicGamesDeals: Game[] = [
     platform: 'Epic Games',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1x3k.jpg',
     freeUntil: 'July 22, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '4',
@@ -111,6 +130,7 @@ export const epicGamesDeals: Game[] = [
     platform: 'Epic Games',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co263e.jpg',
     freeUntil: 'Permanent',
+    urlSlug: randomSlug(),
   },
 ];
 
@@ -121,6 +141,7 @@ export const gogDeals: Game[] = [
     platform: 'GOG',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2g2i.jpg',
     freeUntil: 'July 22, 2025',
+    urlSlug: randomSlug(),
   },
   {
     id: '10',
@@ -128,6 +149,7 @@ export const gogDeals: Game[] = [
     platform: 'GOG',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1wz4.jpg',
     freeUntil: 'Permanent',
+    urlSlug: randomSlug(),
   },
   {
     id: '17',
@@ -135,6 +157,7 @@ export const gogDeals: Game[] = [
     platform: 'GOG',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2724.jpg',
     freeUntil: 'Permanent',
+    urlSlug: randomSlug(),
   },
   {
     id: '18',
@@ -142,5 +165,6 @@ export const gogDeals: Game[] = [
     platform: 'GOG',
     imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co1rgi.jpg',
     freeUntil: 'Permanent',
+    urlSlug: randomSlug(),
   },
 ];

@@ -30,7 +30,7 @@ export const GameCard = ({
   function handleOpenBrowser() {
     setTimeout(() => {
       window.open(
-        "https://store.epicgames.com/en-US/p/the-operator-b835e9",
+        `https://store.epicgames.com/en-US/p/${game.urlSlug}`,
         "_blank"
       );
     }, 800);
@@ -40,7 +40,7 @@ export const GameCard = ({
 
   function handleOpenClient() {
     window.open(
-      "com.epicgames.launcher://store/product/the-operator-b835e9",
+      `com.epicgames.launcher://store/product/${game.urlSlug}`,
       "_blank"
     );
     setModalOpen(false);
