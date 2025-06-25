@@ -11,6 +11,7 @@ import {
 
 interface DealsSectionProps {
   title?: string;
+  buttonText?: string;
   games: Game[];
   colorConfig: {
     sectionTitle: string;
@@ -36,12 +37,19 @@ export const DealsSection = ({
               key={game.id}
               className="pl-8 pb-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
             >
+              {index === 1 ?
               <GameCard
+                game={game}
+                buttonText="View Game"
+                animationDelay={index * 100}
+                iconColorClass={colorConfig.gameCardIcon}
+                shadowColorClass={colorConfig.gameCardShadow}
+              /> :<GameCard
                 game={game}
                 animationDelay={index * 100}
                 iconColorClass={colorConfig.gameCardIcon}
                 shadowColorClass={colorConfig.gameCardShadow}
-              />
+              />}
             </CarouselItem>
           ))}
         </CarouselContent>

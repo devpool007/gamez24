@@ -10,7 +10,7 @@ const epicFreeGames = new EpicFreeGames({
   includeAll: true,
 });
 
-// const epicGamesDeals: Game[] = [];
+
 function formatDateLong(dateString: string): string {
   const date = new Date(dateString);
   const day = date.getDate();
@@ -64,7 +64,7 @@ async function EpicGames() {
         platform: "Epic Games",
         freeUntil: endDate ? (
           <>
-            <b>Free</b> from{" "}
+            <b>Free</b> from{" "} 
             <span className={dealsConfig.epic.colorConfig.sectionTitle}>
               {formatDateLong(endDate)}
             </span>

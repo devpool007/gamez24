@@ -9,19 +9,24 @@ import { useState } from "react";
 
 interface GameCardProps {
   game: Game;
+  buttonText?: string;
   animationDelay: number;
   iconColorClass?: string;
   shadowColorClass?: string;
 }
 
+let trueButtonText = ""
+
 export const GameCard = ({
   game,
+  buttonText,
   animationDelay,
   iconColorClass = "text-primary",
   shadowColorClass = "hover:shadow-primary/50",
 }: GameCardProps) => {
   const claimGame = useClaimStore((state) => state.claimGame);
   const [modalOpen, setModalOpen] = useState(false);
+  const [claimStatus, setClaimStatus] = useState(false);
 
   const handleClaim = () => {
     setModalOpen(true);
@@ -35,7 +40,11 @@ export const GameCard = ({
       );
     }, 800);
     setModalOpen(false);
-    claimGame(game.platform, game.title);
+
+    if (!buttonText && !claimStatus) { 
+      claimGame(game.platform, game.title); 
+      setClaimStatus(true);
+    }
     //addToMoneySaved(game.price)
     // logic in zustand store -> const priceStr = "€13.49";
 // const priceNum = parseFloat(priceStr.replace(/[^0-9.]/g, ''));
@@ -47,7 +56,10 @@ export const GameCard = ({
       "_blank"
     );
     setModalOpen(false);
-    claimGame(game.platform, game.title);
+     if (!buttonText && !claimStatus) { 
+      claimGame(game.platform, game.title); 
+      setClaimStatus(true);
+    }
     //addToMoneySaved(game.price)
   }
 
@@ -56,7 +68,7 @@ export const GameCard = ({
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
             <div className="bg-card rounded-lg p-6 shadow-xl w-full max-w-xs flex flex-col items-center">
               <h2 className="text-lg font-semibold mb-4 text-center">
-                Would you like to claim this game?
+                {(buttonText || claimStatus) ? "Would you like to view this game?": "Would you like to claim this game?"}
               </h2>
               <div className="flex gap-2 w-full">
                 <Button className="flex-1" onClick={handleOpenBrowser}>
@@ -79,6 +91,16 @@ export const GameCard = ({
             </div>
           </div>
         ))
+  }
+
+  if (buttonText){
+    trueButtonText = buttonText;
+  }
+  else if(claimStatus){
+    trueButtonText = "Game Claimed!"
+  }
+  else {
+    trueButtonText = "Claim Game"
   }
 
   return (
@@ -121,7 +143,7 @@ export const GameCard = ({
           className="w-full mt-4"
           onClick={handleClaim}
         >
-          Claim Now
+          {trueButtonText}
         </Button>
       </div>
     </div>
