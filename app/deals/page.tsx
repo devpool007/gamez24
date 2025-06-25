@@ -3,6 +3,8 @@ import { dealsConfig } from "@/config/dealsConfig";
 import { EpicFreeGames, OfferGame } from "epic-free-games";
 import { Game } from "@/data/mock-games";
 import { Suspense } from "react";
+import { CurrencySetter } from "@/components/CurrencySetter";
+import { getCurrencySymbol } from "@/lib/utils";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -21,8 +23,10 @@ function formatDateLong(dateString: string): string {
 
 async function EpicGames() {
   const data = await epicFreeGames.getGames();
+  const currency = getCurrencySymbol(data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD");
+
   console.log(
-    data.currentGames[0]["price"]["totalPrice"]["fmtPrice"]["originalPrice"]
+    data.currentGames[0]["price"]["totalPrice"]["currencyCode"]
   );
 
   const currentDeals: Game[] = data.currentGames.map(
@@ -58,6 +62,7 @@ async function EpicGames() {
       const endDate = upcomingOffers?.[idx]?.endDate;
       return {
         id: game.id,
+        next: true,
         imageUrl: game.keyImages[2]?.url,
         title: game.title,
         price: game.price.totalPrice.fmtPrice.originalPrice,
@@ -80,11 +85,14 @@ async function EpicGames() {
   const epicGamesDeals: Game[] = [...currentDeals, ...nextDeals];
 
   return (
+    <>
+    <CurrencySetter currency={currency} />
     <DealsSection
       title={epicGamesDeals[0]?.platform ?? "Epic Games"}
       games={epicGamesDeals}
       colorConfig={dealsConfig.epic.colorConfig}
     />
+    </>
   );
 }
 
@@ -97,6 +105,7 @@ export default function DealsPage() {
         </p>
       }
     >
+      
       <EpicGames />
       <DealsSection
         title={dealsConfig.steam.title}

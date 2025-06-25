@@ -8,6 +8,7 @@ import { dealsConfig } from '@/config/dealsConfig';
 
 export const ClaimStats = () => {
   const stats = useClaimStore((state) => state.stats);
+  const waehrung = useClaimStore((state) => state.currency);
   const moneySaved = useClaimStore((state) => state.moneySaved);
   const totalClaims = useClaimStore((state) => state.totalClaims());
 
@@ -53,7 +54,7 @@ export const ClaimStats = () => {
             </div>
             <div className="flex items-center justify-between font-bold">
               <span>Money saved</span>
-              <span>{moneySaved}</span>
+              <span>{`${waehrung}${moneySaved}`}</span>
             </div>
           </div>
         </div>

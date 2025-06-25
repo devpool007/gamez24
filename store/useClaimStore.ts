@@ -9,8 +9,11 @@ type ClaimStats = Record<DealCategory, number>;
 interface ClaimStore {
   stats: ClaimStats;
   moneySaved: number;
+  currency: string;
   claimGame: (platform: string, gameTitle: string) => void;
   totalClaims: () => number;
+  addGameMoney: (money: number) => void;
+  setCurrency: (currency: string) =>void;
 }
 
 const platformToCategoryMap: { [key: string]: DealCategory } = {
@@ -34,6 +37,8 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     epic: 0,
     gog: 0,
   },
+
+  currency: '$',
 
   moneySaved: 0,
 
@@ -60,4 +65,13 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     const stats = get().stats;
     return Object.values(stats).reduce((sum, count) => sum + count, 0);
   },
+
+  addGameMoney: (money) => {
+    const moneySavedSoFar = get().moneySaved;
+    set({ moneySaved : moneySavedSoFar + money});
+  },
+
+  setCurrency: (currency) => {
+    set({ currency : currency})
+  }
 }));
