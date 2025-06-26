@@ -28,6 +28,7 @@ async function EpicGames() {
   console.log(
     data.currentGames[0]["price"]["totalPrice"]["currencyCode"]
   );
+ 
 
   const currentDeals: Game[] = data.currentGames.map(
     (game: OfferGame, idx: number) => {
@@ -50,7 +51,7 @@ async function EpicGames() {
         ) : (
           ""
         ),
-        urlSlug: game.offerMappings?.[0]?.pageSlug,
+        urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
       };
     }
   );
@@ -77,7 +78,7 @@ async function EpicGames() {
         ) : (
           ""
         ),
-        urlSlug: game.urlSlug,
+        urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
       };
     }
   );
