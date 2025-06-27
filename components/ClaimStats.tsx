@@ -23,7 +23,7 @@ export const ClaimStats = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="relative p-2 h-auto">
+        <Button variant="ghost" className="relative p-2 h-auto cursor-pointer">
           <Trophy className="w-6 h-6 text-yellow-500" />
           {totalClaims > 0 && (
             <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">

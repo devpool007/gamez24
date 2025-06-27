@@ -12,7 +12,6 @@ const epicFreeGames = new EpicFreeGames({
   includeAll: true,
 });
 
-
 function formatDateLong(dateString: string): string {
   const date = new Date(dateString);
   const day = date.getDate();
@@ -23,76 +22,73 @@ function formatDateLong(dateString: string): string {
 
 async function EpicGames() {
   const data = await epicFreeGames.getGames();
-  const currency = getCurrencySymbol(data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD");
+  const currency = getCurrencySymbol(
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD"
+  );
 
   console.log(
-    data.currentGames[0]["price"]["totalPrice"]["currencyCode"]
-  );
- 
-
-  const currentDeals: Game[] = data.currentGames.map(
-    (game: OfferGame, idx: number) => {
-      const promotionalOffers =
-        game.promotions.promotionalOffers?.[0]?.promotionalOffers;
-      const endDate = promotionalOffers?.[idx]?.endDate;
-      return {
-        id: game.id,
-        imageUrl: game.keyImages[2]?.url,
-        title: game.title,
-        price: game.price.totalPrice.fmtPrice.originalPrice,
-        platform: "Epic Games",
-        freeUntil: endDate ? (
-          <>
-            <b>Free</b> until{" "}
-            <span className={dealsConfig.epic.colorConfig.sectionTitle}>
-              {formatDateLong(endDate)}
-            </span>
-          </>
-        ) : (
-          ""
-        ),
-        urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
-      };
-    }
+    // data.nextGames[1].promotions.upcomingPromotionalOffers[0].promotionalOffers
   );
 
-  const nextDeals: Game[] = data.nextGames.map(
-    (game: OfferGame, idx: number) => {
-      const upcomingOffers =
-        game.promotions.upcomingPromotionalOffers?.[0]?.promotionalOffers;
-      const endDate = upcomingOffers?.[idx]?.endDate;
-      return {
-        id: game.id,
-        next: true,
-        imageUrl: game.keyImages[2]?.url,
-        title: game.title,
-        price: game.price.totalPrice.fmtPrice.originalPrice,
-        platform: "Epic Games",
-        freeUntil: endDate ? (
-          <>
-            <b>Free</b> from{" "} 
-            <span className={dealsConfig.epic.colorConfig.sectionTitle}>
-              {formatDateLong(endDate)}
-            </span>
-          </>
-        ) : (
-          ""
-        ),
-        urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
-      };
-    }
-  );
+  const currentDeals: Game[] = data.currentGames.map((game: OfferGame) => {
+    const promotionalOffers =
+      game.promotions.promotionalOffers?.[0]?.promotionalOffers;
+    const endDate = promotionalOffers?.[0]?.endDate;
+    return {
+      id: game.id,
+      imageUrl: game.keyImages[2]?.url,
+      title: game.title,
+      price: game.price.totalPrice.fmtPrice.originalPrice,
+      platform: "Epic Games",
+      freeUntil: endDate ? (
+        <>
+          <b>Free</b> until{" "}
+          <span className={dealsConfig.epic.colorConfig.sectionTitle}>
+            {formatDateLong(endDate)}
+          </span>
+        </>
+      ) : (
+        ""
+      ),
+      urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
+    };
+  });
+
+  const nextDeals: Game[] = data.nextGames.map((game: OfferGame) => {
+    const upcomingOffers =
+      game.promotions.upcomingPromotionalOffers?.[0]?.promotionalOffers;
+    const startDate = upcomingOffers?.[0]?.startDate;
+    return {
+      id: game.id,
+      next: true,
+      imageUrl: game.keyImages[2]?.url,
+      title: game.title,
+      price: game.price.totalPrice.fmtPrice.originalPrice,
+      platform: "Epic Games",
+      freeUntil: startDate ? (
+        <>
+          <b>Free</b> from{" "}
+          <span className={dealsConfig.epic.colorConfig.sectionTitle}>
+            {formatDateLong(startDate)}
+          </span>
+        </>
+      ) : (
+        ""
+      ),
+      urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug,
+    };
+  });
 
   const epicGamesDeals: Game[] = [...currentDeals, ...nextDeals];
 
   return (
     <>
-    <CurrencySetter currency={currency} />
-    <DealsSection
-      title={epicGamesDeals[0]?.platform ?? "Epic Games"}
-      games={epicGamesDeals}
-      colorConfig={dealsConfig.epic.colorConfig}
-    />
+      <CurrencySetter currency={currency} />
+      <DealsSection
+        title={epicGamesDeals[0]?.platform ?? "Epic Games"}
+        games={epicGamesDeals}
+        colorConfig={dealsConfig.epic.colorConfig}
+      />
     </>
   );
 }
@@ -106,7 +102,6 @@ export default function DealsPage() {
         </p>
       }
     >
-      
       <EpicGames />
       <DealsSection
         title={dealsConfig.steam.title}

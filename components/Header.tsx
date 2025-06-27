@@ -3,6 +3,7 @@ import { Gamepad2, User, Bell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 // import { useToast } from '@/hooks/use-toast';
 import { ClaimStats } from "./ClaimStats";
+import { CountrySelector } from "./CountrySelector";
 // import Link from 'next/link';
 // import { Link, useNavigate } from 'react-router-dom';
 // import { useAuth } from '@/contexts/AuthContext';
@@ -45,7 +46,9 @@ export const Header = () => {
             <span className="text-3xl font-bold text-foreground">Games24</span>
             <ClaimStats />
           </div>
+          
           <div className="flex items-center gap-6">
+            <CountrySelector />
             <Button variant="ghost" size="icon" asChild>
               <>
                 <Bell className="w-5 h-5" />

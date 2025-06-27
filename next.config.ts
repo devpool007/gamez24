@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "cdn1.epicgames.com",
         pathname: "/salesEvent/salesEvent/**"
+      },
+      {
+        protocol: "https",
+        hostname: "cdn1.epicgames.com",
+        pathname: "/epic/offer/**"
+        
       }
     ],
   },
