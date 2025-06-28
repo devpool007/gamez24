@@ -68,7 +68,8 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
 
   addGameMoney: (money) => {
     const moneySavedSoFar = get().moneySaved;
-    set({ moneySaved : moneySavedSoFar + money});
+    const newTotal = parseFloat((moneySavedSoFar + money).toFixed(2));
+    set({ moneySaved: newTotal });
   },
 
   setCurrency: (currency) => {

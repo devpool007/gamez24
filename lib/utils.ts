@@ -14,5 +14,11 @@ export function getCurrencySymbol(currencyCode: string, locale: string = 'en-US'
   }).replace(/\d/g, '').trim();
 }
 
-
+export function formatDateLong(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = String(date.getMonth() + 1);
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
 

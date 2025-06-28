@@ -11,7 +11,7 @@ import {
 
 interface DealsSectionProps {
   title?: string;
-  buttonText?: string;
+  buttonText?: string; 
   games: Game[];
   colorConfig: {
     sectionTitle: string;
