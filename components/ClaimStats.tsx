@@ -1,12 +1,16 @@
 
-import { useClaim } from '@/contexts/ClaimContext';
+"use client";
+import { useClaimStore } from '@/store/useClaimStore';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { Trophy } from 'lucide-react';
 import { dealsConfig } from '@/config/dealsConfig';
 
 export const ClaimStats = () => {
-  const { stats, totalClaims } = useClaim();
+  const stats = useClaimStore((state) => state.stats);
+  const waehrung = useClaimStore((state) => state.currency);
+  const moneySaved = useClaimStore((state) => state.moneySaved);
+  const totalClaims = useClaimStore((state) => state.totalClaims());
 
   const getDisplayName = (categoryKey: string) => {
     const category = dealsConfig[categoryKey as keyof typeof dealsConfig];
@@ -19,7 +23,7 @@ export const ClaimStats = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" className="relative p-2 h-auto">
+        <Button variant="ghost" className="relative p-2 h-auto cursor-pointer">
           <Trophy className="w-6 h-6 text-yellow-500" />
           {totalClaims > 0 && (
             <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
@@ -45,8 +49,12 @@ export const ClaimStats = () => {
               </div>
             ))}
             <div className="flex items-center justify-between font-bold border-t pt-2 mt-2">
-              <span>Total</span>
+              <span>Games claimed</span>
               <span>{totalClaims}</span>
+            </div>
+            <div className="flex items-center justify-between font-bold">
+              <span>Money saved</span>
+              <span>{`${waehrung}${moneySaved}`}</span>
             </div>
           </div>
         </div>

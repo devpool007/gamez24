@@ -9,12 +9,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-
-
-
-
 interface DealsSectionProps {
-  title: string;
+  title?: string;
+  buttonText?: string; 
   games: Game[];
   colorConfig: {
     sectionTitle: string;
@@ -25,34 +22,34 @@ interface DealsSectionProps {
 }
 
 export const DealsSection = ({
-  title,
   games,
   colorConfig,
-  viewAllLink,
 }: DealsSectionProps) => {
   return (
     <section className="mb-12">
-      <SectionTitle
-        className={colorConfig.sectionTitle}
-        viewAllLink={viewAllLink}
-      >
-        {title}
-      </SectionTitle>
+      <SectionTitle/>
       <Carousel opts={{ align: "start" }} className="w-full p-4">
-        <CarouselPrevious className="hidden sm:flex -top-16 right-16 left-auto translate-y-0" />
-        <CarouselNext className="hidden sm:flex -top-16 right-4 translate-y-0" />
-        <CarouselContent className="-ml-4">
+        <CarouselPrevious className="flex -top-12 right-16 left-auto translate-y-0" />
+        <CarouselNext className="flex -top-12 right-4 translate-y-0" />
+        <CarouselContent className="content-center gap-4">
           {games.map((game, index) => (
             <CarouselItem
               key={game.id}
-              className="p-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+              className="pl-8 pb-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
             >
+              {game.next ?
               <GameCard
+                game={game}
+                buttonText="View Game"
+                animationDelay={index * 100}
+                iconColorClass={colorConfig.gameCardIcon}
+                shadowColorClass={colorConfig.gameCardShadow}
+              /> :<GameCard
                 game={game}
                 animationDelay={index * 100}
                 iconColorClass={colorConfig.gameCardIcon}
                 shadowColorClass={colorConfig.gameCardShadow}
-              />
+              />}
             </CarouselItem>
           ))}
         </CarouselContent>
