@@ -78,3 +78,9 @@ export async function EpicGames() {
     </>
   );
 }
+
+
+export async function Steam() {
+  console.log('Steam:')
+
+}
