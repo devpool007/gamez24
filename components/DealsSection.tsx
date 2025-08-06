@@ -27,6 +27,7 @@ export const DealsSection = ({
 }: DealsSectionProps) => {
   return (
     <section className="mb-12">
+      
       <SectionTitle/>
       <Carousel opts={{ align: "start" }} className="w-full p-4">
         <CarouselPrevious className="flex -top-12 right-16 left-auto translate-y-0" />

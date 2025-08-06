@@ -49,6 +49,7 @@ export async function EpicGames() {
       id: game.id,
       imageUrl: game.keyImages[2]?.url,
       title: game.title,
+      next: true,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",
       freeUntil: startDate ? (
