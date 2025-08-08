@@ -11,14 +11,18 @@ import React from "react";
 //   viewAllLink?: string;
 // }
 
-export const SectionTitle = () => {
+interface SectionTitleProps {
+  titleImg: string;
+}
+
+export const SectionTitle: React.FC<SectionTitleProps> = ({ titleImg }) => {
   return (
     <div className="flex justify-between items-center">
       {/* <h1 className={cn("text-2xl font-bold border-l-4 pl-4", className)}>
         {children}
       </h1> */}
       <div className="p-5 size-35">
-        <Image src="/epic_games.png" alt="Epic Games" width={80} height={80} />
+        <Image src={titleImg} alt={titleImg} width={80} height={80} />
       </div>
     </div>
   );

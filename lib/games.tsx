@@ -4,6 +4,7 @@ import { CurrencySetter } from "@/components/CurrencySetter";
 import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
 import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
+import { fetchSteamGames } from "./steamGames";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -81,7 +82,16 @@ export async function EpicGames() {
 }
 
 
-export async function Steam() {
-  console.log('Steam:')
+export async function SteamGames() {
+  const steamGames = await fetchSteamGames();
+   return (
+    <>
+      <DealsSection
+        title={steamGames[0]?.platform ?? "Epic Games"}
+        games={steamGames}
+        colorConfig={dealsConfig.epic.colorConfig}
+      />
+    </>
+  );
 
 }

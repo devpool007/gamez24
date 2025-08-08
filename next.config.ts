@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    domains: [
+      "shared.fastly.steamstatic.com",
+      // add any other domains you need
+    ],
     remotePatterns: [
       {
         protocol: "https",
@@ -11,8 +15,8 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn1.epicgames.com",
-        pathname: "/**"
-      }
+        pathname: "/**",
+      },
     ],
   },
 };
