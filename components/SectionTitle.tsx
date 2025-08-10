@@ -22,7 +22,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({ titleImg }) => {
         {children}
       </h1> */}
       <div className="p-5 size-35">
-        <Image src={titleImg} alt={titleImg} width={80} height={80} />
+        <Image src={titleImg} alt={titleImg} width={60} height={60} />
       </div>
     </div>
   );

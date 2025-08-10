@@ -24,7 +24,7 @@ export async function EpicGames() {
     const endDate = promotionalOffers?.[0]?.endDate;
     return {
       id: game.id,
-      imageUrl: game.keyImages[2]?.url,
+      imageUrl: game.keyImages[0]?.url,
       title: game.title,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",

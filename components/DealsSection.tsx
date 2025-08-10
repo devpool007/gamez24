@@ -32,7 +32,7 @@ export const DealsSection = ({ games, colorConfig }: DealsSectionProps) => {
       <Carousel opts={{ align: "start" }} className="w-full p-4">
         <CarouselPrevious className="flex -top-12 right-16 left-auto translate-y-0" />
         <CarouselNext className="flex -top-12 right-4 translate-y-0" />
-        <CarouselContent className="content-center gap-20">
+        <CarouselContent className="content-center gap-25">
           {games.map((game, index) => (
             <CarouselItem
               key={game.id}

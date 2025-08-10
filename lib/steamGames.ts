@@ -3,8 +3,8 @@ import { JSDOM } from "jsdom";
 //to get  freeUntil date hit the page url with special cookie to avoid age pop up and fetch the date through html
 export async function fetchSteamGames(): Promise<Game[]> {
   const url =
-    "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
-
+    "https://store.steampowered.com/search/?maxprice=5";
+  //&specials=1&ndl=1"
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -166,16 +166,16 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
   return Promise.all(gameInfoPromises);
 }
 
-// Fetch and extract real Steam games data
-async function main() {
-  console.log("Fetching Steam games...");
-  const steamGames = await fetchSteamGames();
-  console.log("Extracted Steam games:", steamGames);
-  console.log(`Found ${steamGames.length} games`);
-  if (steamGames.length > 0) {
-    console.log("Sample game:", steamGames[0]);
-  }
-}
+// // Fetch and extract real Steam games data
+// async function main() {
+//   console.log("Fetching Steam games...");
+//   const steamGames = await fetchSteamGames();
+//   console.log("Extracted Steam games:", steamGames);
+//   console.log(`Found ${steamGames.length} games`);
+//   if (steamGames.length > 0) {
+//     console.log("Sample game:", steamGames[0]);
+//   }
+// }
 
-// Run the main function
-main().catch(console.error);
+// // Run the main function
+// main().catch(console.error);

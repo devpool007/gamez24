@@ -125,7 +125,7 @@ export const GameCard = ({
         )}
         style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
       >
-        <div className="relative aspect-[2/2] overflow-hidden group-hover:scale-105 transition-transform duration-300">
+        <div className="relative aspect-[5/3] overflow-hidden group-hover:scale-110 transition-transform duration-300">
           <Image
             src={game.imageUrl}
             alt={game.title}
@@ -135,7 +135,7 @@ export const GameCard = ({
           />
         </div>
 
-        <div className="p-4 flex flex-col flex-grow">
+        <div className="pt-2 pb-4 pl-4 pr-4 flex flex-col flex-grow">
           <h3 className="font-bold text-lg truncate text-foreground">
             {game.title}
           </h3>
