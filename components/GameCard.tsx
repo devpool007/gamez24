@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useClaimStore } from "@/store/useClaimStore";
 import Image from "next/image";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 interface GameCardProps {
   game: Game;
@@ -28,8 +29,7 @@ export const GameCard = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [claimStatus, setClaimStatus] = useState(false);
   const gamePrice = parseFloat(game.price.replace(/[^0-9.]/g, ""));
-  
-  
+  const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
 
   const handleClaim = () => {
     setModalOpen(true);
@@ -37,18 +37,14 @@ export const GameCard = ({
 
   function handleOpenBrowser() {
     let urlValue;
-    if (game.platform === "Steam"){
-      urlValue = game.urlSlug
-    }
-    else {
-      urlValue = `https://store.epicgames.com/en-US/p/${game.urlSlug}`
+    if (game.platform === "Steam") {
+      urlValue = game.urlSlug;
+    } else {
+      urlValue = `https://store.epicgames.com/en-US/p/${game.urlSlug}`;
     }
 
     setTimeout(() => {
-      window.open(
-        urlValue,
-        "_blank"
-      );
+      window.open(urlValue, "_blank");
     }, 800);
     setModalOpen(false);
 
@@ -57,7 +53,6 @@ export const GameCard = ({
       addGamePrice(gamePrice);
       setClaimStatus(true);
     }
-    
   }
 
   function handleOpenClient() {
@@ -75,8 +70,7 @@ export const GameCard = ({
   }
 
   function GameModal() {
-     
-    return (
+    return createPortal(
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div className="bg-card rounded-lg p-6 shadow-xl w-full max-w-xs flex flex-col items-center">
           <h2 className="text-lg font-semibold mb-4 text-center">
@@ -103,7 +97,10 @@ export const GameCard = ({
             Cancel
           </button>
         </div>
-      </div>
+      </div>,
+      typeof window !== "undefined"
+        ? document.body
+        : document.createElement("div")
     );
   }
 
@@ -120,12 +117,12 @@ export const GameCard = ({
       {modalOpen && <GameModal />}
       <div
         className={cn(
-          "bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-70",
+          `${gamecardbkg} rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-70`,
           shadowColorClass
         )}
         style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
       >
-        <div className="relative aspect-[5/3] overflow-hidden group-hover:scale-110 transition-transform duration-300">
+        <div className="relative aspect-[5/3] overflow-hidden group-hover:scale-105 transition-transform duration-300">
           <Image
             src={game.imageUrl}
             alt={game.title}
