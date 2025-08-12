@@ -123,13 +123,21 @@ export const GameCard = ({
         style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
       >
         <div className="relative aspect-[5/3] overflow-hidden group-hover:scale-105 transition-transform duration-300">
-          <Image
-            src={game.imageUrl}
-            alt={game.title}
-            fill
-            className="object-cover" //what the hell this does figure out later
-            // sizes="(max-width: 768px) 100vw, 200px"
-          />
+          {game.imageUrl && game.imageUrl !== "" ? (
+            <Image
+              src={game.imageUrl}
+              alt={game.title}
+              fill
+              className="object-cover"
+            />
+          ) : (
+            <Image
+              src="/not_found.jpeg" // Replace with your not found image path
+              alt="Image not found"
+              fill
+              className="object-cover"
+            />
+          )}
         </div>
 
         <div className="pt-2 pb-4 pl-4 pr-4 flex flex-col flex-grow">

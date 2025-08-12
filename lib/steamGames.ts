@@ -1,10 +1,7 @@
 import { Game } from "../data/mock-games";
 import { JSDOM } from "jsdom";
 //to get  freeUntil date hit the page url with special cookie to avoid age pop up and fetch the date through html
-export async function fetchSteamGames(): Promise<Game[]> {
-  const url =
-    "https://store.steampowered.com/search/?maxprice=5";
-  //&specials=1&ndl=1"
+export async function fetchSteamGames(url: string): Promise<Game[]> {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -13,14 +10,24 @@ export async function fetchSteamGames(): Promise<Game[]> {
     const htmlString = await response.text();
     const gameInfoList = await extractGameInfoFromHTML(htmlString);
 
+    // Helper to generate a random 6-character string with special chars
+    function generateRandomId(): string {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+      let result = "";
+      for (let i = 0; i < 6; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
+    }
+
     const gameArray: Game[] = gameInfoList.map((game) => ({
-      id: game.gameid ?? "", 
+      id: game.gameid && game.gameid !== "" ? game.gameid : generateRandomId(),
       title: game.title,
       platform: "Steam",
       price: game.originalPrice ?? "",
       imageUrl: game.imageUrl ?? "",
       freeUntil: game.freeUntil ?? "",
-      urlSlug: game.gameurl ?? "", 
+      urlSlug: game.gameurl ?? "",
     }));
 
     return gameArray;

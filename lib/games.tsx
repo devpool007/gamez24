@@ -83,7 +83,23 @@ export async function EpicGames() {
 
 
 export async function SteamGames() {
-  const steamGames = await fetchSteamGames();
+  const url = "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
+  const steamGames = await fetchSteamGames(url);
+   return (
+    <>
+      <DealsSection
+        title={steamGames[0]?.platform ?? "Epic Games"}
+        games={steamGames}
+        colorConfig={dealsConfig.epic.colorConfig}
+      />
+    </>
+  );
+
+}
+
+export async function SteamGamesUnder5() {
+  const url = "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+  const steamGames = await fetchSteamGames(url);
    return (
     <>
       <DealsSection
