@@ -4,6 +4,7 @@ import { CurrencySetter } from "@/components/CurrencySetter";
 import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
 import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
+import { fetchSteamGames } from "./steamGames";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -23,7 +24,7 @@ export async function EpicGames() {
     const endDate = promotionalOffers?.[0]?.endDate;
     return {
       id: game.id,
-      imageUrl: game.keyImages[2]?.url,
+      imageUrl: game.keyImages[0]?.url,
       title: game.title,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",
@@ -49,6 +50,7 @@ export async function EpicGames() {
       id: game.id,
       imageUrl: game.keyImages[2]?.url,
       title: game.title,
+      next: true,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",
       freeUntil: startDate ? (
@@ -80,7 +82,32 @@ export async function EpicGames() {
 }
 
 
-export async function Steam() {
-  console.log('Steam:')
+export async function SteamGames() {
+  const url = "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
+  const steamGames = await fetchSteamGames(url);
+   return (
+    <>
+      <DealsSection
+        title={steamGames[0]?.platform ?? "Epic Games"}
+        games={steamGames}
+        colorConfig={dealsConfig.epic.colorConfig}
+      />
+    </>
+  );
+
+}
+
+export async function SteamGamesUnder5() {
+  const url = "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+  const steamGames = await fetchSteamGames(url);
+   return (
+    <>
+      <DealsSection
+        title={steamGames[0]?.platform ?? "Epic Games"}
+        games={steamGames}
+        colorConfig={dealsConfig.epic.colorConfig}
+      />
+    </>
+  );
 
 }
