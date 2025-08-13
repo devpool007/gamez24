@@ -42,7 +42,7 @@ export function CountrySelector() {
 
       {open && (
         <div className="absolute left-1/2 top-full mt-2 -translate-x-1/2 w-48 bg-popover text-popover-foreground border border-border rounded shadow-lg z-50 p-2">
-          <div className="font-semibold mb-2 pl-2 text-xl text-purple-500">
+          <div className="font-semibold mb-2 pl-2 text-xl text-primary">
             Select Country
           </div>
           <ul>
