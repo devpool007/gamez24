@@ -8,7 +8,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface LoginPromptModalProps {
   isOpen: boolean;
@@ -28,7 +28,7 @@ export const LoginPromptModal = ({ isOpen, onOpenChange }: LoginPromptModalProps
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
           <Button asChild>
-            <Link to="/auth">Sign In</Link>
+            <Link href="/auth">Sign In</Link>
           </Button>
         </DialogFooter>
       </DialogContent>

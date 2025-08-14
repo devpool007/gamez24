@@ -10,8 +10,8 @@ export default function DealsLayout({
 }) {
   const tabs = [
     { label: "Free Game Deals", path: "/deals" },
-    { label: "Games Under €5", path: "/dealsU5" },
-    { label: "Coming Soon", path: "/coming-soon" },
+    { label: "Deals Under €5", path: "/dealsU5" },
+    { label: "Coming Soon", path: "" },
   ];
   return (
     <div className="min-h-screen bg-background text-foreground">
