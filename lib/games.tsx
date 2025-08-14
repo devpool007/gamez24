@@ -28,16 +28,7 @@ export async function EpicGames() {
       title: game.title,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",
-      freeUntil: endDate ? (
-        <>
-          <b>Free</b> until{" "}
-          <span className={dealsConfig.epic.colorConfig.sectionTitle}>
-            {formatDateLong(endDate)}
-          </span>
-        </>
-      ) : (
-        ""
-      ),
+      freeUntil: endDate ? formatDateLong(endDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -53,16 +44,7 @@ export async function EpicGames() {
       next: true,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       platform: "Epic Games",
-      freeUntil: startDate ? (
-        <>
-          <b>Free</b> from{" "}
-          <span className={dealsConfig.epic.colorConfig.sectionTitle}>
-            {formatDateLong(startDate)}
-          </span>
-        </>
-      ) : (
-        ""
-      ),
+      freeUntil: startDate ? formatDateLong(startDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -81,11 +63,11 @@ export async function EpicGames() {
   );
 }
 
-
 export async function SteamGames() {
-  const url = "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
+  const url =
+    "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
   const steamGames = await fetchSteamGames(url);
-   return (
+  return (
     <>
       <DealsSection
         title={steamGames[0]?.platform ?? "Epic Games"}
@@ -94,20 +76,19 @@ export async function SteamGames() {
       />
     </>
   );
-
 }
 
 export async function SteamGamesUnder5() {
-  const url = "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+  const url =
+    "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
   const steamGames = await fetchSteamGames(url);
-   return (
+  return (
     <>
       <DealsSection
-        title={steamGames[0]?.platform ?? "Epic Games"}
+        title={steamGames[0]?.platform ?? "Steam"}
         games={steamGames}
         colorConfig={dealsConfig.epic.colorConfig}
       />
     </>
   );
-
 }

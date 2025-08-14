@@ -103,13 +103,16 @@ export const GameCard = ({
         : document.createElement("div")
     );
   }
-
-  if (buttonText) {
-    trueButtonText = buttonText;
-  } else if (claimStatus) {
-    trueButtonText = "Game Claimed!";
+  if (game.platform === "Epic Games") {
+    if (buttonText) {
+      trueButtonText = buttonText;
+    } else if (claimStatus) {
+      trueButtonText = "Game Claimed!";
+    } else {
+      trueButtonText = "Claim Game";
+    }
   } else {
-    trueButtonText = "Claim Game";
+    trueButtonText = "View Game";
   }
 
   return (
@@ -149,10 +152,25 @@ export const GameCard = ({
               <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
               <span className="line-through">{game.price}</span>
             </div>
-            <div className="flex items-center">
+            {game.freeUntil && game.next ? (
+              <div className="flex items-center">
               <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
-              <span>{game.freeUntil}</span>
-            </div>
+              <span>
+                <>
+                <b>Free</b> from <span className="text-foreground">{game.freeUntil}</span>
+                </>
+              </span>
+              </div>
+            ) :  game.freeUntil && !game.next ? (
+              <div className="flex items-center">
+              <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
+              <span>
+               <>
+                <b>Free</b> until <span className="text-foreground">{game.freeUntil}</span>
+                </>
+              </span>
+              </div>
+            ) : null}
           </div>
           <Button
             variant="secondary"
