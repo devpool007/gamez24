@@ -24,7 +24,8 @@ export async function fetchSteamGames(url: string): Promise<Game[]> {
       id: game.gameid && game.gameid !== "" ? game.gameid : generateRandomId(),
       title: game.title,
       platform: "Steam",
-      price: game.originalPrice ?? "",
+      price: game.originalPrice?.replace(",", ".") ?? "",
+      secondPrice: game.finalPrice?.replace(",", ".") ?? "",
       imageUrl: game.imageUrl ?? "",
       freeUntil: game.freeUntil ?? "",
       urlSlug: game.gameurl ?? "",
@@ -42,6 +43,7 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
     title: string;
     releaseDate: string;
     originalPrice: string | null;
+    finalPrice: string |null;
     gameurl: string | null;
     gameid: string | null;
     imageUrl: string | null;
@@ -126,6 +128,7 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
       const originalPriceElement = gameDiv.querySelector(
         ".discount_original_price"
       );
+      const finalPriceElement = gameDiv.querySelector(".discount_final_price");
 
       // Find the closest anchor parent for the gameDiv
       let gameurl: string | null = null;
@@ -155,6 +158,11 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
         originalPrice = originalPriceElement.textContent?.trim() || null;
       }
 
+      let finalPrice: string | null = null;
+      if(finalPriceElement){
+        finalPrice = finalPriceElement.textContent?.trim() || null;
+      }
+
       // Fetch imageUrl and freeUntil for this game
       const { imageUrl, freeUntil } = await fetchGameDetails(gameurl);
 
@@ -162,6 +170,7 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
         title,
         releaseDate,
         originalPrice,
+        finalPrice,
         gameurl,
         gameid,
         imageUrl,
