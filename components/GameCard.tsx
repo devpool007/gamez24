@@ -110,17 +110,6 @@ export const GameCard = ({
         : document.createElement("div")
     );
   }
-  // if (game.platform === "Epic Games") {
-  //   if (buttonText) {
-  //     trueButtonText = buttonText;
-  //   } else if (claimStatus) {
-  //     trueButtonText = "Game Claimed!";
-  //   } else {
-  //     trueButtonText = "Claim Game";
-  //   }
-  // } else {
-  //   trueButtonText = "View Game";
-  // }
 
   return (
     <>
@@ -185,27 +174,27 @@ export const GameCard = ({
           </div>
           {game.next ? (
             <Button
-              variant="secondary"
+              variant="gameCard"
               className="flex-1 gap-2 mt-5"
               onClick={() => handleClaim("view")}
             >
               View Game
             </Button>
           ) : (
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-1 sm:gap-2 mt-4 w-full">
               <Button
-                variant="secondary"
-                className="flex-1"
+                variant="gameCard"
+                className="flex-1 min-w-0"
                 onClick={() => handleClaim("claim")}
               >
-                {claimStatus ? "Game Claimed!" : "Claim Game"}
+                {claimStatus ? "Claimed!" : "Claim"}
               </Button>
               <Button
-                variant="secondary"
-                className="flex-1"
+                variant="gameCard"
+                className="flex-1 min-w-0"
                 onClick={() => handleClaim("view")}
               >
-                View Game
+                View
               </Button>
             </div>
           )}

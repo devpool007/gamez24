@@ -5,6 +5,7 @@ import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
 import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
 import { fetchSteamGames } from "./steamGames";
+import { DealsGrid } from "@/components/DealsGrid";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -58,6 +59,7 @@ export async function EpicGames() {
         title={epicGamesDeals[0]?.platform ?? "Epic Games"}
         games={epicGamesDeals}
         colorConfig={dealsConfig.epic.colorConfig}
+        viewAll={false}
       />
     </>
   );
@@ -73,6 +75,7 @@ export async function SteamGames() {
         title={steamGames[0]?.platform ?? "Epic Games"}
         games={steamGames}
         colorConfig={dealsConfig.epic.colorConfig}
+        viewAll={false}
       />
     </>
   );
@@ -88,6 +91,23 @@ export async function SteamGamesUnder5() {
         title={steamGames[0]?.platform ?? "Steam"}
         games={steamGames}
         colorConfig={dealsConfig.epic.colorConfig}
+        viewAll={true}
+      />
+    </>
+  );
+}
+
+export async function SteamGamesUnder5ViewAll() {
+  const url =
+    "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+  const steamGames = await fetchSteamGames(url);
+  return (
+    <>
+      <DealsGrid
+        title={steamGames[0]?.platform ?? "Steam"}
+        games={steamGames}
+        colorConfig={dealsConfig.epic.colorConfig}
+        viewAll={false}
       />
     </>
   );

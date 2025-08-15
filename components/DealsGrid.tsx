@@ -1,15 +1,8 @@
 import { Game } from "@/data/mock-games";
 import { SectionTitle } from "@/components/SectionTitle";
 import { GameCard } from "@/components/GameCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
-interface DealsSectionProps {
+interface DealsGridProps {
   title?: string;
   viewAll: boolean;
   games: Game[];
@@ -21,34 +14,29 @@ interface DealsSectionProps {
   viewAllLink?: string;
 }
 
-export const DealsSection = ({ games, colorConfig, viewAll }: DealsSectionProps) => {
+export const DealsGrid = ({ games, colorConfig, viewAll }: DealsGridProps) => {
   return (
     <section className="mb-12">
       <SectionTitle
         titleImg={
           games[0].platform === "Steam" ? "/steam_logo.png" : "/epic_games.png"
         }
-        viewAll = {viewAll}
+        viewAll={viewAll}
       />
-      <Carousel opts={{ align: "start" }} className="w-full p-4">
-        <CarouselPrevious className="flex -top-11 right-16 left-auto translate-y-0" />
-        <CarouselNext className="flex -top-11 right-4 translate-y-0" />
-        <CarouselContent className="content-center gap-25">
+      <div className="p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
           {games.map((game, index) => (
-            <CarouselItem
-              key={game.id}
-              className="pl-8 pb-1 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-            >
+            <div key={game.id} className="flex justify-center">
               <GameCard
                 game={game}
                 animationDelay={index * 100}
                 iconColorClass={colorConfig.gameCardIcon}
                 shadowColorClass={colorConfig.gameCardShadow}
               />
-            </CarouselItem>
+            </div>
           ))}
-        </CarouselContent>
-      </Carousel>
+        </div>
+      </div>
     </section>
   );
 };
