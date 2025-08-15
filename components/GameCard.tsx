@@ -23,15 +23,21 @@ export const GameCard = ({
   iconColorClass = "text-primary",
   shadowColorClass = "hover:shadow-primary/50",
 }: GameCardProps) => {
-  let trueButtonText = "";
+  // let trueButtonText = "";
   const claimGame = useClaimStore((state) => state.claimGame);
   const addGamePrice = useClaimStore((state) => state.addGameMoney);
   const [modalOpen, setModalOpen] = useState(false);
   const [claimStatus, setClaimStatus] = useState(false);
-  const gamePrice = parseFloat(game.price.replace(/[^0-9.]/g, ""));
+  const [modalAction, setModalAction] = useState<"claim" | "view" | null>(null);
+  const gamePrice =
+    game.secondPrice && game.secondPrice !== ""
+      ? parseFloat(game.price.replace(/[^0-9.]/g, "")) -
+        parseFloat(game.secondPrice.replace(/[^0-9.]/g, ""))
+      : parseFloat(game.price.replace(/[^0-9.]/g, ""));
   const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
 
-  const handleClaim = () => {
+  const handleClaim = (action: "claim" | "view") => {
+    setModalAction(action);
     setModalOpen(true);
   };
 
@@ -56,6 +62,7 @@ export const GameCard = ({
   }
 
   function handleOpenClient() {
+    //NOTE: Do the Steam Client thing here and test it please!
     window.open(
       `com.epicgames.launcher://store/product/${game.urlSlug}`,
       "_blank"
@@ -74,7 +81,7 @@ export const GameCard = ({
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div className="bg-card rounded-lg p-6 shadow-xl w-full max-w-xs flex flex-col items-center">
           <h2 className="text-lg font-semibold mb-4 text-center">
-            {buttonText || claimStatus
+            {modalAction === "view" || claimStatus
               ? "Would you like to view this game?"
               : "Would you like to claim this game?"}
           </h2>
@@ -103,17 +110,17 @@ export const GameCard = ({
         : document.createElement("div")
     );
   }
-  if (game.platform === "Epic Games") {
-    if (buttonText) {
-      trueButtonText = buttonText;
-    } else if (claimStatus) {
-      trueButtonText = "Game Claimed!";
-    } else {
-      trueButtonText = "Claim Game";
-    }
-  } else {
-    trueButtonText = "View Game";
-  }
+  // if (game.platform === "Epic Games") {
+  //   if (buttonText) {
+  //     trueButtonText = buttonText;
+  //   } else if (claimStatus) {
+  //     trueButtonText = "Game Claimed!";
+  //   } else {
+  //     trueButtonText = "Claim Game";
+  //   }
+  // } else {
+  //   trueButtonText = "View Game";
+  // }
 
   return (
     <>
@@ -151,34 +158,57 @@ export const GameCard = ({
             <div className="flex items-center">
               <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
               <span className="line-through">{game.price}</span>
+              <span className="mx-1" /> {/* Spacer */}
+              <span className="text-foreground">{game.secondPrice}</span>
             </div>
             {game.freeUntil && game.next ? (
               <div className="flex items-center">
-              <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
-              <span>
-                <>
-                <b>Free</b> from <span className="text-foreground">{game.freeUntil}</span>
-                </>
-              </span>
+                <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
+                <span>
+                  <>
+                    <b>Free</b> from{" "}
+                    <span className="text-foreground">{game.freeUntil}</span>
+                  </>
+                </span>
               </div>
-            ) :  game.freeUntil && !game.next ? (
+            ) : game.freeUntil && !game.next ? (
               <div className="flex items-center">
-              <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
-              <span>
-               <>
-                <b>Free</b> until <span className="text-foreground">{game.freeUntil}</span>
-                </>
-              </span>
+                <Calendar className={cn("w-4 h-4 mr-2", iconColorClass)} />
+                <span>
+                  <>
+                    <b>Free</b> until{" "}
+                    <span className="text-foreground">{game.freeUntil}</span>
+                  </>
+                </span>
               </div>
             ) : null}
           </div>
-          <Button
-            variant="secondary"
-            className="w-full mt-4"
-            onClick={handleClaim}
-          >
-            {trueButtonText}
-          </Button>
+          {game.next ? (
+            <Button
+              variant="secondary"
+              className="flex-1 gap-2 mt-5"
+              onClick={() => handleClaim("view")}
+            >
+              View Game
+            </Button>
+          ) : (
+            <div className="flex gap-2 mt-4">
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={() => handleClaim("claim")}
+              >
+                {claimStatus ? "Game Claimed!" : "Claim Game"}
+              </Button>
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={() => handleClaim("view")}
+              >
+                View Game
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </>
