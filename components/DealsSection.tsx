@@ -31,8 +31,8 @@ export const DealsSection = ({ games, colorConfig, viewAll }: DealsSectionProps)
         viewAll = {viewAll}
       />
       <Carousel opts={{ align: "start" }} className="w-full p-4">
-        <CarouselPrevious className="flex -top-11 right-16 left-auto translate-y-0" />
-        <CarouselNext className="flex -top-11 right-4 translate-y-0" />
+        <CarouselPrevious className="flex -top-10 right-16 left-auto translate-y-0" />
+        <CarouselNext className="flex -top-10 right-4 translate-y-0" />
         <CarouselContent className="content-center gap-25">
           {games.map((game, index) => (
             <CarouselItem

@@ -2,7 +2,8 @@
 import { SteamGamesWithServerActions } from "@/components/SteamGamesUnder5All";
 import { Suspense } from "react";
 
-export default function DealsPage() {
+export default async function DealsPage({ params }: { params: Promise<{ dealSlug: string }> }) {
+  const { dealSlug } = await params;
   return (
     <Suspense
       fallback={
@@ -11,7 +12,7 @@ export default function DealsPage() {
         </p>
       }
     >
-      <SteamGamesWithServerActions />
+      {dealSlug === "steam" ? <SteamGamesWithServerActions /> : <></>}
     </Suspense>
   );
 }
