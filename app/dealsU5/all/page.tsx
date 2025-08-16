@@ -1,4 +1,5 @@
-import { SteamGamesUnder5ViewAll } from "@/lib/games";
+// import { SteamGamesUnder5ViewAll } from "@/lib/games";
+import { SteamGamesWithServerActions } from "@/components/SteamGamesUnder5All";
 import { Suspense } from "react";
 
 export default function DealsPage() {
@@ -10,7 +11,7 @@ export default function DealsPage() {
         </p>
       }
     >
-      <SteamGamesUnder5ViewAll />
+      <SteamGamesWithServerActions />
     </Suspense>
   );
 }

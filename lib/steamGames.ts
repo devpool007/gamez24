@@ -21,7 +21,7 @@ export async function fetchSteamGames(url: string): Promise<Game[]> {
     }
 
     const gameArray: Game[] = gameInfoList.map((game) => ({
-      id: game.gameid && game.gameid !== "" ? game.gameid : generateRandomId(),
+      id: game.gameid && game.gameid !== "" ? game.gameid + generateRandomId() : generateRandomId(),
       title: game.title,
       platform: "Steam",
       price: game.originalPrice?.replace(",", ".") ?? "",
@@ -30,6 +30,8 @@ export async function fetchSteamGames(url: string): Promise<Game[]> {
       freeUntil: game.freeUntil ?? "",
       urlSlug: game.gameurl ?? "",
     }));
+
+    // console.log(gameArray);
 
     return gameArray;
   } catch (error) {

@@ -22,7 +22,7 @@ export default function HorizontalNavTabs({ tabs }: HorizontalNavTabsProps) {
   };
 
   return (
-    <div className="w-full bg-background/80 backdrop-blur-sm">
+    <div className="w-full bg-background/80 backdrop-blur-sm pb-2">
       <div className="flex justify-start space-x-6 px-4 overflow-x-auto">
         {tabs.map((tab) => (
           <button

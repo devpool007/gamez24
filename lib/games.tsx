@@ -6,6 +6,7 @@ import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
 import { fetchSteamGames } from "./steamGames";
 import { DealsGrid } from "@/components/DealsGrid";
+import { Button } from "@/components/ui/button";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -74,7 +75,7 @@ export async function SteamGames() {
       <DealsSection
         title={steamGames[0]?.platform ?? "Epic Games"}
         games={steamGames}
-        colorConfig={dealsConfig.epic.colorConfig}
+        colorConfig={dealsConfig.steam.colorConfig}
         viewAll={false}
       />
     </>
@@ -90,7 +91,7 @@ export async function SteamGamesUnder5() {
       <DealsSection
         title={steamGames[0]?.platform ?? "Steam"}
         games={steamGames}
-        colorConfig={dealsConfig.epic.colorConfig}
+        colorConfig={dealsConfig.steam.colorConfig}
         viewAll={true}
       />
     </>
@@ -98,9 +99,37 @@ export async function SteamGamesUnder5() {
 }
 
 export async function SteamGamesUnder5ViewAll() {
-  const url =
+  const steamGames = [];
+  const baseUrl =
     "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
-  const steamGames = await fetchSteamGames(url);
+  const maxGames = 100;
+  const gamesPerPage = 50; // Steam's default
+  const pages = Math.ceil(maxGames / gamesPerPage);
+
+  for (let page = 0; page < pages; page++) {
+    const start = page * gamesPerPage;
+    const url = `${baseUrl}&start=${start}`;
+
+    try {
+      console.log(`Fetching page ${page + 1}, starting at game ${start}...`);
+
+      const games = await fetchSteamGames(url);
+
+      if (games.length === 0) {
+        console.log("No more games found, stopping pagination");
+        break;
+      }
+
+      steamGames.push(...games);
+
+      // Add delay to avoid rate limiting
+      // await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (error) {
+      console.error(`Error fetching page ${page + 1}:`, error);
+      break;
+    }
+  }
+
   return (
     <>
       <DealsGrid
@@ -109,6 +138,9 @@ export async function SteamGamesUnder5ViewAll() {
         colorConfig={dealsConfig.epic.colorConfig}
         viewAll={false}
       />
+      <div className="flex justify-center">
+        <Button>Load More</Button>
+      </div>
     </>
   );
 }

@@ -22,11 +22,11 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
   viewAll,
 }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center pt-2">
       {/* <h1 className={cn("text-2xl font-bold border-l-4 pl-4", className)}>
         {children}
       </h1> */}
-      <div className="p-5 size-35">
+      <div className="p-5 size-25">
         <Image src={titleImg} alt={titleImg} width={60} height={60} />
       </div>
       {viewAll && (

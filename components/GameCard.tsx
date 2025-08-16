@@ -18,7 +18,6 @@ interface GameCardProps {
 
 export const GameCard = ({
   game,
-  buttonText,
   animationDelay,
   iconColorClass = "text-primary",
   shadowColorClass = "hover:shadow-primary/50",
@@ -54,7 +53,7 @@ export const GameCard = ({
     }, 800);
     setModalOpen(false);
 
-    if (!buttonText && !claimStatus) {
+    if (modalAction === "claim" && !claimStatus) {
       claimGame(game.platform, game.title);
       addGamePrice(gamePrice);
       setClaimStatus(true);
@@ -68,7 +67,7 @@ export const GameCard = ({
       "_blank"
     );
     setModalOpen(false);
-    if (!buttonText && !claimStatus) {
+    if (modalAction === "claim" && !claimStatus) {
       claimGame(game.platform, game.title);
       addGamePrice(gamePrice);
       setClaimStatus(true);

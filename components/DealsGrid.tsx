@@ -16,14 +16,14 @@ interface DealsGridProps {
 
 export const DealsGrid = ({ games, colorConfig, viewAll }: DealsGridProps) => {
   return (
-    <section className="mb-12">
+    <section className="mb-8">
       <SectionTitle
         titleImg={
           games[0].platform === "Steam" ? "/steam_logo.png" : "/epic_games.png"
         }
         viewAll={viewAll}
       />
-      <div className="p-4">
+      <div className="pb-4 px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
           {games.map((game, index) => (
             <div key={game.id} className="flex justify-center">
