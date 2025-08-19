@@ -1,4 +1,4 @@
-import { EpicGames, SteamGames } from "@/lib/games";
+import { EpicGames, SteamGames, GOGGames } from "@/lib/games";
 import { Suspense } from "react";
 
 export default function DealsPage() {
@@ -12,6 +12,7 @@ export default function DealsPage() {
     >
       <EpicGames />
       <SteamGames />
+      <GOGGames />
     </Suspense>
   );
 }

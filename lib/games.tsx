@@ -7,6 +7,7 @@ import { DealsSection } from "@/components/DealsSection";
 import { fetchSteamGames } from "./steamGames";
 import { DealsGrid } from "@/components/DealsGrid";
 import { Button } from "@/components/ui/button";
+import { fetchGOGGamesServerAction } from "./actions/gog-action";
 
 const epicFreeGames = new EpicFreeGames({
   country: "DE",
@@ -73,7 +74,7 @@ export async function SteamGames() {
   return (
     <>
       <DealsSection
-        title={steamGames[0]?.platform ?? "Epic Games"}
+        title={steamGames[0]?.platform ?? "Steam"}
         games={steamGames}
         colorConfig={dealsConfig.steam.colorConfig}
         viewAll={false}
@@ -141,6 +142,22 @@ export async function SteamGamesUnder5ViewAll() {
       <div className="flex justify-center">
         <Button>Load More</Button>
       </div>
+    </>
+  );
+}
+
+
+export async function GOGGames() {
+  const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
+  const gogGames = await fetchGOGGamesServerAction(url);
+  return (
+    <>
+      <DealsSection
+        title={gogGames.games[0]?.platform ?? "Steam"}
+        games={gogGames.games}
+        colorConfig={dealsConfig.steam.colorConfig}
+        viewAll={false}
+      />
     </>
   );
 }
