@@ -53,7 +53,7 @@ export default function RootLayout({
       >
         {children}
         {/* Footer */}
-        <footer className="mt-24 text-sm text-gray-400 text-center py-10 bg-secondary">
+        <footer className="text-sm text-gray-400 text-center py-10 bg-secondary mt-5">
           &copy; {new Date().getFullYear()} Gamez24. All rights reserved ·{" "}
           <Link href="/privacyPolicy" className="hover:underline hover:text-gray-300">
             Privacy Policy

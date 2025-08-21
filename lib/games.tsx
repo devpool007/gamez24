@@ -149,17 +149,92 @@ export async function SteamGamesUnder5ViewAll() {
 }
 
 
+// export async function GOGGames() {
+//   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
+//   const finalGOG : Game[] = [] 
+//   for (let i = 1 ; i<20 ; i++){
+//     const gogGames = await fetchGOGGamesServerAction(url,i);
+//     finalGOG.push(...gogGames.games)
+//   }
+//   console.log(finalGOG.length)
+
+//   return (
+//     <>
+//       <DealsSection
+//         title={finalGOG[0]?.platform ?? "GOG"}
+//         games={finalGOG}
+//         colorConfig={dealsConfig.gog .colorConfig}
+//         viewAll={false}
+//       />
+//     </>
+//   );
+// }
+
 export async function GOGGames() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-  const gogGames = await fetchGOGGamesServerAction(url);
-  return (
-    <>
-      <DealsSection
-        title={gogGames.games[0]?.platform ?? "GOG"}
-        games={gogGames.games}
-        colorConfig={dealsConfig.gog .colorConfig}
-        viewAll={false}
-      />
-    </>
+  
+  // Create array of page numbers and fetch all pages in parallel
+  const pagePromises = Array.from({ length: 50 }, (_, i) => 
+    fetchGOGGamesServerAction(url, i + 1 , 0)
   );
+  
+  try {
+    const results = await Promise.all(pagePromises);
+    const finalGOG = results.flatMap(result => result.games);
+    
+    if (finalGOG.length === 0){
+      return  <>
+        <DealsSection
+          title={"GOG"}
+          games={[]}
+          colorConfig={dealsConfig.gog.colorConfig}
+          viewAll={false}
+        />
+      </>
+      
+    }
+    return (
+      <>
+        <DealsSection
+          title={finalGOG[0]?.platform ?? "GOG"}
+          games={finalGOG}
+          colorConfig={dealsConfig.gog.colorConfig}
+          viewAll={false}
+        />
+      </>
+    );
+  } catch (error) {
+    console.error('Failed to fetch GOG games:', error);
+    return <div>Failed to load GOG games</div>;
+  }
+}
+
+
+export async function GOGGamesUnder5() {
+  const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
+  
+  // Create array of page numbers and fetch all pages in parallel
+  const pagePromises = Array.from({ length: 50 }, (_, i) => 
+    fetchGOGGamesServerAction(url, i + 1 , 5)
+  );
+  
+  try {
+    const results = await Promise.all(pagePromises);
+    const finalGOG = results.flatMap(result => result.games);
+
+    console.log(finalGOG.length)
+    return (
+      <>
+        <DealsSection
+          title={finalGOG[0]?.platform ?? "GOG"}
+          games={finalGOG}
+          colorConfig={dealsConfig.gog.colorConfig}
+          viewAll={true}
+        />
+      </>
+    );
+  } catch (error) {
+    console.error('Failed to fetch GOG games:', error);
+    return <div>Failed to load GOG games</div>;
+  }
 }

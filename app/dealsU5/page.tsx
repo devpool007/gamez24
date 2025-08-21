@@ -1,4 +1,4 @@
-import { SteamGamesUnder5 } from "@/lib/games";
+import { SteamGamesUnder5, GOGGamesUnder5 } from "@/lib/games";
 import { Suspense } from "react";
 
 export default function DealsPage() {
@@ -11,6 +11,7 @@ export default function DealsPage() {
       }
     >
       <SteamGamesUnder5 />
+      <GOGGamesUnder5 />
     </Suspense>
   );
 }

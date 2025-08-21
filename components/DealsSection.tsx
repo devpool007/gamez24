@@ -21,24 +21,41 @@ interface DealsSectionProps {
   viewAllLink?: string;
 }
 
-export const DealsSection = ({ games, colorConfig, viewAll }: DealsSectionProps) => {
+export const DealsSection = ({
+  games,
+  colorConfig,
+  title,
+  viewAll,
+}: DealsSectionProps) => {
   return (
     <section className="mb-12">
       <SectionTitle
         titleImg={
-          games[0].platform === "Steam" 
-      ? "/steam_logo.png" 
-      : games[0].platform === "Epic"
-      ? "/epic_games.png"
-      : games[0].platform === "GOG"
-      ? "/gog3.png"
-      : "/epic_games.png"  // default case
+          title === "Steam"
+            ? "/steam_logo.png"
+            : title === "Epic Games"
+            ? "/epic_games.png"
+            : title === "GOG"
+            ? "/gog3.png"
+            : "/epic_games.png" // default case
         }
-        viewAll = {viewAll}
+        viewAll={viewAll}
       />
       <Carousel opts={{ align: "start" }} className="w-full p-4">
         <CarouselPrevious className="flex -top-10 right-16 left-auto translate-y-0" />
         <CarouselNext className="flex -top-10 right-4 translate-y-0" />
+
+        {games.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-16 px-6">
+            <div className="text-gray-200 text-3xl text-center font-modern font-bold">
+              No free games available on {title} right now...
+            </div>
+            <p className="text-xl text-gray-400 mt-2 font-modern font-bold">
+              Check back later for new deals!
+            </p>
+          </div>
+        )}
+
         <CarouselContent className="content-center gap-25">
           {games.map((game, index) => (
             <CarouselItem

@@ -5,7 +5,8 @@ import { APIResponse } from "@/types/gog";
 // Function with pagination support (if the API supports it)
 export async function fetchGOGGamesWithPagination(
   baseApiUrl: string,
-  page: number = 1,
+  page: number = 1, 
+  maxPrice : number
 ): Promise<{
   games: Game[];
   totalCount: number;
@@ -30,7 +31,10 @@ export async function fetchGOGGamesWithPagination(
 
     const data: APIResponse = await response.json();
     
-    const extractedGames: Game[] = data.products.map((product) => ({
+    const extractedGames: Game[] = data.products
+    .filter((product) => Number(product.price.amount) <= maxPrice && 
+    product.isDiscounted === true ) // Filter first
+    .map((product) => ({
       id: product.id.toString(),
       price: product.price.baseAmount,
       secondPrice: product.price.amount,
@@ -40,6 +44,8 @@ export async function fetchGOGGamesWithPagination(
       imageUrl: product.image.startsWith('//') ? `https:${product.image}.webp` : product.image,
       urlSlug: product.url.startsWith('/') ? `https://www.gog.com${product.url}` : product.url
     }));
+
+
 
     return {
       games: extractedGames,
@@ -65,7 +71,7 @@ export async function exampleUsage() {
     // console.log('Discounted games:', discountedGames);
 
     // With pagination
-    const paginatedResult = await fetchGOGGamesWithPagination('https://embed.gog.com/games/ajax/filtered?mediaType=game', 1);
+    const paginatedResult = await fetchGOGGamesWithPagination('https://embed.gog.com/games/ajax/filtered?mediaType=game', 1, 5);
     console.log(`Loaded ${paginatedResult.games.length} games`);
 
   } catch (error) {

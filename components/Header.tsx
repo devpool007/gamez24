@@ -7,6 +7,7 @@ import { CountrySelector } from "./CountrySelector";
 import { TempLogin } from "./TempLogin";
 import { TempNotification } from "./TempNotification";
 import Image from "next/image";
+import Link from "next/link";
 // import Link from 'next/link';
 // import { Link, useNavigate } from 'react-router-dom';
 // import { useAuth } from '@/contexts/AuthContext';
@@ -46,8 +47,9 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3">
             {/* <Gamepad2Icon className="w-10 h-10 text-primary" /> */}
-            <Image className="rounded-md" width={40} height={40} alt="gamepad"src={"/gamepad2.jpg"}></Image>
-            <span className="text-3xl font-bold font-gaming text-foreground">Gamez24</span>
+            <Link href={"/deals"} className="flex gap-4"><Image className="rounded-md" width={40} height={40} alt="gamepad"src={"/gamepad2.jpg"}></Image>
+            <div className="text-3xl font-bold font-gaming text-foreground">Gamez24</div></Link>
+            
             <ClaimStats />
           </div>
           
