@@ -26,7 +26,13 @@ export const DealsSection = ({ games, colorConfig, viewAll }: DealsSectionProps)
     <section className="mb-12">
       <SectionTitle
         titleImg={
-          games[0].platform === "Steam" ? "/steam_logo.png" : "/epic_games.png"
+          games[0].platform === "Steam" 
+      ? "/steam_logo.png" 
+      : games[0].platform === "Epic"
+      ? "/epic_games.png"
+      : games[0].platform === "GOG"
+      ? "/gog3.png"
+      : "/epic_games.png"  // default case
         }
         viewAll = {viewAll}
       />

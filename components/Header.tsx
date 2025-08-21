@@ -1,9 +1,11 @@
-import { User, Bell } from "lucide-react";
+// import { User, Bell } from "lucide-react";
 // import { Gamepad2, User, Bell, LogOut } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 // import { useToast } from '@/hooks/use-toast';
 import { ClaimStats } from "./ClaimStats";
 import { CountrySelector } from "./CountrySelector";
+import { TempLogin } from "./TempLogin";
+import { TempNotification } from "./TempNotification";
 import Image from "next/image";
 // import Link from 'next/link';
 // import { Link, useNavigate } from 'react-router-dom';
@@ -45,24 +47,15 @@ export const Header = () => {
           <div className="flex items-center space-x-3">
             {/* <Gamepad2Icon className="w-10 h-10 text-primary" /> */}
             <Image className="rounded-md" width={40} height={40} alt="gamepad"src={"/gamepad2.jpg"}></Image>
-            <span className="text-3xl font-bold font-gaming text-foreground">Games24</span>
+            <span className="text-3xl font-bold font-gaming text-foreground">Gamez24</span>
             <ClaimStats />
           </div>
           
           <div className="flex items-center gap-6">
             <CountrySelector />
-            <Button variant="ghost" size="icon" asChild>
-              <>
-                <Bell className="w-5 h-5" />
-                <span className="sr-only">Subscribe to alerts</span>
-              </>
-            </Button>
-            <Button variant="ghost" size="icon" asChild>
-              <>
-                <User className="w-5 h-5" />
-                <span className="sr-only">Sign In</span>
-              </>
-            </Button>
+            <TempNotification />
+            <TempLogin />
+
           </div>
         </div>
       </div>
