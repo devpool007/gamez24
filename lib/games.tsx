@@ -30,6 +30,7 @@ export async function EpicGames() {
       imageUrl: game.keyImages[0]?.url,
       title: game.title,
       price: game.price.totalPrice.fmtPrice.originalPrice,
+      secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: endDate ? formatDateLong(endDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
@@ -46,6 +47,7 @@ export async function EpicGames() {
       title: game.title,
       next: true,
       price: game.price.totalPrice.fmtPrice.originalPrice,
+      secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: startDate ? formatDateLong(startDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
@@ -153,9 +155,9 @@ export async function GOGGames() {
   return (
     <>
       <DealsSection
-        title={gogGames.games[0]?.platform ?? "Steam"}
+        title={gogGames.games[0]?.platform ?? "GOG"}
         games={gogGames.games}
-        colorConfig={dealsConfig.steam.colorConfig}
+        colorConfig={dealsConfig.gog .colorConfig}
         viewAll={false}
       />
     </>
