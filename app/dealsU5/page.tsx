@@ -2,9 +2,10 @@ import { SteamGamesUnder5, GOGGamesUnder5 } from "@/lib/games";
 import { Suspense } from "react";
 import { getCountry } from "@/lib/actions/country-action";
 
-  const { country } = await getCountry();
 
-export default function DealsPage() {
+export default async function DealsPage() {
+
+  const { country } = await getCountry();
   return (
     <Suspense
       fallback={
