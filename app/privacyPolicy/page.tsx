@@ -1,12 +1,7 @@
-export default function PrivacyPolicy({
-  brandName = "Gamez24",
-  lastUpdated = "21 Aug 2025",
-  contactEmail = "techmuscles55@gmail.com"
-}: {
-  brandName?: string;
-  contactEmail?: string;
-  lastUpdated?: string;
-}) {
+export default function PrivacyPolicy() {
+  const brandName = "Gamez24";
+  const contactEmail = "techmuscles55@gmail.com";
+  const lastUpdated = "21 Aug 2025";
   return (
     <article className="prose prose-gray max-w-none">
       <h2 className="!mt-0 text-4xl font-bold font-modern">Privacy Policy</h2>
@@ -17,7 +12,9 @@ export default function PrivacyPolicy({
         deals from third-party platforms such as Steam, Epic Games, and GOG.
       </p>
 
-      <h3 className="text-2xl font-bold font-modern mt-5">Information We Collect</h3>
+      <h3 className="text-2xl font-bold font-modern mt-5">
+        Information We Collect
+      </h3>
       <ul>
         <li>
           We do <strong>not</strong> collect personal information such as names,
@@ -31,7 +28,7 @@ export default function PrivacyPolicy({
         </li>
       </ul>
 
-      <h3 className="text-2xl font-bold font-modern mt-5" >Cookies</h3>
+      <h3 className="text-2xl font-bold font-modern mt-5">Cookies</h3>
       <p>
         This Site does <strong>not</strong> use cookies or similar tracking
         technologies at this time.
@@ -45,13 +42,17 @@ export default function PrivacyPolicy({
         privacy policies.
       </p>
 
-      <h3 className="text-2xl font-bold font-modern mt-5">Children’s Privacy</h3>
+      <h3 className="text-2xl font-bold font-modern mt-5">
+        Children’s Privacy
+      </h3>
       <p>
         The Site is not directed to children under the age of 13. We do not
         knowingly collect personal information from children.
       </p>
 
-      <h3 className="text-2xl font-bold font-modern mt-5">Changes to This Policy</h3>
+      <h3 className="text-2xl font-bold font-modern mt-5">
+        Changes to This Policy
+      </h3>
       <p>
         If we add features such as user accounts, personalized recommendations,
         or newsletters in the future, this Privacy Policy will be updated to
