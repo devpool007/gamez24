@@ -1,4 +1,4 @@
-import { EpicFreeGames, OfferGame } from "epic-free-games";
+import { Country, EpicFreeGames, OfferGame } from "epic-free-games";
 import { Game } from "@/data/mock-games";
 import { CurrencySetter } from "@/components/CurrencySetter";
 import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
@@ -15,8 +15,12 @@ const epicFreeGames = new EpicFreeGames({
   includeAll: true,
 });
 
-export async function EpicGames() {
-  const data = await epicFreeGames.getGames();
+interface EpicGamesProps {
+  country: Country;
+}
+
+export async function EpicGames({ country }: EpicGamesProps) {
+  const data = await epicFreeGames.getGames({ country: country });
   const currency = getCurrencySymbol(
     data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD"
   );
@@ -148,10 +152,9 @@ export async function SteamGamesUnder5ViewAll() {
   );
 }
 
-
 // export async function GOGGames() {
 //   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-//   const finalGOG : Game[] = [] 
+//   const finalGOG : Game[] = []
 //   for (let i = 1 ; i<20 ; i++){
 //     const gogGames = await fetchGOGGamesServerAction(url,i);
 //     finalGOG.push(...gogGames.games)
@@ -172,26 +175,27 @@ export async function SteamGamesUnder5ViewAll() {
 
 export async function GOGGames() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-  
+
   // Create array of page numbers and fetch all pages in parallel
-  const pagePromises = Array.from({ length: 50 }, (_, i) => 
-    fetchGOGGamesServerAction(url, i + 1 , 0)
+  const pagePromises = Array.from({ length: 200 }, (_, i) =>
+    fetchGOGGamesServerAction(url, i + 1, 0)
   );
-  
+
   try {
     const results = await Promise.all(pagePromises);
-    const finalGOG = results.flatMap(result => result.games);
-    
-    if (finalGOG.length === 0){
-      return  <>
-        <DealsSection
-          title={"GOG"}
-          games={[]}
-          colorConfig={dealsConfig.gog.colorConfig}
-          viewAll={false}
-        />
-      </>
-      
+    const finalGOG = results.flatMap((result) => result.games);
+
+    if (finalGOG.length === 0) {
+      return (
+        <>
+          <DealsSection
+            title={"GOG"}
+            games={[]}
+            colorConfig={dealsConfig.gog.colorConfig}
+            viewAll={false}
+          />
+        </>
+      );
     }
     return (
       <>
@@ -204,25 +208,24 @@ export async function GOGGames() {
       </>
     );
   } catch (error) {
-    console.error('Failed to fetch GOG games:', error);
+    console.error("Failed to fetch GOG games:", error);
     return <div>Failed to load GOG games</div>;
   }
 }
 
-
 export async function GOGGamesUnder5() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-  
+
   // Create array of page numbers and fetch all pages in parallel
-  const pagePromises = Array.from({ length: 50 }, (_, i) => 
-    fetchGOGGamesServerAction(url, i + 1 , 5)
+  const pagePromises = Array.from({ length: 50 }, (_, i) =>
+    fetchGOGGamesServerAction(url, i + 1, 5)
   );
-  
+
   try {
     const results = await Promise.all(pagePromises);
-    const finalGOG = results.flatMap(result => result.games);
+    const finalGOG = results.flatMap((result) => result.games);
 
-    console.log(finalGOG.length)
+    console.log(finalGOG.length);
     return (
       <>
         <DealsSection
@@ -234,7 +237,7 @@ export async function GOGGamesUnder5() {
       </>
     );
   } catch (error) {
-    console.error('Failed to fetch GOG games:', error);
+    console.error("Failed to fetch GOG games:", error);
     return <div>Failed to load GOG games</div>;
   }
 }
