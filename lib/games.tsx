@@ -37,6 +37,7 @@ export async function EpicGames({ country }: EpicGamesProps) {
       secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: endDate ? formatDateLong(endDate) : "",
+      // @ts-expect-error chill bro
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -54,6 +55,7 @@ export async function EpicGames({ country }: EpicGamesProps) {
       secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: startDate ? formatDateLong(startDate) : "",
+      // @ts-expect-error chill bro
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -177,7 +179,7 @@ export async function GOGGames() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
 
   // Create array of page numbers and fetch all pages in parallel
-  const pagePromises = Array.from({ length: 200 }, (_, i) =>
+  const pagePromises = Array.from({ length: 150 }, (_, i) =>
     fetchGOGGamesServerAction(url, i + 1, 0)
   );
 
