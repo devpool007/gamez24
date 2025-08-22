@@ -1,7 +1,15 @@
-import { EpicGames, SteamGames } from "@/lib/games";
+import { EpicGames, SteamGames, GOGGames } from "@/lib/games";
 import { Suspense } from "react";
+import { getCountry } from "@/lib/actions/country-action";
+import { Country } from "epic-free-games";
 
-export default function DealsPage() {
+export default async function DealsPage() {
+
+  const { country } = await getCountry();
+  const theCountry = country as Country
+  console.log(theCountry)
+
+
   return (
     <Suspense
       fallback={
@@ -10,8 +18,9 @@ export default function DealsPage() {
         </p>
       }
     >
-      <EpicGames />
+      <EpicGames country = {theCountry} />
       <SteamGames />
+      <GOGGames />
     </Suspense>
   );
 }

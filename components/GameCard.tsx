@@ -25,6 +25,7 @@ export const GameCard = ({
   // let trueButtonText = "";
   const claimGame = useClaimStore((state) => state.claimGame);
   const addGamePrice = useClaimStore((state) => state.addGameMoney);
+  const currency = useClaimStore((state) => state.currency);
   const [modalOpen, setModalOpen] = useState(false);
   const [claimStatus, setClaimStatus] = useState(false);
   const [modalAction, setModalAction] = useState<"claim" | "view" | null>(null);
@@ -145,9 +146,17 @@ export const GameCard = ({
           <div className="mt-2 space-y-2 text-sm text-muted-foreground flex-grow">
             <div className="flex items-center">
               <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
-              <span className="line-through">{game.price}</span>
+              {game.platform === "GOG" ? (
+                <span className="line-through">{currency + game.price}</span>
+              ) : (
+                <span className="line-through">{game.price}</span> 
+              )}
               <span className="mx-1" /> {/* Spacer */}
-              <span className="text-foreground">{game.secondPrice}</span>
+              {game.platform === "Steam" ? (
+                <span className="text-foreground">{game.secondPrice}</span>
+              ) : (
+                <span className="text-foreground">{currency + game.secondPrice}</span> 
+              )}
             </div>
             {game.freeUntil && game.next ? (
               <div className="flex items-center">

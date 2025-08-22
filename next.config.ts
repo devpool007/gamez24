@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         hostname: "cdn1.epicgames.com",
         pathname: "/**",
       },
+      {
+             
+        protocol: 'https',
+        hostname: '*.gog-statics.com',
+        pathname: "/**",
+      }
     ],
   },
 };

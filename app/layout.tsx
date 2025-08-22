@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import Link from "next/link";
+import {
+  Geist,
+  Geist_Mono,
+  Orbitron,
+  Press_Start_2P,
+  Rajdhani,
+} from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,9 +19,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  variable: "--font-orbitron",
+});
+
+const pressStart = Press_Start_2P({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-press-start",
+});
+
+const rajdhani = Rajdhani({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-rajdhani",
+});
+
 export const metadata: Metadata = {
-  title: "Gamez24",
-  description: "Free Game deals for everyone!",
+  title: "Games24",
+  description: "Best and latest free Game deals for everyone!",
 };
 
 export default function RootLayout({
@@ -25,9 +49,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={` ${orbitron.variable} ${pressStart.variable} ${rajdhani.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        {/* Footer */}
+        <footer className="text-sm text-gray-400 text-center py-10 bg-secondary mt-5">
+          &copy; {new Date().getFullYear()} Gamez24. All rights reserved ·{" "}
+          <Link href="/privacyPolicy" className="hover:underline hover:text-gray-300">
+            Privacy Policy
+          </Link>{" "}
+          ·{" "}
+          <Link href="/tos" className="hover:underline hover:text-gray-300">
+            Terms of Service
+          </Link>
+        </footer>
       </body>
     </html>
   );
