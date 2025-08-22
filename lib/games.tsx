@@ -5,8 +5,6 @@ import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
 import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
 import { fetchSteamGames } from "./steamGames";
-import { DealsGrid } from "@/components/DealsGrid";
-import { Button } from "@/components/ui/button";
 import { fetchGOGGamesServerAction } from "./actions/gog-action";
 
 const epicFreeGames = new EpicFreeGames({
@@ -17,6 +15,10 @@ const epicFreeGames = new EpicFreeGames({
 
 interface EpicGamesProps {
   country: Country;
+}
+
+interface SteamGamesProps {
+  country: string;
 }
 
 export async function EpicGames({ country }: EpicGamesProps) {
@@ -75,9 +77,8 @@ export async function EpicGames({ country }: EpicGamesProps) {
   );
 }
 
-export async function SteamGames() {
-  const url =
-    "https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1";
+export async function SteamGames({ country }: SteamGamesProps) {
+  const url = `https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1&cc=${country}`;
   const steamGames = await fetchSteamGames(url);
   return (
     <>
@@ -91,9 +92,8 @@ export async function SteamGames() {
   );
 }
 
-export async function SteamGamesUnder5() {
-  const url =
-    "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+export async function SteamGamesUnder5({ country }: SteamGamesProps) {
+  const url = `https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const steamGames = await fetchSteamGames(url);
   return (
     <>
@@ -106,74 +106,6 @@ export async function SteamGamesUnder5() {
     </>
   );
 }
-
-export async function SteamGamesUnder5ViewAll() {
-  const steamGames = [];
-  const baseUrl =
-    "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
-  const maxGames = 100;
-  const gamesPerPage = 50; // Steam's default
-  const pages = Math.ceil(maxGames / gamesPerPage);
-
-  for (let page = 0; page < pages; page++) {
-    const start = page * gamesPerPage;
-    const url = `${baseUrl}&start=${start}`;
-
-    try {
-      console.log(`Fetching page ${page + 1}, starting at game ${start}...`);
-
-      const games = await fetchSteamGames(url);
-
-      if (games.length === 0) {
-        console.log("No more games found, stopping pagination");
-        break;
-      }
-
-      steamGames.push(...games);
-
-      // Add delay to avoid rate limiting
-      // await new Promise(resolve => setTimeout(resolve, 1000));
-    } catch (error) {
-      console.error(`Error fetching page ${page + 1}:`, error);
-      break;
-    }
-  }
-
-  return (
-    <>
-      <DealsGrid
-        title={steamGames[0]?.platform ?? "Steam"}
-        games={steamGames}
-        colorConfig={dealsConfig.epic.colorConfig}
-        viewAll={false}
-      />
-      <div className="flex justify-center">
-        <Button>Load More</Button>
-      </div>
-    </>
-  );
-}
-
-// export async function GOGGames() {
-//   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-//   const finalGOG : Game[] = []
-//   for (let i = 1 ; i<20 ; i++){
-//     const gogGames = await fetchGOGGamesServerAction(url,i);
-//     finalGOG.push(...gogGames.games)
-//   }
-//   console.log(finalGOG.length)
-
-//   return (
-//     <>
-//       <DealsSection
-//         title={finalGOG[0]?.platform ?? "GOG"}
-//         games={finalGOG}
-//         colorConfig={dealsConfig.gog .colorConfig}
-//         viewAll={false}
-//       />
-//     </>
-//   );
-// }
 
 export async function GOGGames() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";

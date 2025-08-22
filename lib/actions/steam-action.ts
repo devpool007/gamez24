@@ -3,8 +3,8 @@
 import { fetchSteamGames } from '@/lib/steamGames';
 
 // Server Action for getting Steam games
-export async function getSteamGames(start: number = 0) {
-  const baseUrl = "https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1";
+export async function getSteamGames(start: number = 0, country: string) {
+  const baseUrl = `https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const url = `${baseUrl}&start=${start}`;
 
   try {
@@ -30,14 +30,14 @@ export async function getSteamGames(start: number = 0) {
 }
 
 // Server Action for batch loading (loading multiple pages at once)
-export async function getSteamGamesBatch(startPage: number = 0, pageCount: number = 2) {
+export async function getSteamGamesBatch(startPage: number = 0, pageCount: number = 2, country: string) {
   const gamesPerPage = 50;
   const allGames = [];
   
   try {
     for (let page = startPage; page < startPage + pageCount; page++) {
       const start = page * gamesPerPage;
-      const result = await getSteamGames(start);
+      const result = await getSteamGames(start, country);
       
       if (!result.success || result.games.length === 0) {
         break;

@@ -19,7 +19,7 @@ export default async function DealsPage() {
       }
     >
       <EpicGames country = {theCountry} />
-      <SteamGames />
+      <SteamGames country= {country} />
       <GOGGames />
     </Suspense>
   );
