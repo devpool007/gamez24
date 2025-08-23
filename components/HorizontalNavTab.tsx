@@ -28,7 +28,7 @@ export default function HorizontalNavTabs({ tabs }: HorizontalNavTabsProps) {
           <button
             key={tab.path}
             onClick={() => handleTabClick(tab.path)}
-            className={`mt-5 pt-1 pb-1 pr-2 pl-2 text-sm font-medium rounded-sm border-1 transition-colors  duration-200 ${
+            className={`mt-5 pt-1 pb-1 pr-2 pl-2 text-xs sm:text-sm font-medium rounded-sm border-1 transition-colors  duration-200 ${
               activeTab === tab.path
                 ? "bg-violet-700 text-white"
                 : "border-transparent text-gray-400 hover:text-white hover:border-violet-600 hover:cursor-pointer"

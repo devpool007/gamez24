@@ -17,14 +17,14 @@ interface ClaimStore {
 }
 
 const platformToCategoryMap: { [key: string]: DealCategory } = {
-  "Prime gaming": "prime",
+  // "Prime gaming": "prime",
   Steam: "steam",
   "Epic Games": "epic",
   GOG: "gog",
 };
 
 const categoryToDisplayNameMap: { [key in DealCategory]: string } = {
-  prime: "Prime Gaming",
+  // prime: "Prime Gaming",
   steam: "Steam",
   epic: "Epic Games",
   gog: "GOG",
@@ -32,7 +32,7 @@ const categoryToDisplayNameMap: { [key in DealCategory]: string } = {
 
 export const useClaimStore = create<ClaimStore>((set, get) => ({
   stats: {
-    prime: 0,
+    // prime: 0,
     steam: 0,
     epic: 0,
     gog: 0,

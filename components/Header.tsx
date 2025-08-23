@@ -3,7 +3,6 @@
 // import { Button } from "@/components/ui/button";
 // import { useToast } from '@/hooks/use-toast';
 import { ClaimStats } from "./ClaimStats";
-import { CountrySelector } from "./CountrySelector";
 import { TempLogin } from "./TempLogin";
 import { TempNotification } from "./TempNotification";
 import Image from "next/image";
@@ -47,17 +46,27 @@ export const Header = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3">
             {/* <Gamepad2Icon className="w-10 h-10 text-primary" /> */}
-            <Link href={"/deals"} className="flex gap-4"><Image className="rounded-md" width={40} height={40} alt="gamepad"src={"/gamepad2.jpg"}></Image>
-            <div className="text-3xl font-bold font-gaming text-foreground">Gamez24</div></Link>
-            
+            <Link href={"/deals"} className="flex gap-4">
+              <div className="relative size-8 sm:size-10">
+                <Image
+                  className="rounded-md"
+                  fill
+                  alt="gamepad"
+                  src={"/gamepad2.jpg"}
+                ></Image>
+              </div>
+
+              <div className="text-xl sm:text-3xl font-bold font-gaming text-foreground">
+                Gamez24
+              </div>
+            </Link>
+
             <ClaimStats />
           </div>
-          
-          <div className="flex items-center gap-6">
-            <CountrySelector />
+
+          <div className="flex items-center gap-2">
             <TempNotification />
             <TempLogin />
-
           </div>
         </div>
       </div>

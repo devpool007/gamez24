@@ -28,7 +28,7 @@ export const DealsSection = ({
   viewAll,
 }: DealsSectionProps) => {
   return (
-    <section className="mb-12">
+    <section className="mb-12 mt-2">
       <SectionTitle
         titleImg={
           title === "Steam"

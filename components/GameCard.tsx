@@ -43,10 +43,10 @@ export const GameCard = ({
 
   function handleOpenBrowser() {
     let urlValue;
-    if (game.platform === "Steam") {
-      urlValue = game.urlSlug;
-    } else {
+    if (game.platform === "Epic Games") {
       urlValue = `https://store.epicgames.com/en-US/p/${game.urlSlug}`;
+    } else {
+      urlValue = game.urlSlug;
     }
 
     setTimeout(() => {
@@ -63,10 +63,15 @@ export const GameCard = ({
 
   function handleOpenClient() {
     //NOTE: Do the Steam Client thing here and test it please!
-    window.open(
-      `com.epicgames.launcher://store/product/${game.urlSlug}`,
-      "_blank"
-    );
+    if (game.platform === "Epic Games") {
+      window.open(
+        `com.epicgames.launcher://store/product/${game.urlSlug}`,
+        "_blank"
+      );
+    } else {
+      window.open(` steam://openurl/${game.urlSlug}`, "_blank");
+    }
+
     setModalOpen(false);
     if (modalAction === "claim" && !claimStatus) {
       claimGame(game.platform, game.title);
@@ -89,13 +94,15 @@ export const GameCard = ({
             <Button className="flex-1" onClick={handleOpenBrowser}>
               Open in browser
             </Button>
-            <Button
-              className="flex-1"
-              onClick={handleOpenClient}
-              variant="outline"
-            >
-              Open in client
-            </Button>
+            {["Steam", "Epic Games"].includes(game.platform) && (
+              <Button
+                className="flex-1"
+                onClick={handleOpenClient}
+                variant="outline"
+              >
+                Open in client
+              </Button>
+            )}
           </div>
           <button
             className="mt-4 text-sm text-muted-foreground hover:underline cursor-pointer"
@@ -116,7 +123,7 @@ export const GameCard = ({
       {modalOpen && <GameModal />}
       <div
         className={cn(
-          `${gamecardbkg} rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-70`,
+          `${gamecardbkg} rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-60 sm:w-70 `,
           shadowColorClass
         )}
         style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
@@ -149,13 +156,15 @@ export const GameCard = ({
               {game.platform === "GOG" ? (
                 <span className="line-through">{currency + game.price}</span>
               ) : (
-                <span className="line-through">{game.price}</span> 
+                <span className="line-through">{game.price}</span>
               )}
               <span className="mx-1" /> {/* Spacer */}
               {game.platform === "Steam" ? (
                 <span className="text-foreground">{game.secondPrice}</span>
               ) : (
-                <span className="text-foreground">{currency + game.secondPrice}</span> 
+                <span className="text-foreground">
+                  {currency + game.secondPrice}
+                </span>
               )}
             </div>
             {game.freeUntil && game.next ? (

@@ -1,15 +1,15 @@
-import { primeGames, steamDeals, epicGamesDeals, gogDeals } from '@/data/mock-games';
+import { steamDeals, epicGamesDeals, gogDeals } from '@/data/mock-games';
 
 export const dealsConfig = {
-  prime: {
-    title: 'Prime Gaming Freebies',
-    games: primeGames,
-    colorConfig: {
-      sectionTitle: 'text-primary border-primary',
-      gameCardIcon: 'text-primary',
-      gameCardShadow: 'hover:shadow-primary/50',
-    },
-  },
+  // prime: {
+  //   title: 'Prime Gaming Freebies',
+  //   games: primeGames,
+  //   colorConfig: {
+  //     sectionTitle: 'text-primary border-primary',
+  //     gameCardIcon: 'text-primary',
+  //     gameCardShadow: 'hover:shadow-primary/50',
+  //   },
+  // },
   steam: {
     title: 'Steam Deals',
     games: steamDeals,

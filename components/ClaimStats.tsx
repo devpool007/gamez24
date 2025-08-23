@@ -38,7 +38,7 @@ export const ClaimStats = () => {
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Games Claimed</h4>
             <p className="text-sm text-muted-foreground">
-              Your stats for claimed freebies.
+              Your stats for claimed games.
             </p>
           </div>
           <div className="grid gap-2 text-sm">
