@@ -68,8 +68,11 @@ export function getDealsTitle(
   return `Deals under ${currencySign}${threshold}`;
 }
 
-export function getDealsThreshold(currency: string, rates: Rates): number {
-  const threshold = getDealThreshold(currency, rates);
+export function getDealsThreshold(currencyCode: string, rates: Rates): number {
+  if (currencyCode === "EUR"){
+    return 5;
+  }
+  const threshold = getDealThreshold(currencyCode, rates);
   return threshold;
 }
 

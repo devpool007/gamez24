@@ -38,8 +38,9 @@ export async function EpicGames({ country }: EpicGamesProps) {
   let currencyTitle = "Deals Under €5"
   if (currencyCode !== "EUR"){
     currencyTitle = getDealsTitle(currency , currencyCode, rates);
+    console.log(getDealsTitle(currency , currencyCode, rates));
   }
-  console.log(getDealsTitle(currency , currencyCode, rates));
+  
 
   const currentDeals: Game[] = data.currentGames.map((game: OfferGame) => {
     const promotionalOffers =
