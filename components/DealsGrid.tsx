@@ -1,6 +1,7 @@
 import { Game } from "@/data/mock-games";
 import { SectionTitle } from "@/components/SectionTitle";
 import { GameCard } from "@/components/GameCard";
+import { getCurrencyRates } from "@/lib/actions/currency-action";
 
 interface DealsGridProps {
   title?: string;
@@ -14,7 +15,9 @@ interface DealsGridProps {
   viewAllLink?: string;
 }
 
-export const DealsGrid = ({ games, colorConfig, viewAll }: DealsGridProps) => {
+export const DealsGrid = async ({ games, colorConfig, viewAll }: DealsGridProps) => {
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
   return (
     <section className="mb-8">
       <SectionTitle
@@ -29,6 +32,7 @@ export const DealsGrid = ({ games, colorConfig, viewAll }: DealsGridProps) => {
             <div key={game.id} className="flex justify-center">
               <GameCard
                 game={game}
+                rates={rates}
                 animationDelay={index * 100}
                 iconColorClass={colorConfig.gameCardIcon}
                 shadowColorClass={colorConfig.gameCardShadow}
