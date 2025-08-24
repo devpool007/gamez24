@@ -62,7 +62,7 @@ export function getDealsTitle(
   rates: Rates
 ): string {
   if (currencyCode === "EUR"){
-    return "Deals under €5"
+    return "Deals under €10"
   }
   const threshold = getDealThreshold(currencyCode, rates);
   return `Deals under ${currencySign}${threshold}`;

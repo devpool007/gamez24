@@ -45,7 +45,7 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
   currency: '€',
 
   currencyCode: 'USD',
-  currencyTitle: 'Deals Under €5',
+  currencyTitle: 'Deals Under €10',
   moneySaved: 0,
 
   claimGame: (platform: string, gameTitle: string) => {
