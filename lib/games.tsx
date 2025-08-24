@@ -27,7 +27,7 @@ interface SteamGamesProps {
 export async function EpicGames({ country }: EpicGamesProps) {
   const data = await epicFreeGames.getGames({ country: country });
   const currency = getCurrencySymbol(
-    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "EUR"
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "€"
   );
   const currencyCode =
     data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "EUR";
