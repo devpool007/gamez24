@@ -15,11 +15,13 @@ import Link from "next/link";
 interface SectionTitleProps {
   titleImg: string;
   viewAll: boolean;
+  slug: string;
 }
 
 export const SectionTitle: React.FC<SectionTitleProps> = ({
   titleImg,
   viewAll,
+  slug
 }) => {
   return (
     <div className="flex justify-between items-center pt-2">
@@ -30,7 +32,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
         <Image src={titleImg} alt={titleImg} width={60} height={60} />
       </div>
       {viewAll && (
-        <Link href={"/dealsU5/steam"} className="mb-8 text-sm sm:text-base mr-4 px-2 py-1 rounded-md border border-input bg-background hover:text-accent-foreground hover:border-violet-600">
+        <Link href={`/dealsU5/${slug}`} className="mb-8 text-sm sm:text-base mr-4 px-2 py-1 rounded-md border border-input bg-background hover:text-accent-foreground hover:border-violet-600">
           View All
         </Link>
       )}

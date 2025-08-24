@@ -70,7 +70,7 @@ export function getDealsTitle(
 
 export function getDealsThreshold(currencyCode: string, rates: Rates): number {
   if (currencyCode === "EUR"){
-    return 5;
+    return 10;
   }
   const threshold = getDealThreshold(currencyCode, rates);
   return threshold;

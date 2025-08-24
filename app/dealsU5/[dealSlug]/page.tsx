@@ -1,9 +1,11 @@
 // import { SteamGamesUnder5ViewAll } from "@/lib/games";
 import { SteamGamesWithServerActions } from "@/components/SteamGamesUnder5All";
+import GOGGamesUnder5All from "@/components/GOGGamesUnder5All";
 import { Suspense } from "react";
 import { getCountry } from "@/lib/actions/country-action";
 import { getCurrencyRates } from "@/lib/actions/currency-action";
-
+import { cookies } from "next/headers";
+import { getDealsThreshold } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -32,8 +34,25 @@ export default async function DealsPage({
 }) {
   const currData = await getCurrencyRates();
   const rates = currData.rates;
+  const cookieStore = await cookies();
+  const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
+  const threshold = getDealsThreshold(currencyCode, rates);
   const { dealSlug } = await params;
   const { country } = await getCountry();
+
+  let viewAllComponent;
+  if (dealSlug === "steam") {
+    viewAllComponent = (
+      <SteamGamesWithServerActions country={country} rates={rates} />
+    );
+  } else if (dealSlug === "gog") {
+    viewAllComponent = (
+      <GOGGamesUnder5All rates={rates} threshold={threshold} />
+    );
+  } else {
+    viewAllComponent = <></>;
+  }
+
   return (
     <Suspense
       fallback={
@@ -42,11 +61,7 @@ export default async function DealsPage({
         </p>
       }
     >
-      {dealSlug === "steam" ? (
-        <SteamGamesWithServerActions country={country} rates={rates} />
-      ) : (
-        <></>
-      )}
+      {viewAllComponent}
     </Suspense>
   );
 }
