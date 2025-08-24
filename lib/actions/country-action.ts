@@ -8,7 +8,7 @@ interface CountryResponse {
 
 export async function getCountry(): Promise<CountryResponse> {
   const headersList = headers();
-  const country: string = (await headersList).get("x-user-country") || "US";
+  const country: string = (await headersList).get("x-user-country") || "DE";
 
   return { country };
 }

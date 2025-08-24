@@ -16,7 +16,7 @@ export async function fetchGOGGamesWithPagination(
     const url = new URL(baseApiUrl);
     url.searchParams.append('page', page.toString());
 
-    const response = await fetch(url.toString(),  { next: { revalidate: 3600 } } );
+    const response = await fetch(url.toString(),  { cache: "force-cache"} );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

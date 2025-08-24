@@ -1,18 +1,25 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 // import fs from 'fs/promises';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-export function getCurrencySymbol(currencyCode: string, locale: string = 'en-US'): string {
-  return (0).toLocaleString(locale, {
-    style: 'currency',
-    currency: currencyCode,
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).replace(/\d/g, '').trim();
+export function getCurrencySymbol(
+  currencyCode: string,
+  locale: string = "en-US"
+): string {
+  return (0)
+    .toLocaleString(locale, {
+      style: "currency",
+      currency: currencyCode,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+    .replace(/\d/g, "")
+    .trim();
 }
 
 export function formatDateLong(dateString: string): string {
@@ -23,89 +30,53 @@ export function formatDateLong(dateString: string): string {
   return `${day}/${month}/${year}`;
 }
 
-// export const splitIntoBatches = <T>(arr: T[], size: number): T[][] => {
-//   const batches: T[][] = [];
+function roundToPricePoint(value: number): number {
+  if (value < 10) {
+    return Math.ceil(value / 5) * 5;
+  } else if (value < 100) {
+    return Math.ceil(value / 5) * 5; // e.g., 73 → 75
+  } else if (value < 1000) {
+    return Math.ceil(value / 100) * 100; // e.g., 501 → 600
+  } else if (value < 5000) {
+    return Math.ceil(value / 500) * 500; // e.g., 1907 → 2000
+  } else {
+    return Math.ceil(value / 1000) * 1000; // e.g., 9100 → 10000
+  }
+}
 
-//   for (let i = 0; i < arr.length; i += size) {
-//     batches.push(arr.slice(i, i + size));
-//   }
+type Rates = Record<string, number>;
 
-//   return batches;
-// };
+function getDealThreshold(currency: string, rates: Rates): number {
+  const baseValueEUR = 10;
+  const rate = rates[currency];
 
+  if (!rate) throw new Error(`Currency ${currency} not supported`);
 
+  const converted = baseValueEUR * rate;
+  return roundToPricePoint(converted);
+}
 
-// export const saveToFile = async (data: any[], fileName: string) => {
-//   await fs.writeFile(fileName, JSON.stringify(data, null, 2));
-// };
+export function getDealsTitle(
+  currencySign: string,
+  currency: string,
+  rates: Rates
+): string {
+  const threshold = getDealThreshold(currency, rates);
+  return `Deals under ${currencySign}${threshold}`;
+}
 
+export function getDealsThreshold(currency: string, rates: Rates): number {
+  const threshold = getDealThreshold(currency, rates);
+  return threshold;
+}
 
-// // utils.ts
-// export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+export function getExchangePrice(
+  basePrice: number,
+  currencyCode: string,
+  rates: Rates
+) {
+  const rate = rates[currencyCode];
+  const converted = basePrice * rate;
 
-
-
-// async function fetchAppDetails(appId: number) {
-//   try {
-//     const res = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appId}`, {
-//       headers: {
-//         'User-Agent': 'Mozilla/5.0',
-//         'Referer': 'https://store.steampowered.com/',
-//       },
-//     });
-//     if (!res.ok) return null;
-//     const json = await res.json();
-//     return json[appId]?.data ?? null;
-//   } catch (e) {
-//     console.warn(`Fetch failed for app ${appId}:`, e);
-//     return null;
-//   }
-// }
-
-// function isFreeGame(data: any): boolean {
-//   return data?.price_overview?.final === 0;
-// }
-
-// async function fetchBatch(appIds: number[]) {
-//   const results: any[] = [];
-
-//   await Promise.all(
-//     appIds.map(async (id) => {
-//       const data = await fetchAppDetails(id);
-//       if (isFreeGame(data)) {
-//         results.push({
-//           appId: id,
-//           name: data.name,
-//           price: 0,
-//           currency: data.price_overview.currency,
-//         });
-//       }
-//       await sleep(200); // small delay to reduce rate limit risk
-//     })
-//   );
-
-//   return results;
-// }
-
-// async function fetchAll(appIds: number[], concurrency = 5) {
-//   const allResults: any[] = [];
-
-//   for (let i = 0; i < appIds.length; i += concurrency) {
-//     const batch = appIds.slice(i, i + concurrency);
-//     console.log(`Fetching batch ${i / concurrency + 1} / ${Math.ceil(appIds.length / concurrency)}`);
-//     const batchResults = await fetchBatch(batch);
-//     allResults.push(...batchResults);
-//   }
-
-//   return allResults;
-// }
-
-// // // Example usage:
-// // async function main() {
-// //   const appIds = Array.from({ length: 250000 }, (_, i) => i + 1);
-// //   const freeGames = await fetchAll(appIds, 5);
-// //   console.log(`Found ${freeGames.length} free games.`);
-// //   // Here, upload freeGames to S3 or save locally
-// // }
-
-// // main();
+  return converted;
+}

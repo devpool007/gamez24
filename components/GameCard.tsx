@@ -2,22 +2,23 @@
 import { Game } from "@/data/mock-games";
 import { Calendar, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, getExchangePrice } from "@/lib/utils";
 import { useClaimStore } from "@/store/useClaimStore";
 import Image from "next/image";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-
 interface GameCardProps {
   game: Game;
   buttonText?: string;
   animationDelay: number;
   iconColorClass?: string;
   shadowColorClass?: string;
+  rates: Record<string, number>;
 }
 
 export const GameCard = ({
   game,
+  rates,
   animationDelay,
   iconColorClass = "text-primary",
   shadowColorClass = "hover:shadow-primary/50",
@@ -26,15 +27,65 @@ export const GameCard = ({
   const claimGame = useClaimStore((state) => state.claimGame);
   const addGamePrice = useClaimStore((state) => state.addGameMoney);
   const currency = useClaimStore((state) => state.currency);
+  const currencyCode = useClaimStore((state) => state.currencyCode);
   const [modalOpen, setModalOpen] = useState(false);
   const [claimStatus, setClaimStatus] = useState(false);
   const [modalAction, setModalAction] = useState<"claim" | "view" | null>(null);
-  const gamePrice =
+  const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
+    // Display stuff fixed now fix the addition too, (maybe it can be done within if statement)
+  let gamePrice = 
     game.secondPrice && game.secondPrice !== ""
       ? parseFloat(game.price.replace(/[^0-9.]/g, "")) -
         parseFloat(game.secondPrice.replace(/[^0-9.]/g, ""))
       : parseFloat(game.price.replace(/[^0-9.]/g, ""));
-  const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
+  const match = game.price.match(/[^\d.,]+/);
+  const currencySign = match ? match[0] : ""; // "$"
+
+  let priceDisplay;
+  let secondPriceDisplay;
+
+  if (game.platform === "GOG") {
+    priceDisplay = (
+      <span className="line-through">{currency + game.price}</span>
+    );
+    secondPriceDisplay = (
+      <span className="text-foreground">{currency + game.secondPrice}</span>
+    );
+  } else if (game.platform === "Steam" && currency !== currencySign) {
+    const firstPrice = getExchangePrice(
+      parseFloat(game.price.replace(/[^0-9.]/g, "")),
+      currencyCode,
+      rates
+    );
+    const secondPrice = getExchangePrice(
+      parseFloat(game.secondPrice!.replace(/[^0-9.]/g, "")),
+      currencyCode,
+      rates
+    );
+
+    gamePrice = game.secondPrice && game.secondPrice !== "" ? firstPrice - secondPrice : firstPrice ;
+
+    priceDisplay = (
+      <span className="line-through">{currency + firstPrice}</span>
+    );
+    secondPriceDisplay = (
+      <span className="text-foreground">{currency + secondPrice}</span>
+    );
+  } else {
+    priceDisplay = <span className="line-through">{game.price}</span>;
+
+    if (game.platform === "Steam") {
+      secondPriceDisplay = (
+        <span className="text-foreground">{game.secondPrice}</span>
+      );
+    } else {
+      secondPriceDisplay = (
+        <span className="text-foreground">{currency + game.secondPrice}</span>
+      );
+    }
+  }
+
+
 
   const handleClaim = (action: "claim" | "view") => {
     setModalAction(action);
@@ -62,7 +113,6 @@ export const GameCard = ({
   }
 
   function handleOpenClient() {
-    //NOTE: Do the Steam Client thing here and test it please!
     if (game.platform === "Epic Games") {
       window.open(
         `com.epicgames.launcher://store/product/${game.urlSlug}`,
@@ -153,19 +203,9 @@ export const GameCard = ({
           <div className="mt-2 space-y-2 text-sm text-muted-foreground flex-grow">
             <div className="flex items-center">
               <Tag className={cn("w-4 h-4 mr-2", iconColorClass)} />
-              {game.platform === "GOG" ? (
-                <span className="line-through">{currency + game.price}</span>
-              ) : (
-                <span className="line-through">{game.price}</span>
-              )}
+              {priceDisplay}
               <span className="mx-1" /> {/* Spacer */}
-              {game.platform === "Steam" ? (
-                <span className="text-foreground">{game.secondPrice}</span>
-              ) : (
-                <span className="text-foreground">
-                  {currency + game.secondPrice}
-                </span>
-              )}
+              {secondPriceDisplay}
             </div>
             {game.freeUntil && game.next ? (
               <div className="flex items-center">

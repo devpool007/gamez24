@@ -1,22 +1,20 @@
+"use client";
 import { Toaster } from "sonner";
-import type { Metadata } from "next";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Header } from "@/components/Header";
 import HorizontalNavTabs from "@/components/HorizontalNavTab";
-
-export const metadata: Metadata = {
-  title: "Free Games",
-  description: "Free Games and deals across major gaming stores",
-};
+import { useClaimStore } from "@/store/useClaimStore";
 
 export default function DealsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+   const currencyTitle = useClaimStore((state) => state.currencyTitle);
+
   const tabs = [
     { label: "Free Game Deals", path: "/deals" },
-    { label: "Deals Under €5", path: "/dealsU5" },
+    { label: currencyTitle, path: "/dealsU5" },
     { label: "Coming Soon", path: "/gameSearch" },
   ];
 

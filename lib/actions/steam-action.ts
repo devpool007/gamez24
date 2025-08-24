@@ -1,10 +1,17 @@
 'use server';
 
 import { fetchSteamGames } from '@/lib/steamGames';
-
+import { cookies } from 'next/headers';
+import { getDealsThreshold } from '../utils';
+import { getCurrencyRates } from './currency-action';
 // Server Action for getting Steam games
 export async function getSteamGames(start: number = 0, country: string) {
-  const baseUrl = `https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1&cc=${country}`;
+    const currData = await getCurrencyRates();
+    const rates = currData.rates;
+    const cookieStore = await cookies();
+    const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+    const threshold = getDealsThreshold(currencyCode,rates);
+  const baseUrl = `https://store.steampowered.com/search/?maxprice=${threshold}&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const url = `${baseUrl}&start=${start}`;
 
   try {

@@ -1,6 +1,7 @@
 import { Game } from "@/data/mock-games";
 import { SectionTitle } from "@/components/SectionTitle";
 import { GameCard } from "@/components/GameCard";
+import { getCurrencyRates } from "@/lib/actions/currency-action";
 import {
   Carousel,
   CarouselContent,
@@ -21,12 +22,15 @@ interface DealsSectionProps {
   viewAllLink?: string;
 }
 
-export const DealsSection = ({
+export const DealsSection = async ({
   games,
   colorConfig,
   title,
   viewAll,
 }: DealsSectionProps) => {
+
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
   return (
     <section className="mb-12 mt-2">
       <SectionTitle
@@ -67,6 +71,7 @@ export const DealsSection = ({
                 animationDelay={index * 100}
                 iconColorClass={colorConfig.gameCardIcon}
                 shadowColorClass={colorConfig.gameCardShadow}
+                rates={rates}
               />
             </CarouselItem>
           ))}

@@ -1,4 +1,5 @@
-import { Country, EpicFreeGames, OfferGame } from "epic-free-games";
+"use server";
+import { Country, EpicFreeGames, OfferGame } from "@/epic-free";
 import { Game } from "@/data/mock-games";
 import { CurrencySetter } from "@/components/CurrencySetter";
 import { getCurrencySymbol, formatDateLong } from "@/lib/utils";
@@ -6,9 +7,11 @@ import { dealsConfig } from "@/config/dealsConfig";
 import { DealsSection } from "@/components/DealsSection";
 import { fetchSteamGames } from "./steamGames";
 import { fetchGOGGamesServerAction } from "./actions/gog-action";
+import { getCurrencyRates } from "./actions/currency-action";
+import { getDealsTitle, getDealsThreshold } from "@/lib/utils";
+import { cookies } from 'next/headers'
 
 const epicFreeGames = new EpicFreeGames({
-  country: "DE",
   locale: "en-US",
   includeAll: true,
 });
@@ -24,8 +27,16 @@ interface SteamGamesProps {
 export async function EpicGames({ country }: EpicGamesProps) {
   const data = await epicFreeGames.getGames({ country: country });
   const currency = getCurrencySymbol(
-    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD"
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "EUR"
   );
+  const currencyCode =
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "EUR";
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
+
+  //this is set as currencyTitle in currencySetter and Zustand store 
+  const currencyTitle = getDealsTitle(currency , currencyCode, rates);
+  console.log(getDealsTitle(currency , currencyCode, rates));
 
   const currentDeals: Game[] = data.currentGames.map((game: OfferGame) => {
     const promotionalOffers =
@@ -39,7 +50,6 @@ export async function EpicGames({ country }: EpicGamesProps) {
       secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: endDate ? formatDateLong(endDate) : "",
-      // @ts-expect-error chill bro
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -57,7 +67,6 @@ export async function EpicGames({ country }: EpicGamesProps) {
       secondPrice: "0.00",
       platform: "Epic Games",
       freeUntil: startDate ? formatDateLong(startDate) : "",
-      // @ts-expect-error chill bro
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
   });
@@ -66,7 +75,7 @@ export async function EpicGames({ country }: EpicGamesProps) {
 
   return (
     <>
-      <CurrencySetter currency={currency} />
+      <CurrencySetter currency={currency} currencyCode={currencyCode} currencyTitle={currencyTitle} />
       <DealsSection
         title={epicGamesDeals[0]?.platform ?? "Epic Games"}
         games={epicGamesDeals}
@@ -93,7 +102,13 @@ export async function SteamGames({ country }: SteamGamesProps) {
 }
 
 export async function SteamGamesUnder5({ country }: SteamGamesProps) {
-  const url = `https://store.steampowered.com/search/?maxprice=5&supportedlang=english&specials=1&ndl=1&cc=${country}`;
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
+  const cookieStore = await cookies();
+  const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+  const threshold = getDealsThreshold(currencyCode,rates);
+  console.log(threshold)
+  const url = `https://store.steampowered.com/search/?maxprice=${threshold}&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const steamGames = await fetchSteamGames(url);
   return (
     <>
@@ -149,10 +164,14 @@ export async function GOGGames() {
 
 export async function GOGGamesUnder5() {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
-
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
+  const cookieStore = await cookies();
+  const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+  const threshold = getDealsThreshold(currencyCode,rates);
   // Create array of page numbers and fetch all pages in parallel
   const pagePromises = Array.from({ length: 50 }, (_, i) =>
-    fetchGOGGamesServerAction(url, i + 1, 5)
+    fetchGOGGamesServerAction(url, i + 1, threshold)
   );
 
   try {

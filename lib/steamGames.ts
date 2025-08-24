@@ -3,7 +3,7 @@ import { JSDOM } from "jsdom";
 //to get  freeUntil date hit the page url with special cookie to avoid age pop up and fetch the date through html
 export async function fetchSteamGames(url: string): Promise<Game[]> {
   try {
-    const response = await fetch(url, { next: { revalidate: 3600 } });
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

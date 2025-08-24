@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Toaster } from "sonner";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Header } from "@/components/Header";
@@ -10,10 +10,11 @@ export default function DealsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currency = useClaimStore((state) => state.currency);
+  const currencyTitle = useClaimStore((state) => state.currencyTitle);
+
   const tabs = [
     { label: "Free Game Deals", path: "/deals" },
-    { label: `Deals Under ${currency}5`, path: "/dealsU5" },
+    { label: currencyTitle, path: "/dealsU5" },
     { label: "Coming Soon", path: "/gameSearch" },
   ];
   return (
