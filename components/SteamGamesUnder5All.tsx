@@ -9,9 +9,10 @@ import { dealsConfig } from "@/config/dealsConfig";
 
 interface SteamGamesProps {
   country: string;
+  rates: Record<string, number>;
 }
 
-export function SteamGamesWithServerActions({country} : SteamGamesProps) {
+export function SteamGamesWithServerActions({country, rates} : SteamGamesProps) {
   const [steamGames, setSteamGames] = useState<Game[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -117,6 +118,7 @@ export function SteamGamesWithServerActions({country} : SteamGamesProps) {
         games={steamGames}
         colorConfig={dealsConfig.steam.colorConfig}
         viewAll={false}
+        rates={rates}
       />
 
       {steamGames.length > 0 && (

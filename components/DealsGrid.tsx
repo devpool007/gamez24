@@ -1,7 +1,7 @@
 import { Game } from "@/data/mock-games";
 import { SectionTitle } from "@/components/SectionTitle";
 import { GameCard } from "@/components/GameCard";
-import { getCurrencyRates } from "@/lib/actions/currency-action";
+
 
 interface DealsGridProps {
   title?: string;
@@ -13,11 +13,11 @@ interface DealsGridProps {
     gameCardShadow: string;
   };
   viewAllLink?: string;
+  rates: Record<string, number>;
 }
 
-export const DealsGrid = async ({ games, colorConfig, viewAll }: DealsGridProps) => {
-  const currData = await getCurrencyRates();
-  const rates = currData.rates;
+export const DealsGrid =  ({ games, colorConfig, viewAll, rates }: DealsGridProps) => {
+
   return (
     <section className="mb-8">
       <SectionTitle

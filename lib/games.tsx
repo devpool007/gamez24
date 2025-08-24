@@ -111,7 +111,7 @@ export async function SteamGamesUnder5({ country }: SteamGamesProps) {
   const cookieStore = await cookies();
   const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
   const threshold = getDealsThreshold(currencyCode,rates);
-  console.log(threshold)
+  console.log("Inside SteamGamesUnder5")
   const url = `https://store.steampowered.com/search/?maxprice=${threshold}&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const steamGames = await fetchSteamGames(url);
   return (

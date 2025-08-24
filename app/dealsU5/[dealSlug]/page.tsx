@@ -2,7 +2,7 @@
 import { SteamGamesWithServerActions } from "@/components/SteamGamesUnder5All";
 import { Suspense } from "react";
 import { getCountry } from "@/lib/actions/country-action";
-
+import { getCurrencyRates } from "@/lib/actions/currency-action";
 
 
 export async function generateMetadata({
@@ -30,6 +30,8 @@ export default async function DealsPage({
 }: {
   params: Promise<{ dealSlug: string }>;
 }) {
+  const currData = await getCurrencyRates();
+  const rates = currData.rates;
   const { dealSlug } = await params;
   const { country } = await getCountry();
   return (
@@ -41,7 +43,7 @@ export default async function DealsPage({
       }
     >
       {dealSlug === "steam" ? (
-        <SteamGamesWithServerActions country={country} />
+        <SteamGamesWithServerActions country={country} rates={rates} />
       ) : (
         <></>
       )}

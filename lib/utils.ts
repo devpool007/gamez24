@@ -84,5 +84,6 @@ export function getExchangePrice(
   const rate = rates[currencyCode];
   const converted = basePrice * rate;
 
-  return converted;
+  return Number(converted.toFixed(2));
+
 }
