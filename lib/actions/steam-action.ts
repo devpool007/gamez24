@@ -9,7 +9,7 @@ export async function getSteamGames(start: number = 0, country: string) {
     const currData = await getCurrencyRates();
     const rates = currData.rates;
     const cookieStore = await cookies();
-    const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+    const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
     const threshold = getDealsThreshold(currencyCode,rates);
   const baseUrl = `https://store.steampowered.com/search/?maxprice=${threshold}&supportedlang=english&specials=1&ndl=1&cc=${country}`;
   const url = `${baseUrl}&start=${start}`;

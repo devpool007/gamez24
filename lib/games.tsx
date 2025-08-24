@@ -27,10 +27,10 @@ interface SteamGamesProps {
 export async function EpicGames({ country }: EpicGamesProps) {
   const data = await epicFreeGames.getGames({ country: country });
   const currency = getCurrencySymbol(
-    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "€"
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD"
   );
   const currencyCode =
-    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "EUR";
+    data.currentGames[0]?.price?.totalPrice?.currencyCode ?? "USD";
   const currData = await getCurrencyRates();
   const rates = currData.rates;
 
@@ -105,7 +105,7 @@ export async function SteamGamesUnder5({ country }: SteamGamesProps) {
   const currData = await getCurrencyRates();
   const rates = currData.rates;
   const cookieStore = await cookies();
-  const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+  const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
   const threshold = getDealsThreshold(currencyCode,rates);
   console.log(threshold)
   const url = `https://store.steampowered.com/search/?maxprice=${threshold}&supportedlang=english&specials=1&ndl=1&cc=${country}`;
@@ -167,7 +167,7 @@ export async function GOGGamesUnder5() {
   const currData = await getCurrencyRates();
   const rates = currData.rates;
   const cookieStore = await cookies();
-  const currencyCode = cookieStore.get("currencyCode")?.value || "EUR";
+  const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
   const threshold = getDealsThreshold(currencyCode,rates);
   // Create array of page numbers and fetch all pages in parallel
   const pagePromises = Array.from({ length: 50 }, (_, i) =>
