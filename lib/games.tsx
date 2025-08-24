@@ -35,7 +35,10 @@ export async function EpicGames({ country }: EpicGamesProps) {
   const rates = currData.rates;
 
   //this is set as currencyTitle in currencySetter and Zustand store 
-  const currencyTitle = getDealsTitle(currency , currencyCode, rates);
+  let currencyTitle = ""
+  if (currencyCode !== "EUR"){
+    currencyTitle = getDealsTitle(currency , currencyCode, rates);
+  }
   console.log(getDealsTitle(currency , currencyCode, rates));
 
   const currentDeals: Game[] = data.currentGames.map((game: OfferGame) => {
