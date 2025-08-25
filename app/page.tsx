@@ -96,14 +96,14 @@ export default function Home() {
         {/* Hero Section */}
         <section className="text-center max-w-4xl">
           <h1 className="text-5xl md:text-6xl font-extrabold text-purple-500 mb-6 drop-shadow-2xl">
-            Welcome to <span className="text-white">Gamez24</span>
+            Welcome to <span className="text-foreground">Gamez24</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-100 mb-10 drop-shadow-lg leading-relaxed">
+          <p className="text-lg md:text-xl text-foreground mb-10 drop-shadow-lg leading-relaxed">
             Your ultimate destination to grab{" "}
             <span className="text-purple-400 font-semibold">free</span> games and{" "}
             <span className="text-purple-400 font-semibold">cheap deals</span> from
             top platforms like <span className="text-white font-medium">Steam</span>,{" "}
-            <span className="text-white font-medium">Epic Games</span>, and{" "}
+            <span className="text-foreground font-medium">Epic Games</span>, and{" "}
             <span className="text-white font-medium">GOG.com</span>. We track deals so
             you never miss a freebie.
           </p>

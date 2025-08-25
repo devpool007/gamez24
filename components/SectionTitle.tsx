@@ -29,10 +29,10 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({
         {children}
       </h1> */}
       <div className="p-5 size-25">
-        <Image src={titleImg} alt={titleImg} width={60} height={60} />
+        <Image src={titleImg} alt={titleImg} width={60} height={60} className="rounded-md"/>
       </div>
       {viewAll && (
-        <Link href={`/dealsU5/${slug}`} className="mb-8 text-sm sm:text-base mr-4 px-2 py-1 rounded-md border border-input bg-background hover:text-accent-foreground hover:border-violet-600">
+        <Link href={`/dealsU5/${slug}`} className="mb-8 text-sm sm:text-base mr-4 px-2 py-1 rounded-md border border-input bg-background hover:text-foreground hover:border-violet-600">
           View All
         </Link>
       )}

@@ -52,7 +52,7 @@ export const DealsSection = async ({
 
         {games.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 px-6">
-            <div className="text-gray-200 text-3xl text-center font-modern font-bold">
+            <div className="text-foreground text-3xl text-center font-modern font-bold">
               No free games available on {title} right now...
             </div>
             <p className="text-xl text-gray-400 mt-2 font-modern font-bold">

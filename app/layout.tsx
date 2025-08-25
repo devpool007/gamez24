@@ -53,8 +53,9 @@ export default function RootLayout({
         className={` ${orbitron.variable} ${pressStart.variable} ${rajdhani.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
         {/* Footer */}
-        <footer className="text-sm text-gray-400 text-center py-10 bg-secondary mt-5">
+        <footer className="text-sm text-foreground text-center py-10 bg-background mt-5">
           &copy; {new Date().getFullYear()} Gamez24. All rights reserved
           <div className="mt-2">
             <Link

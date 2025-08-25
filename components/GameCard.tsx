@@ -31,7 +31,7 @@ export const GameCard = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [claimStatus, setClaimStatus] = useState(false);
   const [modalAction, setModalAction] = useState<"claim" | "view" | null>(null);
-  const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
+  // const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
     // Display stuff fixed now fix the addition too, (maybe it can be done within if statement)
   let gamePrice = 
     game.secondPrice && game.secondPrice !== ""
@@ -173,7 +173,7 @@ export const GameCard = ({
       {modalOpen && <GameModal />}
       <div
         className={cn(
-          `${gamecardbkg} rounded-lg overflow-hidden shadow-lg transition-all duration-300 transform group animate-fade-in-up flex flex-col w-60 sm:w-70 `,
+          "bg-background rounded-lg overflow-hidden shadow-xl  transition-all duration-300 transform group animate-fade-in-up flex flex-col w-60 sm:w-70",
           shadowColorClass
         )}
         style={{ animationDelay: `${animationDelay}ms`, opacity: 0 }}
