@@ -54,7 +54,7 @@ export async function getSteamGamesBatch(startPage: number = 0, pageCount: numbe
       
       // Small delay to avoid rate limiting
       if (page < startPage + pageCount - 1) {
-        await new Promise(resolve => setTimeout(resolve, 60));
+        await new Promise(resolve => setTimeout(resolve, 120));
       }
     }
     

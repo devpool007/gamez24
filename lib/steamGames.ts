@@ -3,7 +3,20 @@ import { JSDOM } from "jsdom";
 //to get  freeUntil date hit the page url with special cookie to avoid age pop up and fetch the date through html
 export async function fetchSteamGames(url: string): Promise<Game[]> {
   try {
-    const response = await fetch(url, { cache: "force-cache" });
+    const response = await fetch(url, {
+      next: {revalidate : 3600},
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
+        Referer: "https://store.steampowered.com/",
+        Connection: "keep-alive",
+      },
+    });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -12,16 +25,20 @@ export async function fetchSteamGames(url: string): Promise<Game[]> {
 
     // Helper to generate a random 6-character string with special chars
     function generateRandomId(): string {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+      const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
       let result = "";
       for (let i = 0; i < 6; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       return result;
     }
 
     const gameArray: Game[] = gameInfoList.map((game) => ({
-      id: game.gameid && game.gameid !== "" ? game.gameid + generateRandomId() : generateRandomId(),
+      id:
+        game.gameid && game.gameid !== ""
+          ? game.gameid + generateRandomId()
+          : generateRandomId(),
       title: game.title,
       platform: "Steam",
       price: game.originalPrice?.replace(",", ".") ?? "",
@@ -45,7 +62,7 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
     title: string;
     releaseDate: string;
     originalPrice: string | null;
-    finalPrice: string |null;
+    finalPrice: string | null;
     gameurl: string | null;
     gameid: string | null;
     imageUrl: string | null;
@@ -161,7 +178,7 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
       }
 
       let finalPrice: string | null = null;
-      if(finalPriceElement){
+      if (finalPriceElement) {
         finalPrice = finalPriceElement.textContent?.trim() || null;
       }
 
