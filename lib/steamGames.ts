@@ -2,25 +2,44 @@ import { Game } from "../data/mock-games";
 import { JSDOM } from "jsdom";
 //to get  freeUntil date hit the page url with special cookie to avoid age pop up and fetch the date through html
 export async function fetchSteamGames(url: string): Promise<Game[]> {
+  // try {
+  //   const response = await fetch(url, {
+  //     next: {revalidate : 3600},
+  //     headers: {
+  //       "User-Agent":
+  //         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  //       Accept:
+  //         "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  //       "Accept-Language": "en-US,en;q=0.9",
+  //       "Cache-Control": "no-cache",
+  //       Pragma: "no-cache",
+  //       Referer: "https://store.steampowered.com/",
+  //       Connection: "keep-alive",
+  //     },
+  //   });
+  //   if (!response.ok) {
+  //     throw new Error(`HTTP error! status: ${response.status}`);
+  //   }
+
   try {
-    const response = await fetch(url, {
-      next: {revalidate : 3600},
+    const response = await fetch("https://api.brightdata.com/request", {
+      method: "POST",
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-        Accept:
-          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-        Referer: "https://store.steampowered.com/",
-        Connection: "keep-alive",
+        Authorization: "Bearer " + process.env.BRIGHTDATA_API_KEY,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        zone: "steam_unocker",
+        url: url,
+        format: "json",
+      }),
     });
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Bright Data fetch failed: ${response.status}`);
     }
-    const htmlString = await response.text();
+    const data = await response.json();
+    const htmlString = data.body;
     const gameInfoList = await extractGameInfoFromHTML(htmlString);
 
     // Helper to generate a random 6-character string with special chars

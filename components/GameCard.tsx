@@ -135,7 +135,7 @@ export const GameCard = ({
     return createPortal(
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div className="bg-card rounded-lg p-6 shadow-xl w-full max-w-xs flex flex-col items-center">
-          <h2 className="text-lg font-semibold mb-4 text-center">
+          <h2 className="text-lg text-white font-semibold mb-4 text-center">
             {modalAction === "view" || claimStatus
               ? "Would you like to view this game?"
               : "Would you like to claim this game?"}
@@ -146,7 +146,7 @@ export const GameCard = ({
             </Button>
             {["Steam", "Epic Games"].includes(game.platform) && (
               <Button
-                className="flex-1"
+                className="flex-1 text-white"
                 onClick={handleOpenClient}
                 variant="outline"
               >

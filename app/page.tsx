@@ -150,7 +150,7 @@ export default function Home() {
                 alt="GOG Games"
                 width={100}
                 height={100}
-                className="mb-4"
+                className="mb-4 rounded-md"
               />
             </div>
             <p className="text-gray-300 mt-2 font-medium">Free Games on GOG.com</p>

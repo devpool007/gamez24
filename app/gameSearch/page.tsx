@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function GameSearch() {
   return (
-    <div className="flex justify-center mt-40 text-xl sm:text-3xl md:text-4xl text-primary-foreground">
+    <div className="flex justify-center mt-40 text-xl sm:text-3xl md:text-4xl text-foreground">
      Game Search feature <span className="text-violet-500 font-semibold ml-2">coming soon...</span>
     </div>
   );
