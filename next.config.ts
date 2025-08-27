@@ -4,6 +4,8 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       "shared.fastly.steamstatic.com",
+      "shared.akamai.steamstatic.com",
+      "cdn.cludfare.steamstatic.com"
       // add any other domains you need
     ],
     remotePatterns: [
