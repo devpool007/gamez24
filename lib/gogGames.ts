@@ -41,9 +41,9 @@ export async function fetchGOGGamesWithPagination(
         platform: "GOG",
         title: product.title.trim(),
         freeUntil: "",
-        imageUrl: product.image.startsWith("//")
-          ? `https:${product.image}.webp`
-          : product.image,
+        imageUrl: product.boxImage.startsWith("//")
+          ? `https:${product.boxImage}.webp`
+          : product.boxImage,
         urlSlug: product.url.startsWith("/")
           ? `https://www.gog.com${product.url}`
           : product.url,

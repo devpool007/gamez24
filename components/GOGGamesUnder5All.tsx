@@ -13,14 +13,14 @@ export default async function GOGGamesUnder5All({
 }: GOGProps) {
   const url = "https://embed.gog.com/games/ajax/filtered?mediaType=game";
   // Create array of page numbers and fetch all pages in parallel
-  const pagePromises = Array.from({ length: 100 }, (_, i) =>
+  const pagePromises = Array.from({ length: 10 }, (_, i) =>
     fetchGOGGamesServerAction(url, i + 1, threshold)
   );
 
   try {
     const results = await Promise.all(pagePromises);
     const finalGOG = results.flatMap((result) => result.games);
-
+    console.log("GOG game length in Under 5 All")
     console.log(finalGOG.length);
     return (
       <>

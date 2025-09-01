@@ -174,14 +174,14 @@ export async function GOGGamesUnder5() {
   const currencyCode = cookieStore.get("currencyCode")?.value || "USD";
   const threshold = getDealsThreshold(currencyCode,rates);
   // Create array of page numbers and fetch all pages in parallel
-  const pagePromises = Array.from({ length: 50 }, (_, i) =>
+  const pagePromises = Array.from({ length: 7 }, (_, i) =>
     fetchGOGGamesServerAction(url, i + 1, threshold)
   );
 
   try {
     const results = await Promise.all(pagePromises);
     const finalGOG = results.flatMap((result) => result.games);
-
+    console.log("GOG under 5")
     console.log(finalGOG.length);
     return (
       <>

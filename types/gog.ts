@@ -25,6 +25,7 @@ interface Product {
   publisher: string;
   genres: string[];
   isDiscounted: boolean;
+  boxImage: string;
   // ... other properties you might need
 }
 
