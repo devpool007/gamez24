@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-// import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/next";
 import {
   Geist,
   Geist_Mono,
@@ -71,7 +71,7 @@ export default function RootLayout({
           </div>
         </footer>
 
-        {/* <Analytics /> */}
+        <Analytics />
       </body>
     </html>
   );

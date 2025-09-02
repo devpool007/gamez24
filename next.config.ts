@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 2678400,
+    unoptimized: true,
     qualities: [5,10,15,20,25,30,75],
     domains: [
       "shared.fastly.steamstatic.com",

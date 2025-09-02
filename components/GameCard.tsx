@@ -185,6 +185,7 @@ export const GameCard = ({
               alt={game.title}
               fill
               quality={15}
+              unoptimized
               className="object-cover"
             />
           ) : (
@@ -193,6 +194,7 @@ export const GameCard = ({
               alt="Image not found"
               fill
               quality={15}
+              unoptimized
               className="object-cover"
             />
           )}
