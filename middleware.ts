@@ -9,7 +9,7 @@ export default function middleware(request: NextRequest): NextResponse {
     request.headers.get('x-vercel-ip-country') ||
     request.headers.get('cf-ipcountry') ||
     request.headers.get('x-country-code') ||
-    'US';
+    'DE';
   
   // Add country to headers so it's available in your app
   requestHeaders.set('x-user-country', country);
