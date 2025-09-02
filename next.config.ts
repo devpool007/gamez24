@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    minimumCacheTTL: 2678400,
+    qualities: [5,10,15,20,25,30,75],
     domains: [
       "shared.fastly.steamstatic.com",
       "shared.akamai.steamstatic.com",

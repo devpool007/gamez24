@@ -184,6 +184,7 @@ export const GameCard = ({
               src={game.imageUrl}
               alt={game.title}
               fill
+              quality={15}
               className="object-cover"
             />
           ) : (
@@ -191,6 +192,7 @@ export const GameCard = ({
               src="/not_found.jpeg" // Replace with your not found image path
               alt="Image not found"
               fill
+              quality={15}
               className="object-cover"
             />
           )}
