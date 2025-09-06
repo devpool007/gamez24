@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+"use server"
+import GameSearch from "@/components/GameSearch";
+import { getSteamIDforGameServer } from "@/lib/actions/getSteamID-action";
 
-export const metadata: Metadata = {
-  title: "Free Games",
-  description: "Free Games and deals across major gaming stores",
-};
+export default async function GameSearchPage(){
 
-export default function GameSearch() {
   return (
-    <div className="flex justify-center mt-40 text-xl sm:text-3xl md:text-4xl text-foreground">
-     Game Search feature <span className="text-violet-500 font-semibold ml-2">coming soon...</span>
-    </div>
+    <GameSearch getSteamIDforGame={getSteamIDforGameServer}/>
   );
+
 }
