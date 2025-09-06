@@ -1,8 +1,8 @@
 // app/actions/getSteamID.ts
 "use server"
-import { getSteamIDsForGame } from "steamgames";
+import { getSteamIDsforGame } from "steamgames";
 
 export async function getSteamIDforGameServer(gameName: string) {
-  const ids = await getSteamIDsForGame(gameName);
+  const ids = await getSteamIDsforGame(gameName);
   return ids;
 }
