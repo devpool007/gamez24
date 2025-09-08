@@ -3,10 +3,10 @@ import { twMerge } from "tailwind-merge";
 import localGames from "../data/gog_app_list.json";
 // import fs from 'fs/promises';
 
-export function getLocalGameMatches(gameName: string): { name: string; id: string }[] {
+export function getLocalGameMatches(gameName: string): string[] {
   return Object.entries(localGames)
     .filter(([name]) => name.toLowerCase().includes(gameName.toLowerCase()))
-    .map(([name, id]) => ({ name, id }));
+    .map(([, id]) => id); // only return the id
 }
 
 export function cn(...inputs: ClassValue[]) {
@@ -67,15 +67,15 @@ export function getDealsTitle(
   currencyCode: string,
   rates: Rates
 ): string {
-  if (currencyCode === "EUR"){
-    return "Deals under €10"
+  if (currencyCode === "EUR") {
+    return "Deals under €10";
   }
   const threshold = getDealThreshold(currencyCode, rates);
   return `Deals under ${currencySign}${threshold}`;
 }
 
 export function getDealsThreshold(currencyCode: string, rates: Rates): number {
-  if (currencyCode === "EUR"){
+  if (currencyCode === "EUR") {
     return 10;
   }
   const threshold = getDealThreshold(currencyCode, rates);
@@ -91,5 +91,4 @@ export function getExchangePrice(
   const converted = basePrice * rate;
 
   return Number(converted.toFixed(2));
-
 }
