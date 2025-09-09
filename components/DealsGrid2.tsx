@@ -39,7 +39,7 @@ export const DealsGrid2 = ({
       />
       {games.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 px-6">
-          <div className="text-foreground text-3xl text-center font-modern font-bold">
+          <div className="text-foreground text-2xl sm:text-3xl md:text-3xl lg:text-3xl xl:text-3xl text-center font-modern font-bold">
             Sorry no games have been searched or found... 
           </div>
         </div>

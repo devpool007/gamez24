@@ -222,7 +222,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
   return (
     <>
       <div className="flex flex-col items-center mt-20 text-l sm:text-xl md:text-2xl text-foreground">
-        <h1 className="mb-6 text-5xl font-modern font-bold">Game Search</h1>
+        <h1 className="mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl font-modern font-bold">Game Search</h1>
 
         {/* Search Input */}
         <div className="flex">
@@ -231,11 +231,11 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
             placeholder="Enter game name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-72 sm:w-96 px-4 py-2 text-lg border border-gray-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+            className="w-50 sm:w-96 px-4 py-2 text-sm sm:text-lg md:text-xl border border-gray-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
           />
           <button
             onClick={handleSearch}
-            className="ml-3 px-5 py-2 bg-violet-600 text-lg text-white rounded-2xl hover:bg-violet-700 transition"
+            className="ml-2 px-5 py-2  bg-violet-600 text-xs sm:text-lg md:text-xl text-white rounded-2xl hover:bg-violet-700 transition"
           >
             Search
           </button>

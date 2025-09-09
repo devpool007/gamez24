@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import HorizontalNavTabs from "@/components/HorizontalNavTab";
 import { useClaimStore } from "@/store/useClaimStore";
 
+
 export default function DealsLayout({
   children,
 }: {
