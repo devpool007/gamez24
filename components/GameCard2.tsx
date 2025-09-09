@@ -214,7 +214,7 @@ export const GameCard2 = ({
         </div>
 
         <div className="pt-2 pb-4 pl-4 pr-4 flex flex-col flex-grow">
-          <h3 className="font-bold text-lg truncate text-foreground">
+          <h3 className="font-bold text-xs sm:text-sm md:text-sm lg:text-sm xl:text-sm truncate text-foreground">
             {game.title}
           </h3>
           <div className="mt-2 space-y-2 text-sm text-muted-foreground flex-grow">
