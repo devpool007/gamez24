@@ -15,7 +15,7 @@ export default function DealsLayout({
   const tabs = [
     { label: "Free Game Deals", path: "/deals" },
     { label: currencyTitle, path: "/dealsU5" },
-    { label: "Coming Soon", path: "/gameSearch" },
+    { label: "Game Search", path: "/gameSearch" },
   ];
   return (
     <div className="min-h-screen bg-background text-foreground">

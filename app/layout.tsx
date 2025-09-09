@@ -69,6 +69,11 @@ export default function RootLayout({
               Terms of Service
             </Link>
           </div>
+          <div className="flex justify-center mt-2">
+            <Link href="https://github.com/devpool007" className="hover:underline hover:text-gray-300">
+              Made with ❤️ by devpool007
+            </Link>
+          </div>
         </footer>
 
         <Analytics />

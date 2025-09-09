@@ -1,7 +1,24 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import localGames from "../data/gog_app_list.json";
+import Fuse from "fuse.js";
 
-// import fs from 'fs/promises';
+// Transform JSON into array of objects
+const gamesArray = Object.entries(localGames).map(([name, id]) => ({
+  name,
+  id,
+}));
+// Configure Fuse
+const fuse = new Fuse(gamesArray, {
+  keys: ["name"],
+  threshold: 0.2, // lower = stricter matching
+  ignoreLocation: false,
+});
+
+export function getLocalGameMatches(gameName: string): string[] {
+  const results = fuse.search(gameName);
+  return results.map((r) => r.item.id);
+}
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -61,15 +78,15 @@ export function getDealsTitle(
   currencyCode: string,
   rates: Rates
 ): string {
-  if (currencyCode === "EUR"){
-    return "Deals under €10"
+  if (currencyCode === "EUR") {
+    return "Deals under €10";
   }
   const threshold = getDealThreshold(currencyCode, rates);
   return `Deals under ${currencySign}${threshold}`;
 }
 
 export function getDealsThreshold(currencyCode: string, rates: Rates): number {
-  if (currencyCode === "EUR"){
+  if (currencyCode === "EUR") {
     return 10;
   }
   const threshold = getDealThreshold(currencyCode, rates);
@@ -85,5 +102,4 @@ export function getExchangePrice(
   const converted = basePrice * rate;
 
   return Number(converted.toFixed(2));
-
 }
