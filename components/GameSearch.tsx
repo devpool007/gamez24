@@ -8,7 +8,9 @@ import { dealsConfig } from "@/config/dealsConfig";
 import { Game } from "@/data/mock-games";
 import { GogProduct } from "@/types/gog_api";
 import { AppDetailsResponse } from "@/types/steam";
+import { getCountry } from "@/lib/actions/country-action";
 import { GOGPriceResponse } from "@/types/got_price";
+
 type GameSearchProps = {
   getSteamIDforGame: (name: string) => Promise<number[] | undefined>;
 };
@@ -23,7 +25,7 @@ function parsePrice(priceStr: string): number {
   }
 
   const integerPart = numericPart.slice(0, -2); // all except last 2
-  const decimalPart = numericPart.slice(-2);   // last 2 digits
+  const decimalPart = numericPart.slice(-2); // last 2 digits
 
   return parseFloat(`${integerPart}.${decimalPart}`);
 }
@@ -47,16 +49,18 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
     setEpicGames([]);
 
     try {
-      const res = await fetch(`http://127.0.0.1:8000/games?name=${searchTerm}`);
+      const res = await fetch(
+        `https://epic-backend-3dto.onrender.com/games?name=${searchTerm}`
+      );
       if (!res.ok) throw new Error(`HTTP error for Epic ${res.status}`);
       const data = (await res.json()) as EpicGamesResponse;
       console.log(data);
       setEpicGames(data.data.Catalog.searchStore.elements);
     } catch (err) {
-      setError("Error fetching Epic Games while searching...");
+      setError("Error fetching games while searching, please refresh...");
       console.error(err);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
 
     try {
@@ -96,6 +100,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
         urlSlug: resultUrl || "",
       };
     });
+    
     setEpicDeals(tempDeals);
 
     // time to call GOG ;)
@@ -113,18 +118,26 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
         console.log(GOGIds);
       }
 
-      const res = await fetch(`http://127.0.0.1:8000/gog?ids=${GOGIds}`);
+      const res = await fetch(
+        `https://epic-backend-3dto.onrender.com/gog?ids=${GOGIds}`
+      );
       if (!res.ok) throw new Error(`HTTP error for GOG ${res.status}`);
       const data: GogProduct[] = await res.json();
+
+      const { country } = await getCountry();
+
+      console.log(country);
 
       const tempDealsPromises = (data ?? []).map(async (game: GogProduct) => {
         const img = game.images.logo2x;
 
         // You can fetch price here if needed, currently not used
-        const res = await fetch(`https://embed.gog.com/products/${game.id}/prices?countryCode=DE`);
+        const res = await fetch(
+          `https://embed.gog.com/products/${game.id}/prices?countryCode=${country}`
+        );
         if (!res.ok) throw new Error(`HTTP error for GOG ${res.status}`);
         const data: GOGPriceResponse = await res.json();
-        
+
         const firstPrice = parsePrice(data._embedded.prices[0].basePrice);
         const secondPrice = parsePrice(data._embedded.prices[0].finalPrice);
 
@@ -150,20 +163,17 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
 
     //Time to get Steam Games now from Ids
     async function fetchGames2() {
-      const steamTempDeals: Game[] = [];
+      setLoading(true);
+      const { country } = await getCountry();
 
-      for (let i = 0; i < steamIds!.length; ++i) {
-        setLoading(true);
-        const id = steamIds![i];
-        const res = await fetch(`http://127.0.0.1:8000/steam?id=${id}&cc=DE`);
+      const steamPromises = steamIds!.map(async (id) => {
+        const res = await fetch(
+          `https://epic-backend-3dto.onrender.com/steam?id=${id}&cc=${country}`
+        );
         if (!res.ok) throw new Error(`HTTP error for Steam ${res.status}`);
         const data: AppDetailsResponse = await res.json();
 
-        // if(data[id].data.price_overview === undefined){
-        //   continue;
-        // }
-
-        const tempDeal = {
+        const tempDeal : Game = {
           id: String(id),
           imageUrl: data[id].data?.header_image,
           title: data[id].data?.name,
@@ -184,14 +194,22 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
           tempDeal.price === undefined ||
           tempDeal.secondPrice === undefined
         ) {
-          continue;
+          return null; // skip invalid
         }
 
-        steamTempDeals.push(tempDeal);
-      }
+        return tempDeal;
+      });
+
+      const results = await Promise.all(steamPromises);
+
+      const steamTempDeals = results.filter(
+        (deal): deal is Game => deal !== null
+      );
+
       console.log("Steam Deals", steamTempDeals);
 
-      setSteamDeals(steamTempDeals);
+      setSteamDeals(steamTempDeals!
+);
       setLoading(false);
     }
     if (steamIds!.length > 0) {
@@ -227,14 +245,14 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-              <p>Loading games...</p>
+              <p>Fetching data from all stores...</p>
             </div>
           </div>
         )}
         {error && <p className="text-red-500">{error}</p>}
         {/* Results */}
-        <div className="mt-6">
-          {/* {steamIds && (
+        {/* <div className="mt-6"> */}
+        {/* {steamIds && (
             <div className="mt-4">
               <p className="text-green-500 font-semibold mb-2">
                 Found Steam IDs:
@@ -251,7 +269,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
               </div>
             </div>
           )} */}
-          {/* {GOGIds && (
+        {/* {GOGIds && (
             <div className="mt-4">
               <p className="text-blue-500 font-semibold mb-2">GOG JSON IDs:</p>
               <div className="flex flex-col gap-1">
@@ -266,7 +284,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
               </div>
             </div>
           )} */}
-        </div>
+        {/* </div> */}
       </div>
       {!loading && (
         <DealsGrid2

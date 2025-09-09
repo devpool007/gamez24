@@ -1,12 +1,23 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import localGames from "../data/gog_app_list.json";
-// import fs from 'fs/promises';
+import Fuse from "fuse.js";
+
+// Transform JSON into array of objects
+const gamesArray = Object.entries(localGames).map(([name, id]) => ({
+  name,
+  id,
+}));
+// Configure Fuse
+const fuse = new Fuse(gamesArray, {
+  keys: ["name"],
+  threshold: 0.2, // lower = stricter matching
+  ignoreLocation: false,
+});
 
 export function getLocalGameMatches(gameName: string): string[] {
-  return Object.entries(localGames)
-    .filter(([name]) => name.toLowerCase().includes(gameName.toLowerCase()))
-    .map(([, id]) => id); // only return the id
+  const results = fuse.search(gameName);
+  return results.map((r) => r.item.id);
 }
 
 export function cn(...inputs: ClassValue[]) {

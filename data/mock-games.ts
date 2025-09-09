@@ -15,8 +15,8 @@ export interface Game {
   next? : boolean;
   title: string;
   platform: string;
-  price: string;
-  secondPrice?: string;
+  price: string | undefined;
+  secondPrice?: string | undefined;
   imageUrl: string;
   freeUntil: string | JSX.Element;
   urlSlug: string;
