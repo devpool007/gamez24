@@ -133,7 +133,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
 
         // You can fetch price here if needed, currently not used
         const res = await fetch(
-          `https://embed.gog.com/products/${game.id}/prices?countryCode=${country}`
+          `https://epic-backend-3dto.onrender.com/gogProduct?id${game.id}&cc=${country}`
         );
         if (!res.ok) throw new Error(`HTTP error for GOG ${res.status}`);
         const data: GOGPriceResponse = await res.json();
