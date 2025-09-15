@@ -5,11 +5,11 @@ export async function apiRequest<T>(
   body?: Record<string, string>
 ): Promise<T> {
 
-  const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
+  // const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
 
     // Debug: Log the exact URL being called
-  console.log("🚀 Making request to:", fullUrl);
-  console.log("🍪 Document cookies:", document.cookie);
+  // console.log("🚀 Making request to:", fullUrl);
+  // console.log("🍪 Document cookies:", document.cookie);
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
     
     method,
