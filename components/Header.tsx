@@ -1,12 +1,13 @@
+"use client";
 // import { User, Bell } from "lucide-react";
 // import { Gamepad2, User, Bell, LogOut } from 'lucide-react';
 // import { Button } from "@/components/ui/button";
 // import { useToast } from '@/hooks/use-toast';
 import { ClaimStats } from "./ClaimStats";
-import { TempLogin } from "./TempLogin";
 import { TempNotification } from "./TempNotification";
 import Image from "next/image";
 import Link from "next/link";
+import { UserHeader } from "./UserHeader";
 // import Link from 'next/link';
 // import { Link, useNavigate } from 'react-router-dom';
 // import { useAuth } from '@/contexts/AuthContext';
@@ -40,6 +41,7 @@ export const Header = () => {
   //   </Button> */}
   // {/* )} */}
 
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-sm z-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,7 +68,7 @@ export const Header = () => {
 
           <div className="flex items-center gap-2">
             <TempNotification />
-            <TempLogin />
+            <UserHeader/>
           </div>
         </div>
       </div>

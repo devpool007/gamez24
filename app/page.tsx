@@ -74,21 +74,26 @@
 // app/page.tsx
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Gamez24",
+  description: "Best and latest free Game deals for everyone!",
+};
 
 export default function Home() {
   return (
     <main className="min-h-screen text-white flex flex-col items-center justify-center px-6 py-12 relative">
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 bg-black">
         {/* You can use a collage of game images or a single hero image */}
         <Image
           src="/gaming-page.png" // Replace with your gaming background image
           alt="Gaming Background"
           fill
-          className="object-cover opacity-15" // Adjust opacity as needed
+          className="object-cover opacity-30" // Adjust opacity as needed
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/80"></div>
       </div>
 
       {/* Content - positioned above background */}
@@ -111,7 +116,7 @@ export default function Home() {
             href="/deals" 
             className="bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold px-8 py-4 rounded-2xl transition-all duration-300 shadow-2xl shadow-purple-900/50 hover:shadow-purple-600/50 hover:scale-105"
           >
-            Explore Free Deals
+            Explore Deals
           </Link>
         </section>
 
