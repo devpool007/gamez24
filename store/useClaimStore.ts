@@ -15,9 +15,9 @@ interface ClaimStore {
   claimGame: (platform: string, gameTitle: string) => void;
   totalClaims: () => number;
   addGameMoney: (money: number) => void;
-  setCurrency: (currency: string) =>void;
-  setCurrencyCode: (currencyCode: string) =>void;
-  setCurrencyTitle: (currencyTitle: string) =>void;
+  setCurrency: (currency: string) => void;
+  setCurrencyCode: (currencyCode: string) => void;
+  setCurrencyTitle: (currencyTitle: string) => void;
 }
 
 const platformToCategoryMap: { [key: string]: DealCategory } = {
@@ -42,10 +42,10 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     gog: 0,
   },
 
-  currency: '€',
+  currency: "€",
 
-  currencyCode: 'USD',
-  currencyTitle: 'Deals Under €10',
+  currencyCode: "USD",
+  currencyTitle: "Deals Under €10",
   moneySaved: 0,
 
   claimGame: (platform: string, gameTitle: string) => {
@@ -79,14 +79,14 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
   },
 
   setCurrency: (currency) => {
-    set({ currency : currency})
+    set({ currency: currency });
   },
 
   setCurrencyCode: (currencyCode) => {
-    set({ currencyCode : currencyCode})
+    set({ currencyCode: currencyCode });
   },
 
   setCurrencyTitle: (currencyTitle) => {
-    set({ currencyTitle : currencyTitle})
+    set({ currencyTitle: currencyTitle });
   }
 }));

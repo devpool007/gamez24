@@ -14,6 +14,8 @@ import { GOGPriceResponse } from "@/types/got_price";
 type GameSearchProps = {
   getSteamIDforGame: (name: string) => Promise<number[] | undefined>;
 };
+// https://epic-backend-3dto.onrender.com
+const backend_url = "https://epic-backend-3dto.onrender.com"
 
 function parsePrice(priceStr: string): number {
   // remove currency and whitespace
@@ -50,7 +52,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
 
     try {
       const res = await fetch(
-        `https://epic-backend-3dto.onrender.com/games?name=${searchTerm}`
+        `${backend_url}/games/epic?name=${searchTerm}`
       );
       if (!res.ok) throw new Error(`HTTP error for Epic ${res.status}`);
       const data = (await res.json()) as EpicGamesResponse;
@@ -119,7 +121,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
       }
 
       const res = await fetch(
-        `https://epic-backend-3dto.onrender.com/gog?ids=${GOGIds}`
+        `${backend_url}/games/gog?ids=${GOGIds}`
       );
       if (!res.ok) throw new Error(`HTTP error for GOG ${res.status}`);
       const data: GogProduct[] = await res.json();
@@ -128,12 +130,12 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
 
       console.log(country);
 
-      const tempDealsPromises = (data ?? []).map(async (game: GogProduct) => {
+      const tempDealsPromises = (data ?? []).slice(0,5).map(async (game: GogProduct) => {
         const img = game.images.logo2x;
 
         // You can fetch price here if needed, currently not used
         const res = await fetch(
-          `https://epic-backend-3dto.onrender.com/gogProduct?id=${game.id}&cc=${country}`
+          `${backend_url}/games/gogProduct?id=${game.id}&cc=${country}`
         );
         if (!res.ok) throw new Error(`HTTP error for GOG ${res.status}`);
         const data: GOGPriceResponse = await res.json();
@@ -165,10 +167,11 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
     async function fetchGames2() {
       setLoading(true);
       const { country } = await getCountry();
-
-      const steamPromises = steamIds!.map(async (id) => {
+      console.log(steamIds)
+      console.log(steamIds?.length)
+      const steamPromises = steamIds!.slice(0,25).map(async (id) => {
         const res = await fetch(
-          `https://epic-backend-3dto.onrender.com/steam?id=${id}&cc=${country}`
+          `${backend_url}/games/steam?id=${id}&cc=${country}`
         );
         if (!res.ok) throw new Error(`HTTP error for Steam ${res.status}`);
         const data: AppDetailsResponse = await res.json();

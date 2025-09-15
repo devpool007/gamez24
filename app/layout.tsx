@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
+import AuthProvider from "@/components/AuthProvider";
 import {
   Geist,
   Geist_Mono,
@@ -37,11 +37,6 @@ const rajdhani = Rajdhani({
   variable: "--font-rajdhani",
 });
 
-export const metadata: Metadata = {
-  title: "Gamez24",
-  description: "Best and latest free Game deals for everyone!",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -52,10 +47,10 @@ export default function RootLayout({
       <body
         className={` ${orbitron.variable} ${pressStart.variable} ${rajdhani.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>{children}</AuthProvider>
 
         {/* Footer */}
-        <footer className="text-sm text-foreground text-center py-10 bg-background mt-5">
+        <footer className="text-sm text-foreground text-center py-10 bg-background pt-10">
           &copy; {new Date().getFullYear()} Gamez24. All rights reserved
           <div className="mt-2">
             <Link
@@ -70,7 +65,10 @@ export default function RootLayout({
             </Link>
           </div>
           <div className="flex justify-center mt-2">
-            <Link href="https://github.com/devpool007" className="hover:underline hover:text-gray-300">
+            <Link
+              href="https://github.com/devpool007"
+              className="hover:underline hover:text-gray-300"
+            >
               Made with ❤️ by devpool007
             </Link>
           </div>

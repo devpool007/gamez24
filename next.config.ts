@@ -9,7 +9,8 @@ const nextConfig: NextConfig = {
       "shared.fastly.steamstatic.com",
       "shared.akamai.steamstatic.com",
       "cdn.cludfare.steamstatic.com",
-      "epic-backend-3dto.onrender.com"
+      "epic-backend-3dto.onrender.com",
+      "127.0.0.1:8000"
       // add any other domains you need
     ],
     remotePatterns: [
