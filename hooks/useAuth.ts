@@ -14,9 +14,9 @@ export function useAuth() {
       try {
         const data = await apiRequest("/users/me");
         const userData = data as { id: string; email: string };
-        setUser(userData);
+        setUser(userData,"");
       } catch {
-        setUser(null);
+        setUser(null,"");
       } finally {
         setLoading(false);
       }
