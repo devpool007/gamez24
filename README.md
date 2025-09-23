@@ -41,19 +41,18 @@ Other important folders:
 - shadcn/ui + Radix primitives
 - sonner for toast notifications
 - jsdom for server-side HTML parsing of Steam pages
-- (recommended) TanStack Query for client-side caching
 
 ## Backend (Kotlin Spring Boot)
 
 This project uses a dedicated backend service (Kotlin + Spring Boot) for user accounts, authentication, tracking claimed games, storing user stats (money saved, claims history) and search endpoints. The backend lives in a separate repository — add your production/staging repo URL here.
 
-- Placeholder backend repository: https://github.com/<your-org>/gamez24-backend
+- Backend repository: https://github.com/devpool007/springboot-gamez24
 
 Responsibilities of the backend service:
 
 - User signup / login / JWT auth and session validation
 - Persisting claimed games and calculating user stats (money saved, claim counts)
-- Providing search endpoints and advanced filtering for games
+- Providing search endpoints and advanced filtering for games (seperate Python FastAPI backend)
 - Handling user settings and preferences
 - Any protected or rate-limited endpoints that should not be called directly from the client
 
@@ -64,6 +63,7 @@ Frontend integration notes:
 
 ```env
 NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+NEXT_PUBLIC_PYTHON_BACKEND=https://api2.example.com
 ```
 
 - For authenticated calls, the frontend uses tokens (e.g. JWT) returned by the backend. Keep auth tokens in secure httpOnly cookies or use a secure client-side storage strategy and follow best practices.
