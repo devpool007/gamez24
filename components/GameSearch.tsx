@@ -14,8 +14,8 @@ import { GOGPriceResponse } from "@/types/got_price";
 type GameSearchProps = {
   getSteamIDforGame: (name: string) => Promise<number[] | undefined>;
 };
-// https://epic-backend-3dto.onrender.com
-const backend_url = "https://epic-backend-3dto.onrender.com"
+
+const backend_url = process.env.NEXT_PUBLIC_PYTHON_BACKEND
 
 function parsePrice(priceStr: string): number {
   // remove currency and whitespace
