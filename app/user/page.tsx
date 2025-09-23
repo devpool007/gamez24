@@ -3,12 +3,14 @@
 
 import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useClaimStore } from "@/store/useClaimStore";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function UserPage() {
   const { user, logout } = useAuthStore();
   const [isEditing, setIsEditing] = useState(false);
+  const { user: userDetails } = useClaimStore();
 
   if (!user) {
     return (
@@ -86,9 +88,9 @@ export default function UserPage() {
           </thead>
           <tbody>
             {[
-              { platform: "Steam", games: 10, saved: 120 },
-              { platform: "Epic", games: 8, saved: 90 },
-              { platform: "GOG", games: 5, saved: 45 },
+              { platform: "Steam", games: userDetails?.stats.steamGames, saved: userDetails?.stats.totalSaved },
+              { platform: "Epic", games: userDetails?.stats.epicGames, saved: userDetails?.stats.totalSaved },
+              { platform: "GOG", games: userDetails?.stats.gogGames, saved: userDetails?.stats.totalSaved },
             ].map((stat) => (
               <tr key={stat.platform} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-2 font-medium">{stat.platform}</td>

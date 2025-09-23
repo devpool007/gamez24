@@ -2,7 +2,7 @@
 export async function apiRequest<T>(
   endpoint: string,
   method: "GET" | "POST" = "GET",
-  body?: Record<string, string>
+  body?: Record<string, string | number>
 ): Promise<T> {
 
   // const fullUrl = `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`;
@@ -17,7 +17,7 @@ export async function apiRequest<T>(
       "Content-Type": "application/json",
     },
     body: body ? JSON.stringify(body) : undefined,
-    credentials: "include", // allow cookies if FastAPI uses them
+    credentials: "include", // allow cookies if backend uses them
   });
 
   if (!res.ok) {

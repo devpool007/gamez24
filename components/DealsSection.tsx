@@ -35,9 +35,9 @@ export const DealsSection = async ({
     <section className="mb-12 mt-2">
       <SectionTitle
         titleImg={
-          title === "Steam"
+          title === "STEAM"
             ? "/steam_logo.png"
-            : title === "Epic Games"
+            : title === "EPIC_GAMES"
             ? "/epic_games.png"
             : title === "GOG"
             ? "/gog3.png"

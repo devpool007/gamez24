@@ -52,7 +52,7 @@ export async function EpicGames({ country }: EpicGamesProps) {
       title: game.title,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       secondPrice: "0.00",
-      platform: "Epic Games",
+      platform: "EPIC_GAMES",
       freeUntil: endDate ? formatDateLong(endDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
@@ -69,7 +69,7 @@ export async function EpicGames({ country }: EpicGamesProps) {
       next: true,
       price: game.price.totalPrice.fmtPrice.originalPrice,
       secondPrice: "0.00",
-      platform: "Epic Games",
+      platform: "EPIC_GAMES",
       freeUntil: startDate ? formatDateLong(startDate) : "",
       urlSlug: game.offerMappings?.[0]?.pageSlug || game.urlSlug || "",
     };
