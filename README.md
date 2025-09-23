@@ -170,8 +170,6 @@ If you'd like, I can add ISSUE / PR templates and a GitHub Actions workflow to r
 - Do not commit secrets or API keys.
 - Treat scraping respectfully and avoid overloading third-party servers.
 
-Suggested license: MIT (add `LICENSE` file if you accept)
 
----
 
-If you want, I can commit this README for you and/or create the API route and React Query scaffolding to make client caching easy for contributors. Which would you like next?
+
