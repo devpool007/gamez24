@@ -19,7 +19,7 @@ export default function AuthProvider({
             Loading...
             </div>
             <div className="animate-pulse text-sm text-foreground font-modern mt-2">
-            Please have patience the backend server is booting up. This may take a moment.
+            Please be patient while the backend server boots up. This may take a moment.
             </div>
         </div>
       </>
