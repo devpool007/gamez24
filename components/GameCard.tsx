@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn, getExchangePrice } from "@/lib/utils";
 import { useClaimStore } from "@/store/useClaimStore";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 interface GameCardProps {
   game: Game;
@@ -24,22 +24,34 @@ export const GameCard = ({
   shadowColorClass = "hover:shadow-primary/50",
 }: GameCardProps) => {
   // let trueButtonText = "";
-  const claimGame = useClaimStore((state) => state.claimGame);
-  const addGamePrice = useClaimStore((state) => state.addGameMoney);
+  // const claimGame = useClaimStore((state) => state.claimGame);
+  // const addGamePrice = useClaimStore((state) => state.addGameMoney);
   const currency = useClaimStore((state) => state.currency);
   const currencyCode = useClaimStore((state) => state.currencyCode);
   const [modalOpen, setModalOpen] = useState(false);
-  const [claimStatus, setClaimStatus] = useState(false);
+  // const [claimStatus, setClaimStatus] = useState(false);
+
+
+  const { claimGame, claimedGames, claimedGameNames } = useClaimStore();
+    // ✅ Calculate claim status with useMemo - no state needed!
+  const claimStatus = useMemo(() => {
+    return (
+      claimedGameNames?.includes(game.title) ||
+      claimedGames.some((claimedGame) => claimedGame.game_name === game.title)
+    );
+  }, [game.title, claimedGameNames, claimedGames]);
   const [modalAction, setModalAction] = useState<"claim" | "view" | null>(null);
+
   // const gamecardbkg = game.platform === "Steam" ? "bg-[#1b2838]" : "bg-card";
-    // Display stuff fixed now fix the addition too, (maybe it can be done within if statement)
-  let gamePrice = 
-    game.secondPrice && game.secondPrice !== ""
-      ? parseFloat(game.price.replace(/[^0-9.]/g, "")) -
-        parseFloat(game.secondPrice.replace(/[^0-9.]/g, ""))
-      : parseFloat(game.price.replace(/[^0-9.]/g, ""));
+  // Display stuff fixed now fix the addition too, (maybe it can be done within if statement)
+  // let gamePrice =
+  //   game.secondPrice && game.secondPrice !== ""
+  //     ? parseFloat(game.price.replace(/[^0-9.]/g, "")) -
+  //       parseFloat(game.secondPrice.replace(/[^0-9.]/g, ""))
+  //     : parseFloat(game.price.replace(/[^0-9.]/g, ""));
   const match = game.price.match(/[^\d.,]+/);
   const currencySign = match ? match[0] : ""; // "$"
+
 
   let priceDisplay;
   let secondPriceDisplay;
@@ -63,7 +75,10 @@ export const GameCard = ({
       rates
     );
 
-    gamePrice = game.secondPrice && game.secondPrice !== "" ? firstPrice - secondPrice : firstPrice ;
+    // gamePrice =
+    //   game.secondPrice && game.secondPrice !== ""
+    //     ? firstPrice - secondPrice
+    //     : firstPrice;
 
     priceDisplay = (
       <span className="line-through">{currency + firstPrice}</span>
@@ -85,8 +100,6 @@ export const GameCard = ({
     }
   }
 
-
-
   const handleClaim = (action: "claim" | "view") => {
     setModalAction(action);
     setModalOpen(true);
@@ -94,7 +107,7 @@ export const GameCard = ({
 
   function handleOpenBrowser() {
     let urlValue;
-    if (game.platform === "Epic Games") {
+    if (game.platform === "EPIC_GAMES") {
       urlValue = `https://store.epicgames.com/en-US/p/${game.urlSlug}`;
     } else {
       urlValue = game.urlSlug;
@@ -106,14 +119,15 @@ export const GameCard = ({
     setModalOpen(false);
 
     if (modalAction === "claim" && !claimStatus) {
-      claimGame(game.platform, game.title);
-      addGamePrice(gamePrice);
-      setClaimStatus(true);
+      claimGame(game);
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
+      // setClaimStatus(true);
     }
   }
 
   function handleOpenClient() {
-    if (game.platform === "Epic Games") {
+    if (game.platform === "EPIC_GAMES") {
       window.open(
         `com.epicgames.launcher://store/product/${game.urlSlug}`,
         "_blank"
@@ -124,9 +138,12 @@ export const GameCard = ({
 
     setModalOpen(false);
     if (modalAction === "claim" && !claimStatus) {
-      claimGame(game.platform, game.title);
-      addGamePrice(gamePrice);
-      setClaimStatus(true);
+      claimGame(game);
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
+      // addGamePrice(gamePrice);
+      // setClaimStatus(true);
+      console.log(`${game.title} is claimed!`);
     }
     //addToMoneySaved(game.price)
   }

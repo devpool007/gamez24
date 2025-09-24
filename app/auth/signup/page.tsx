@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { apiRequest } from "@/lib/api";
 import { useAuthStore } from "@/store/useAuthStore";
-
+import { useClaimStore } from "@/store/useClaimStore";
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,8 @@ export default function SignupPage() {
       const data = await apiRequest("/users/me");
       console.log("USERS DATA", data);
       const userData = data as { id: string; email: string };
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
       setUser(userData, "Sign Up Succesful!");
       // alert("Signup successful you are now logged in!");
     } catch (err: unknown) {

@@ -1,14 +1,29 @@
 // app/user/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useClaimStore } from "@/store/useClaimStore";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function UserPage() {
   const { user, logout } = useAuthStore();
   const [isEditing, setIsEditing] = useState(false);
+  const { user: userDetails, claimedGames, clearGameData } = useClaimStore();
+
+  useEffect(() => {
+    useClaimStore.getState().initializeUserStats();
+    useClaimStore.getState().loadClaimedGames();
+  }, [claimedGames,user]);
 
   if (!user) {
     return (
@@ -45,7 +60,7 @@ export default function UserPage() {
       <div className="relative w-full max-w-md">
         <button
           onClick={() => setIsEditing(!isEditing)}
-          className="absolute right-0 top-0 rounded-lg bg-accent px-3 py-1 text-sm cursor-pointer"
+          className="absolute right-0 top-0 rounded-lg bg-primary px-3 py-1 text-sm cursor-pointer"
         >
           {isEditing ? "Close" : "Edit"}
         </button>
@@ -76,6 +91,57 @@ export default function UserPage() {
 
       {/* Stats Table */}
       <div className="mt-8 w-full max-w-md overflow-x-auto">
+        <Table className="rounded-lg shadow">
+          <TableHeader className="bg-primary">
+            <TableRow>
+              <TableHead className="px-4 py-2 text-left text-foreground text-lg font-modern font-bold">
+                Platform
+              </TableHead>
+              <TableHead className="px-4 py-2 text-right text-foreground text-lg font-modern font-bold">
+                Games Claimed
+              </TableHead>
+              <TableHead className="px-4 py-2 text-right text-foreground text-lg font-modern font-bold">
+                Money Saved (€)
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {[
+              {
+                platform: "Steam",
+                games: userDetails?.stats.steamGames,
+                saved: userDetails?.stats.steamValue,
+              },
+              {
+                platform: "Epic",
+                games: userDetails?.stats.epicGames,
+                saved: userDetails?.stats.epicValue,
+              },
+              {
+                platform: "GOG",
+                games: userDetails?.stats.gogGames,
+                saved: userDetails?.stats.gogValue,
+              },
+            ].map((stat) => (
+              <TableRow
+                key={stat.platform}
+                className="border-t hover:bg-accent hover:cursor-pointer"
+              >
+                <TableCell className="px-4 py-2 font-medium">
+                  {stat.platform}
+                </TableCell>
+                <TableCell className="px-4 py-2 text-right">
+                  {stat.games}
+                </TableCell>
+                <TableCell className="px-4 py-2 text-right">
+                  €{stat.saved}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {/* <div className="mt-8 w-full max-w-md overflow-x-auto">
         <table className="w-full border-collapse rounded-lg shadow">
           <thead className="bg-accent">
             <tr>
@@ -86,9 +152,21 @@ export default function UserPage() {
           </thead>
           <tbody>
             {[
-              { platform: "Steam", games: 10, saved: 120 },
-              { platform: "Epic", games: 8, saved: 90 },
-              { platform: "GOG", games: 5, saved: 45 },
+              {
+                platform: "Steam",
+                games: userDetails?.stats.steamGames,
+                saved: userDetails?.stats.totalSaved,
+              },
+              {
+                platform: "Epic",
+                games: userDetails?.stats.epicGames,
+                saved: userDetails?.stats.totalSaved,
+              },
+              {
+                platform: "GOG",
+                games: userDetails?.stats.gogGames,
+                saved: userDetails?.stats.totalSaved,
+              },
             ].map((stat) => (
               <tr key={stat.platform} className="border-t hover:bg-gray-50">
                 <td className="px-4 py-2 font-medium">{stat.platform}</td>
@@ -98,6 +176,23 @@ export default function UserPage() {
             ))}
           </tbody>
         </table>
+      </div> */}
+
+      {/*Game Claimed List */}
+      <div className="bg-primary p-6 rounded-lg shadow-lg max-w-sm mx-auto my-10">
+        <h2 className="text-2xl font-bold text-white mb-4 text-center font-modern">
+          Games Claimed
+        </h2>
+        <ul className="space-y-3 h-64 overflow-y-auto">
+          {claimedGames?.map((game) => (
+            <li
+              key={game.id}
+              className="bg-background p-4 rounded-md text-white hover:bg-gray-600 transition-colors duration-200 cursor-pointer text-base"
+            >
+              {game.game_name}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Logout Button */}
@@ -105,6 +200,7 @@ export default function UserPage() {
         <button
           onClick={async () => {
             await logout();
+            clearGameData();
           }}
           className="w-full rounded-lg bg-red-500 py-2 text-white shadow hover:bg-red-600 cursor-pointer"
         >

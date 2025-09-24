@@ -60,7 +60,7 @@ export async function fetchSteamGames(url: string): Promise<Game[]> {
           ? game.gameid + generateRandomId()
           : generateRandomId(),
       title: game.title,
-      platform: "Steam",
+      platform: "STEAM",
       price: game.originalPrice?.replace(",", ".") ?? "",
       secondPrice: game.finalPrice?.replace(",", ".") ?? "",
       imageUrl: game.imageUrl ?? "",
