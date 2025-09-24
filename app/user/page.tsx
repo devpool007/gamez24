@@ -23,7 +23,7 @@ export default function UserPage() {
   useEffect(() => {
     useClaimStore.getState().initializeUserStats();
     useClaimStore.getState().loadClaimedGames();
-  }, [claimedGames,user]);
+  }, []);
 
   if (!user) {
     return (
