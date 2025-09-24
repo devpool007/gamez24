@@ -128,6 +128,8 @@ export const GameCard2 = ({
 
     if (modalAction === "claim" && !claimStatus) {
       claimGame(game);
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
       // addGamePrice(gamePrice);
       // setClaimStatus(true);
     }
@@ -146,6 +148,8 @@ export const GameCard2 = ({
     setModalOpen(false);
     if (modalAction === "claim" && !claimStatus) {
       claimGame(game);
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
       // addGamePrice(gamePrice);
       // setClaimStatus(true);
     }

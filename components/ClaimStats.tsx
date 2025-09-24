@@ -65,7 +65,7 @@ export const ClaimStats = () => {
               <span>{user?.stats.totalGames}</span>
             </div>
             <div className="flex items-center justify-between font-bold">
-              <span>Money saved</span>
+              <span>Total money saved</span>
               <span>{`${waehrung}${user?.stats.totalSaved}`}</span>
             </div>
           </div>

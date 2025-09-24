@@ -28,6 +28,7 @@ export default function LoginPage() {
         console.log("USERS DATA",data)
         const userData = data as { id: string, email : string };
         useClaimStore.getState().initializeUserStats()
+        useClaimStore.getState().loadClaimedGames();
         setUser(userData,"Login Succesful!");
     } catch (err: unknown) {
       if (err instanceof Error) {

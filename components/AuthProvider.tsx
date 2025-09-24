@@ -10,13 +10,13 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   const { loading } = useAuth();
-  const { loadClaimedGames } = useClaimStore();
+  const { loadClaimedGames, initializeUserStats } = useClaimStore();
 
   // Initialize game stats when user logs in or app loads
   useEffect(() => {
     console.log("🚀 App useEffect - User reloaded:");
 
-    // initializeUserStats();
+    initializeUserStats();
     loadClaimedGames();
   }, []);
   // const {initializeUserStats} = useClaimStore();

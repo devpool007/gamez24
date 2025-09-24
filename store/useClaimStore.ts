@@ -12,8 +12,11 @@ import { Game } from "@/data/mock-games";
 type GameStats = {
   totalGames: number;
   steamGames: number;
+  steamValue?: number;
   epicGames: number;
+  epicValue?: number;
   gogGames: number;
+  gogValue?: number;
   totalSaved: number;
 };
 
@@ -70,8 +73,11 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
     stats: {
       totalGames: 0,
       steamGames: 0,
+      steamValue: 0,
       epicGames: 0,
+      epicValue: 0,
       gogGames: 0,
+      gogValue: 0,
       totalSaved: 0.0,
     },
   },
@@ -99,9 +105,13 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
             epicGames: stats.store_breakdown.epic_games.games,
             gogGames: stats.store_breakdown.gog.games,
             totalSaved: stats.total_money_saved,
+            steamValue: stats.store_breakdown.steam.money_saved,
+            epicValue: stats.store_breakdown.epic_games.money_saved,
+            gogValue: stats.store_breakdown.gog.money_saved,
           },
         },
         isLoading: false,
+        
       });
 
       console.log("✅ User stats loaded:", get().user?.stats);
@@ -151,6 +161,9 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
             epicGames: response.updated_stats.epic_games,
             gogGames: response.updated_stats.gog_games,
             totalSaved: response.updated_stats.total_saved,
+            steamValue: get().user?.stats.steamValue || 0,
+            epicValue: get().user?.stats.epicValue || 0,
+            gogValue: get().user?.stats.gogValue || 0,
           },
         },
         claimedGameNames: [...(get().claimedGameNames || []), gameData.title],
@@ -211,6 +224,9 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
             epicGames: response.stats.store_counts.epic_games,
             gogGames: response.stats.store_counts.gog,
             totalSaved: response.stats.total_saved,
+            steamValue: get().user?.stats.steamValue || 0,
+            epicValue: get().user?.stats.epicValue || 0,
+            gogValue: get().user?.stats.gogValue || 0,
           },
         },
         isLoading: false,
@@ -238,6 +254,9 @@ export const useClaimStore = create<ClaimStore>((set, get) => ({
           epicGames: 0,
           gogGames: 0,
           totalSaved: 0.0,
+          steamValue: 0,
+          epicValue: 0,
+          gogValue: 0,
         },
       },
       claimedGames: [],

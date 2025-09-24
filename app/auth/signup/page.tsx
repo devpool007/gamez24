@@ -23,7 +23,8 @@ export default function SignupPage() {
       const data = await apiRequest("/users/me");
       console.log("USERS DATA", data);
       const userData = data as { id: string; email: string };
-      useClaimStore.getState().initializeUserStats()
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
       setUser(userData, "Sign Up Succesful!");
       // alert("Signup successful you are now logged in!");
     } catch (err: unknown) {
