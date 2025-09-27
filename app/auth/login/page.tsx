@@ -26,7 +26,7 @@ export default function LoginPage() {
 
         const data = await apiRequest("/users/me");
         console.log("USERS DATA",data)
-        const userData = data as { id: string, email : string };
+        const userData = data as { id: string, username: string, email : string };
         useClaimStore.getState().initializeUserStats()
         useClaimStore.getState().loadClaimedGames();
         setUser(userData,"Login Succesful!");

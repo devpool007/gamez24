@@ -85,7 +85,7 @@ export default function UserPage() {
             </button>
           )}
         </div>
-        <h1 className="text-2xl font-semibold">{user.email || "Anonymous"}</h1>
+        <h1 className="text-2xl font-semibold">{user.username || "Anonymous"}</h1>
         <p className="text-gray-600">{user.email}</p>
       </div>
 

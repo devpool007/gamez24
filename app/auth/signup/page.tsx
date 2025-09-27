@@ -7,6 +7,7 @@ import { useClaimStore } from "@/store/useClaimStore";
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { setUser, isLoggedIn } = useAuthStore();
@@ -18,11 +19,12 @@ export default function SignupPage() {
     try {
       await apiRequest("/users/signup", "POST", {
         email,
+        username,
         password,
       });
       const data = await apiRequest("/users/me");
       console.log("USERS DATA", data);
-      const userData = data as { id: string; email: string };
+      const userData = data as { id: string; username:string; email: string };
       useClaimStore.getState().initializeUserStats();
       useClaimStore.getState().loadClaimedGames();
       setUser(userData, "Sign Up Succesful!");
@@ -60,6 +62,13 @@ export default function SignupPage() {
           className="border p-2 w-full mb-3 rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          placeholder="Username"
+          className="border p-2 w-full mb-3 rounded"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <input

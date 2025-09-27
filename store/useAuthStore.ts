@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { apiRequest } from "@/lib/api";
 import { toast } from "sonner";
 interface AuthState {
-  user: { id: string; email: string } | null;
+  user: { id: string; username: string; email: string } | null;
   isLoggedIn: boolean;
   setUser: (user: AuthState["user"], toastString: string) => void;
   logout: () => Promise<void>;
@@ -15,7 +15,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ user, isLoggedIn: !!user });
     if (user) {
       toast.success(toastString, {
-        description: `Welcome ${user?.email}`,
+        description: `Welcome ${user.username}`,
       });
     }
   },
