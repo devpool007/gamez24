@@ -10,7 +10,7 @@ export async function apiRequest<T>(
     // Debug: Log the exact URL being called
   // console.log("🚀 Making request to:", fullUrl);
   // console.log("🍪 Document cookies:", document.cookie);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
+  const res = await fetch(`/api${endpoint}`, {
     
     method,
     headers: {

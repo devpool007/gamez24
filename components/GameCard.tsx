@@ -30,7 +30,7 @@ export const GameCard = ({
   const currencyCode = useClaimStore((state) => state.currencyCode);
   const [modalOpen, setModalOpen] = useState(false);
   // const [claimStatus, setClaimStatus] = useState(false);
-
+  
 
   const { claimGame, claimedGames, claimedGameNames } = useClaimStore();
     // ✅ Calculate claim status with useMemo - no state needed!
@@ -63,7 +63,7 @@ export const GameCard = ({
     secondPriceDisplay = (
       <span className="text-foreground">{currency + game.secondPrice}</span>
     );
-  } else if (game.platform === "Steam" && currency !== currencySign) {
+  } else if (game.platform === "STEAM" && currency !== currencySign) {
     const firstPrice = getExchangePrice(
       parseFloat(game.price.replace(/[^0-9.]/g, "")),
       currencyCode,
@@ -89,7 +89,7 @@ export const GameCard = ({
   } else {
     priceDisplay = <span className="line-through">{game.price}</span>;
 
-    if (game.platform === "Steam") {
+    if (game.platform === "STEAM") {
       secondPriceDisplay = (
         <span className="text-foreground">{game.secondPrice}</span>
       );
@@ -161,7 +161,7 @@ export const GameCard = ({
             <Button className="flex-1" onClick={handleOpenBrowser}>
               Open in browser
             </Button>
-            {["Steam", "Epic Games"].includes(game.platform) && (
+            {["STEAM", "EPIC_GAMES"].includes(game.platform) && (
               <Button
                 className="flex-1 text-white"
                 onClick={handleOpenClient}

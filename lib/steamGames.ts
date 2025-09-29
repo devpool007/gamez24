@@ -160,10 +160,13 @@ async function extractGameInfoFromHTML(htmlString: string): Promise<
   // Collect all game info objects first
   const gameInfoPromises = Array.from(gameDivs).map(
     async (gameDiv: Element) => {
-      const titleElement = gameDiv.querySelector(".col.search_name .title");
-      const releaseDateElement = gameDiv.querySelector(
-        ".col.search_released.responsive_secondrow"
-      );
+  // Some pages use `search_name` without a surrounding `col` class — accept both
+  const titleElement = gameDiv.querySelector(".search_name .title") || gameDiv.querySelector(".title");
+      // console.log("TITLE ELEMENT STEAM:", titleElement);
+      // Similarly, release date is often `search_released responsive_secondrow` (no `col`)
+      const releaseDateElement =
+        gameDiv.querySelector(".search_released.responsive_secondrow") ||
+        gameDiv.querySelector(".responsive_secondrow");
       const originalPriceElement = gameDiv.querySelector(
         ".discount_original_price"
       );

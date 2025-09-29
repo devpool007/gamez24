@@ -59,7 +59,7 @@ export const GameCard2 = ({
     secondPriceDisplay = (
       <span className="text-foreground">{currency + game.secondPrice}</span>
     );
-  } else if (game.platform === "Steam" && currency !== currencySign) {
+  } else if (game.platform === "STEAM" && currency !== currencySign) {
     const firstPrice = getExchangePrice(
       parseFloat(game.price.replace(/[^0-9.]/g, "")),
       currencyCode,
@@ -88,7 +88,7 @@ export const GameCard2 = ({
     }
     
 
-    if (game.platform === "Steam" || game.platform === "Epic Games") {
+    if (game.platform === "STEAM" || game.platform === "EPIC_GAMES") {
       if (game.secondPrice === "0"){
         secondPriceDisplay = <span className="text-foreground">Free</span>;
       }
@@ -169,7 +169,7 @@ export const GameCard2 = ({
             <Button className="flex-1" onClick={handleOpenBrowser}>
               Open in browser
             </Button>
-            {["Steam", "Epic Games"].includes(game.platform) && (
+            {["STEAM", "EPIC_GAMES"].includes(game.platform) && (
               <Button
                 className="flex-1 text-white"
                 onClick={handleOpenClient}

@@ -43,7 +43,7 @@ export const DealsSection = async ({
             ? "/gog3.png"
             : "/epic_games.png" // default case
         }
-        slug= {title === "Steam" ? "steam" : "gog"}
+        slug= {title === "STEAM" ? "steam" : "gog"}
         viewAll={viewAll}
       />
       <Carousel opts={{ align: "start" }} className="w-full p-4">

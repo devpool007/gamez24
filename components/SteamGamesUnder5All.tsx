@@ -114,7 +114,7 @@ export function SteamGamesWithServerActions({country, rates} : SteamGamesProps) 
   return (
     <>
       <DealsGrid
-        title={steamGames[0]?.platform ?? "Steam"}
+        title={steamGames[0]?.platform ?? "STEAM"}
         games={steamGames}
         colorConfig={dealsConfig.steam.colorConfig}
         viewAll={false}

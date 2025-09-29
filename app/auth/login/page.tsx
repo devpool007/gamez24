@@ -4,13 +4,14 @@ import { useState } from "react";
 import { apiRequest } from "@/lib/api";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useClaimStore } from "@/store/useClaimStore";
+import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-   const { setUser, isLoggedIn } = useAuthStore();
-   
+  const { setUser, isLoggedIn } = useAuthStore();
+  const router = useRouter();
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -24,24 +25,25 @@ export default function LoginPage() {
       // alert("Login successful!");
       // TODO: store JWT in cookies - Done!
 
-        const data = await apiRequest("/users/me");
-        console.log("USERS DATA",data)
-        const userData = data as { id: string, username: string, email : string };
-        useClaimStore.getState().initializeUserStats()
-        useClaimStore.getState().loadClaimedGames();
-        setUser(userData,"Login Succesful!");
+      const data = await apiRequest("/users/me");
+      console.log("USERS DATA", data);
+      const userData = data as { id: string; username: string; email: string };
+      useClaimStore.getState().initializeUserStats();
+      useClaimStore.getState().loadClaimedGames();
+      setUser(userData, "Login Succesful!");
+      // redirect to deals after successful login
+      router.push("/deals");
     } catch (err: unknown) {
       if (err instanceof Error) {
-      console.error(err.message);
-      setError("Invalid credentials for login");
-    } else {
-      setError("Invalid credentials for login");
-    }
+        console.error(err.message);
+        setError("Invalid credentials for login");
+      } else {
+        setError("Invalid credentials for login");
+      }
     } finally {
       setLoading(false);
     }
   }
-
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -67,7 +69,9 @@ export default function LoginPage() {
           required
         />
         {error && <p className="text-red-500 mb-2">{error}</p>}
-        {isLoggedIn && <p className="text-green-500 mb-2">Sign up and Login Successful!</p>}
+        {isLoggedIn && (
+          <p className="text-green-500 mb-2">Sign up and Login Successful!</p>
+        )}
         <button
           type="submit"
           disabled={loading}

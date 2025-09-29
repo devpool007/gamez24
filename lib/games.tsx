@@ -93,10 +93,11 @@ export async function EpicGames({ country }: EpicGamesProps) {
 export async function SteamGames({ country }: SteamGamesProps) {
   const url = `https://store.steampowered.com/search/?maxprice=free&specials=1&ndl=1&cc=${country}`;
   const steamGames = await fetchSteamGames(url);
+  console.log("STEAM DEALS:",steamGames)
   return (
     <>
       <DealsSection
-        title={steamGames[0]?.platform ?? "Steam"}
+        title={steamGames[0]?.platform ?? "STEAM"}
         games={steamGames}
         colorConfig={dealsConfig.steam.colorConfig}
         viewAll={false}
@@ -117,7 +118,7 @@ export async function SteamGamesUnder5({ country }: SteamGamesProps) {
   return (
     <>
       <DealsSection
-        title={steamGames[0]?.platform ?? "Steam"}
+        title={steamGames[0]?.platform ?? "STEAM"}
         games={steamGames}
         colorConfig={dealsConfig.steam.colorConfig}
         viewAll={true}

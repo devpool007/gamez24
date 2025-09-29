@@ -26,15 +26,15 @@ export const DealsGrid2 = ({
     <section className="mb-8">
       <SectionTitle
         titleImg={
-          title === "Steam"
+          title === "STEAM"
             ? "/steam_logo.png"
-            : title === "Epic Games"
+            : title === "EPIC_GAMES"
             ? "/epic_games.png"
             : title === "GOG"
             ? "/gog3.png"
             : "/epic_games.png" // default case
         }
-        slug={title === "Steam" ? "steam" : "gog"}
+        slug={title === "STEAM" ? "steam" : "gog"}
         viewAll={viewAll}
       />
       {games.length === 0 && (

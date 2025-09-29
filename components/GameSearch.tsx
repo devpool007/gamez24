@@ -97,7 +97,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
         title: game.title,
         price: game.price.totalPrice.fmtPrice.originalPrice,
         secondPrice: game.price.totalPrice.fmtPrice.discountPrice,
-        platform: "Epic Games",
+        platform: "EPIC_GAMES",
         freeUntil: "",
         urlSlug: resultUrl || "",
       };
@@ -188,7 +188,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
             data[id].data?.price_overview?.initial_formatted === ""
               ? data[id].data?.price_overview?.final_formatted
               : data[id].data?.price_overview?.final_formatted,
-          platform: "Steam",
+          platform: "STEAM",
           freeUntil: "",
           urlSlug: `https://store.steampowered.com/app/${id}`,
         };
@@ -292,7 +292,7 @@ export default function GameSearch({ getSteamIDforGame }: GameSearchProps) {
       {!loading && (
         <DealsGrid2
           games={steamDeals}
-          title="Steam"
+          title="STEAM"
           rates={{}}
           colorConfig={dealsConfig.steam.colorConfig}
           viewAll={false}

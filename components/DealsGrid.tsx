@@ -25,15 +25,15 @@ export const DealsGrid = ({
     <section className="mb-8">
       <SectionTitle
         titleImg={
-          games[0].platform === "Steam"
+          games[0].platform === "STEAM"
             ? "/steam_logo.png"
-            : games[0].platform === "Epic Games"
+            : games[0].platform === "EPIC_GAMES"
             ? "/epic_games.png"
             : games[0].platform === "GOG"
             ? "/gog3.png"
             : "/epic_games.png" // default case
         }
-        slug={games[0].platform === "Steam" ? "steam" : "gog"}
+        slug={games[0].platform === "STEAM" ? "steam" : "gog"}
         viewAll={viewAll}
       />
       <div className="pb-4 px-4">

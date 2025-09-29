@@ -36,15 +36,15 @@ export const DealsSection2 = ({
     <section className="mb-12 mt-2">
       <SectionTitle
         titleImg={
-          title === "Steam"
+          title === "STEAM"
             ? "/steam_logo.png"
-            : title === "Epic Games"
+            : title === "EPIC_GAMES"
             ? "/epic_games.png"
             : title === "GOG"
             ? "/gog3.png"
             : "/epic_games.png" // default case
         }
-        slug= {title === "Steam" ? "steam" : "gog"}
+        slug= {title === "STEAM" ? "steam" : "gog"}
         viewAll={viewAll}
       />
       <Carousel opts={{ align: "start" }} className="w-full p-4">
