@@ -5,18 +5,19 @@ import { Header } from "@/components/Header";
 import HorizontalNavTabs from "@/components/HorizontalNavTab";
 import { useClaimStore } from "@/store/useClaimStore";
 
-export default function DealsLayout({
+
+export default function PostsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const currencyTitle = useClaimStore((state) => state.currencyTitle);
+   const currencyTitle = useClaimStore((state) => state.currencyTitle);
 
   const tabs = [
     { label: "Free Game Deals", path: "/deals" },
     { label: currencyTitle, path: "/dealsU5" },
     { label: "Game Search", path: "/gameSearch" },
-    { label: "Posts", path: "/posts" },
+    {label: "Posts", path: "/posts"}
   ];
 
   return (

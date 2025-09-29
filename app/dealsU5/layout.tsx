@@ -16,6 +16,7 @@ export default function DealsLayout({
     { label: "Free Game Deals", path: "/deals" },
     { label: currencyTitle, path: "/dealsU5" },
     { label: "Game Search", path: "/gameSearch" },
+    { label: "Posts", path: "/posts" },
   ];
   return (
     <div className="min-h-screen bg-background text-foreground">
