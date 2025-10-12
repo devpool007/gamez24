@@ -29,7 +29,7 @@ export default function UserPage() {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="flex w-1/2 flex-col items-center gap-4 text-center">
-          <p className="mb-8 text-2xl font-bold font-gaming">
+          <p className="mb-8 md:text-2xl text-base font-bold font-gaming">
             Please log in or sign up to create a new user account to access this
             page.
           </p>
@@ -37,14 +37,14 @@ export default function UserPage() {
             <Link
               href={"auth/signup"}
               type="button"
-              className="w-full rounded bg-blue-600 px-4 py-2 text-white font-gaming font-semibold"
+              className="w-full rounded bg-blue-600 px-4 py-2 text-sm md:text-base text-white font-gaming font-semibold"
             >
               Sign Up
             </Link>
             <Link
               href={"auth/login"}
               type="button"
-              className="w-full rounded bg-green-600 px-4 py-2 text-white font-gaming font-semibold"
+              className="w-full rounded bg-green-600 px-4 py-2 text-sm md:text-base text-white font-gaming font-semibold"
             >
               Login
             </Link>
